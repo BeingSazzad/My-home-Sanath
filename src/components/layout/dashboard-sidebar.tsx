@@ -2,16 +2,11 @@
 
 import useBaseUrl from "@/hooks/useBaseUrl";
 import {
-  BellOutlined,
-  HeartOutlined,
   LeftOutlined,
-  LockOutlined,
   LogoutOutlined,
-  RightOutlined,
-  SearchOutlined,
-  SendOutlined,
-  UserOutlined
+  RightOutlined
 } from "@ant-design/icons";
+import { Heart, Search, Send, Bell, User, Lock, LogOut } from "lucide-react";
 import { Avatar, Button, Layout, Menu, Tag, Typography } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -39,10 +34,11 @@ export default function DashboardSidebar({
   }, [pathname]);
 
   const menuItems = [
-    { key: "enquiries", icon: <SendOutlined />, label: "My Enquiries" },
-    { key: "user-notifications", icon: <BellOutlined />, label: "Alerts & Notifications" },
-    { key: "profile", icon: <UserOutlined />, label: "Personal Information" },
-    { key: "password-security", icon: <LockOutlined />, label: "Password & Security" },
+    { key: "saved", icon: <Heart size={18} />, label: "My Saved" },
+    { key: "enquiries", icon: <Send size={18} />, label: "My Enquiries" },
+    { key: "user-notifications", icon: <Bell size={18} />, label: "Alerts & Notifications" },
+    { key: "profile", icon: <User size={18} />, label: "Personal Information" },
+    { key: "password-security", icon: <Lock size={18} />, label: "Password & Security" },
   ];
 
   const handleSetQuery = (value: boolean) => {
@@ -96,37 +92,13 @@ export default function DashboardSidebar({
       trigger={null}
       className="bg-white! border-r border-[#f0f0f0] h-[90vh] relative left-0 bottom-0 z-10 flex flex-col overflow-y-auto"
     >
-      {/* User Profile Header */}
-      <div
-        className={`border-b border-[#f0f0f0] flex items-center justify-between gap-3 transition-all duration-200 ${collapsed ? "py-4 px-3" : "py-5 px-4"
-          }`}
-      >
-        <div>
-          <Avatar
-            size={collapsed ? 36 : 44}
-            className={`bg-[#0d9488]! font-bold shrink-0 ${collapsed ? "text-sm" : "text-base"}`}
-          >
-            WF
-          </Avatar>
-          {!collapsed && (
-            <div className="overflow-hidden">
-              <Text strong className="text-sm block whitespace-nowrap text-[#1a1a1a]">
-                Westfert Admin
-              </Text>
-              <Text className="text-xs text-[#6b7280]">Administrator</Text>
-              <div className="mt-1">
-                <Tag className="bg-primary! border-primary! text-white! text-[10px] leading-4 px-1.5 rounded m-0 font-normal">
-                  Premium Plan
-                </Tag>
-              </div>
-            </div>
-          )}
-        </div>
+      {/* Sidebar Toggle Only */}
+      <div className={`flex items-center ${collapsed ? "justify-center py-4" : "justify-end p-4"} border-b border-[#f0f0f0]`}>
         <Button
           type="text"
           icon={collapsed ? <RightOutlined /> : <LeftOutlined />}
           onClick={() => onCollapse?.(!collapsed)}
-          className="text-[#6b7280] text-base"
+          className="text-[#6b7280] text-base hover:bg-gray-50 rounded-lg h-9 w-9 flex items-center justify-center p-0"
         />
       </div>
 
@@ -147,7 +119,7 @@ export default function DashboardSidebar({
         <div className="mt-auto border-t border-[#f0f0f0]">
           <Button
             type="text"
-            icon={<LogoutOutlined className="text-red-500" />}
+            icon={<LogOut size={18} className="text-red-500" />}
             onClick={handleLogOut}
             className={`w-full h-12 flex items-center gap-2 text-red-500 hover:text-red-600 font-bold text-sm rounded-none ${collapsed ? "justify-center pl-0" : "justify-start pl-6"
               }`}

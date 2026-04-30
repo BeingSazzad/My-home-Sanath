@@ -65,8 +65,12 @@ export default function NavActions() {
                 <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
                     <div className="flex items-center gap-3 cursor-pointer group">
                         <div className="text-right hidden xl:block">
-                            <p className="text-[13px] font-bold text-[#1a3c6e] leading-none mb-1">Westfert Admin</p>
-                            <p className="text-[10px] text-gray-500 font-medium">Premium Member</p>
+                            <p className="text-[14px] font-bold text-[#1a3c6e] leading-none mb-1">Westfert Admin</p>
+                            <div className="flex justify-end">
+                                <span className="text-[10px] bg-[#1a3c6e]/5 text-[#1a3c6e] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                                    Agent
+                                </span>
+                            </div>
                         </div>
                         <Avatar
                             size={44}
