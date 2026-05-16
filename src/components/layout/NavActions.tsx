@@ -5,6 +5,7 @@ import type { MenuProps } from "antd";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Bell, User, LogOut, LayoutDashboard } from "lucide-react";
 import { logout } from "@/redux/feature/auth/authSlice";
 
@@ -12,6 +13,11 @@ export default function NavActions() {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { user } = useSelector((state: any) => state.auth);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const dashboardRoutes = [
         '/analytics', '/saved', '/profile', '/enquiries',
@@ -20,8 +26,6 @@ export default function NavActions() {
         '/agent-enquiries', '/subscription', '/agency-profile', '/security',
     ];
     const isDashboard = dashboardRoutes.some(route => pathname.includes(route));
-
-    const isLoggedIn = !!user || isDashboard;
 
     const handleLogout = () => {
         dispatch(logout());
@@ -57,9 +61,16 @@ export default function NavActions() {
         },
     ];
 
+    // Prevent SSR/client hydration mismatch — render placeholder until mounted
+    if (!mounted) {
+        return <div className="w-28 h-10" />;
+    }
+
+    const isLoggedIn = !!user;
+
     if (isLoggedIn) {
         return (
-            <div className="flex items-center gap-3 sm:gap-6 animate-in fade-in duration-500">
+            <div className="flex items-center gap-3 sm:gap-6 animate-in fade-in duration-300">
                 <Link href="/user-notifications">
                     <Badge count={3} size="small" offset={[-2, 2]} color="#14b8a6">
                         <div className="p-2 hover:bg-gray-50 rounded-full transition-all group">

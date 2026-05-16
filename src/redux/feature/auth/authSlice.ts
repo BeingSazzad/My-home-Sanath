@@ -3,28 +3,33 @@ import { createSlice } from "@reduxjs/toolkit";
 type TUser = {
   id: string;
   email: string;
-  role: "Admin" | "Manager" | "Sales Executive";
+  role: "Admin" | "Manager" | "Sales Executive" | "Agent" | "User";
   iat: number;
   exp: number;
 };
 
 type TInitialState = {
-  user: null | TUser;
+  user: null | { user: TUser; token: string };
   token: null | string;
 };
 
-const initialState: TInitialState = {
-  user: null,
-  token: null,
+const loadAuth = (): TInitialState => {
+  if (typeof window === "undefined") return { user: null, token: null };
+  try {
+    const raw = localStorage.getItem("auth");
+    return raw ? JSON.parse(raw) : { user: null, token: null };
+  } catch {
+    return { user: null, token: null };
+  }
 };
 
 const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: loadAuth,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.user = action.payload;
+      state.token = action.payload?.token ?? null;
     },
     logout: (state) => {
       state.user = null;
