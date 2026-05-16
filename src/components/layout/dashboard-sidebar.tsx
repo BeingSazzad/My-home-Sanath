@@ -6,7 +6,7 @@ import {
   LogoutOutlined,
   RightOutlined
 } from "@ant-design/icons";
-import { Heart, Search, Send, Bell, User, Lock, LogOut } from "lucide-react";
+import { Heart, Search, Send, User, Lock, Settings } from "lucide-react";
 import { Avatar, Button, Layout, Menu, Tag, Typography } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,10 +34,11 @@ export default function DashboardSidebar({
   }, [pathname]);
 
   const menuItems = [
-    { key: "profile", icon: <User size={18} />, label: "Personal Information" },
     { key: "saved", icon: <Heart size={18} />, label: "Saved" },
     { key: "enquiries", icon: <Send size={18} />, label: "My Enquiries" },
-    { key: "user-notifications", icon: <Bell size={18} />, label: "Alerts & Notifications" },
+    { key: "profile", icon: <User size={18} />, label: "Personal Information" },
+    { type: "divider" as const },
+    { key: "notification-settings", icon: <Settings size={18} />, label: "Notification Settings" },
     { key: "password-security", icon: <Lock size={18} />, label: "Password & Security" },
   ];
 

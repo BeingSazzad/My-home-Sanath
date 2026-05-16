@@ -5,18 +5,22 @@ import type { MenuProps } from "antd";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";
-import { Bell, User, LogOut, LayoutDashboard, Heart, Search } from "lucide-react";
+import { Bell, User, LogOut, LayoutDashboard } from "lucide-react";
 import { logout } from "@/redux/feature/auth/authSlice";
 
 export default function NavActions() {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { user } = useSelector((state: any) => state.auth);
-    
-    // Check if we are on a dashboard-related route
-    const dashboardRoutes = ['/analytics', '/saved', '/profile', '/enquiries', '/user-notifications', '/password-security', '/overview', '/my-listing', '/agent-enquiries', '/subscription', '/agency-profile', '/security'];
+
+    const dashboardRoutes = [
+        '/analytics', '/saved', '/profile', '/enquiries',
+        '/user-notifications', '/notification-settings',
+        '/password-security', '/overview', '/my-listing',
+        '/agent-enquiries', '/subscription', '/agency-profile', '/security',
+    ];
     const isDashboard = dashboardRoutes.some(route => pathname.includes(route));
-                        
+
     const isLoggedIn = !!user || isDashboard;
 
     const handleLogout = () => {
@@ -24,38 +28,38 @@ export default function NavActions() {
     };
 
     const userMenuItems: MenuProps["items"] = [
-        { 
-            key: "profile", 
+        {
+            key: "profile",
             icon: <User size={16} />,
-            label: <Link href="/profile" className="font-medium">My Profile</Link> 
+            label: <Link href="/profile" className="font-medium">My Profile</Link>,
         },
-        { type: "divider" },
-        ...(!isDashboard ? [{
-            key: "dashboard", 
-            icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
-            label: (
-                <Link 
-                    href={user?.user?.role === "Agent" ? "/analytics" : "/saved"} 
-                    className="font-bold text-[#1a3c6e]"
-                >
-                    {user?.user?.role === "Agent" ? "Agent Dashboard" : "User Dashboard"}
-                </Link>
-            ),
-        },
-        { type: "divider" }] : []),
-
-        { 
-            key: "logout", 
+        { type: "divider" as const },
+        ...(!isDashboard ? [
+            {
+                key: "dashboard",
+                icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
+                label: (
+                    <Link
+                        href={user?.user?.role === "Agent" ? "/analytics" : "/saved"}
+                        className="font-bold text-[#1a3c6e]"
+                    >
+                        {user?.user?.role === "Agent" ? "Agent Dashboard" : "User Dashboard"}
+                    </Link>
+                ),
+            },
+            { type: "divider" as const },
+        ] : []),
+        {
+            key: "logout",
             icon: <LogOut size={16} />,
-            label: <span onClick={handleLogout} className="cursor-pointer font-bold">Sign Out</span>, 
-            danger: true 
+            label: <span onClick={handleLogout} className="cursor-pointer font-bold">Sign Out</span>,
+            danger: true,
         },
     ];
 
     if (isLoggedIn) {
         return (
             <div className="flex items-center gap-3 sm:gap-6 animate-in fade-in duration-500">
-                {/* Notifications */}
                 <Link href="/user-notifications">
                     <Badge count={3} size="small" offset={[-2, 2]} color="#14b8a6">
                         <div className="p-2 hover:bg-gray-50 rounded-full transition-all group">
@@ -63,7 +67,7 @@ export default function NavActions() {
                         </div>
                     </Badge>
                 </Link>
-                
+
                 <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
                     <div className="flex items-center gap-3 cursor-pointer group">
                         <div className="text-right hidden xl:block">
