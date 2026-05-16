@@ -1,74 +1,63 @@
 
 export const mainTheme = {
     token: { 
-        controlHeight: 42, 
-        colorPrimary: "var(--color-primary)",
-        fontFamily: "var(--font-inter), 'Inter', sans-serif"
+        controlHeight: 40, 
+        colorPrimary: "#1a3c6e", // Professional dark blue
+        borderRadius: 8,
+        fontFamily: "var(--font-inter), 'Inter', sans-serif",
+        colorBgLayout: "#f8fafc",
     },
     components: {
-        Input: {
-            borderRadius: 12,
-            colorBorder: "#d9d9d9",
-            colorPrimaryBg: "#ffffff",
-            colorText: "#1f2937",
-            inputFontSize: 16,
-            colorBgBlur: "#ffffff",
-            colorTextPlaceholder: "#9ca3af",
-            colorBgContainer: "#ffffff",
+        Button: {
+            controlHeight: 40,
+            borderRadius: 8,
+            fontWeight: 600,
         },
-
+        Input: {
+            borderRadius: 8,
+            colorBorder: "#e2e8f0",
+            colorPrimaryBg: "#ffffff",
+            colorText: "#1e293b",
+            fontSize: 14,
+            colorTextPlaceholder: "#94a3b8",
+        },
         Modal: {
-            colorIcon: "#000",
-            colorBgMask: "rgba(64,64,64,0.5)",
-            headerBg: "transparent",
-            titleColor: "#909090 ",
-            titleFontSize: 22,
+            colorIcon: "#64748b",
+            colorBgMask: "rgba(15, 23, 42, 0.5)",
+            headerBg: "#ffffff",
+            titleColor: "#1e293b",
+            titleFontSize: 18,
+            borderRadiusLG: 16,
         },
         Menu: {
-            itemSelectedBg: "rgba(1, 46, 124, 0.2)",
-            itemSelectedColor: "var(--color-primary)",
-            itemHoverColor: "var(--color-primary)",
-            borderRadius: 0,
-            // submenu
-            subMenuItemSelectedColor: "var(--color-primary)",
-        },
-        Select: {
-            optionSelectedBg: "var(--color-primary)",
-            optionSelectedColor: "#fff",
-            colorTextPlaceholder: "var(--color-primary)",
-            optionActiveBg: "rgba(1, 46, 124, 0.2)",
-            optionActiveColor: "var(--color-primary)",
-
-            optionPaddingBlock: 6, // 👈 base spacing (single value only)
-        },
-        Collapse: {
-            headerBg: "#043623",
-            contentBg: "rgba(255,255,255,0.4)",
-            colorText: "#ffffff",
-            colorTextHeading: "#fff",
-            fontSize: 18,
-            colorPrimaryBorder: '#043623',
-            borderlessContentBg: 'transparent',
-
-        },
-        Pagination: {
-            itemActiveBg: "rgba(2, 115, 72, .8)",
-            itemBg: "rgba(0,42,96,0.3215686274509804)",
-            colorPrimary: "rgb(255,255,255)",
-            colorText: "rgb(255,255,255)",
-            colorTextDisabled: "rgb(255,255,255, .5)",
-            borderRadius: 25,
-            itemSize: 40,
+            itemSelectedBg: "rgba(26, 60, 110, 0.08)",
+            itemSelectedColor: "#1a3c6e",
+            itemHoverColor: "#1a3c6e",
+            itemHoverBg: "rgba(26, 60, 110, 0.04)",
+            borderRadius: 8,
+            itemMarginInline: 8,
+            itemHeight: 44,
         },
         Table: {
-            colorBgContainer: "#121215",
-            borderColor: "#404040",
-            headerBg: "#043623 ",
-            colorText: "#fff",
-            headerColor: "#ffffff",
+            colorBgContainer: "#ffffff",
+            borderColor: "#f1f5f9",
+            headerBg: "#f8fafc",
+            colorText: "#334155",
+            headerColor: "#475569",
             headerSplitColor: "transparent",
-            colorSplit: "transparent",
-            cellPaddingBlock: 15,
+            borderRadius: 12,
         },
+        Card: {
+            borderRadiusLG: 16,
+            colorBorderSecondary: "#f1f5f9",
+            boxShadowTertiary: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        },
+        Tag: {
+            borderRadiusSM: 6,
+        },
+        Select: {
+            borderRadius: 8,
+            colorBorder: "#e2e8f0",
+        }
     },
 };

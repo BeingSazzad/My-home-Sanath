@@ -24,6 +24,7 @@ import {
   RightOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -109,6 +110,9 @@ const tooltipStyle = {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function AnalyticsPage() {
+  const { user } = useSelector((state: any) => state.auth);
+  const userRole = user?.user?.role || "Admin";
+
   return (
     <div className="p-6 space-y-6">
       {/* Page Header */}
@@ -118,7 +122,7 @@ export default function AnalyticsPage() {
             Agent Dashboard
           </Title>
           <Text className="text-[#6b7280] text-sm">
-            Welcome back, Admin. Here&apos;s what&apos;s happening today.
+            Welcome back, {userRole}. Here&apos;s what&apos;s happening today.
           </Text>
         </div>
         <Button
@@ -136,7 +140,7 @@ export default function AnalyticsPage() {
           <Col xs={24} sm={8} key={i}>
             <Card
               className="rounded-xl border border-[#f0f0f0]"
-              bodyStyle={{ padding: "20px 24px" }}
+              styles={{ body: { padding: "20px 24px" } }}
             >
               <div className="flex items-center gap-4">
                 <div
@@ -161,7 +165,7 @@ export default function AnalyticsPage() {
       <Row gutter={[16, 16]}>
         {metricsData.map((m, i) => (
           <Col xs={24} sm={12} xl={6} key={i}>
-            <Card className="rounded-xl border border-[#f0f0f0]" bodyStyle={{ padding: "20px 24px" }}>
+            <Card className="rounded-xl border border-[#f0f0f0]" styles={{ body: { padding: "20px 24px" } }}>
               <div className="flex items-center gap-3 mb-3">
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center text-lg"
@@ -192,7 +196,7 @@ export default function AnalyticsPage() {
       {/* Recent Enquiries */}
       <Card
         className="rounded-xl border border-[#f0f0f0] my-5"
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
         title={
           <div className="flex items-center justify-between py-1">
             <span className="font-semibold text-gray-800">Recent Enquiries</span>

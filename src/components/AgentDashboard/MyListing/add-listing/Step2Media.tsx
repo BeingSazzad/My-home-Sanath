@@ -30,10 +30,10 @@ function ExistingItem({ url, type, onRemove }: ExistingItemProps) {
 
     if (type === "image") {
         return (
-            <div className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 ring-2 ring-[#0d9488]/30">
+            <div className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 ring-2 ring-[#1a3c6e]/30">
                 <Image src={url} alt={filename} fill className="object-cover" unoptimized />
                 {/* "Existing" badge */}
-                <span className="absolute top-1 left-1 bg-[#0d9488] text-white text-[9px] px-1.5 py-0.5 rounded-full font-medium">
+                <span className="absolute top-1 left-1 bg-[#1a3c6e] text-white text-[9px] px-1.5 py-0.5 rounded-full font-medium">
                     Saved
                 </span>
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all" />
@@ -50,7 +50,7 @@ function ExistingItem({ url, type, onRemove }: ExistingItemProps) {
 
     if (type === "video") {
         return (
-            <div className="relative group aspect-square rounded-lg overflow-hidden bg-gray-900 ring-2 ring-[#0d9488]/30">
+            <div className="relative group aspect-square rounded-lg overflow-hidden bg-gray-900 ring-2 ring-[#1a3c6e]/30">
                 <video
                     src={url}
                     className="w-full h-full object-cover"
@@ -62,7 +62,7 @@ function ExistingItem({ url, type, onRemove }: ExistingItemProps) {
                         v.currentTime = 0;
                     }}
                 />
-                <span className="absolute top-1 left-1 bg-[#0d9488] text-white text-[9px] px-1.5 py-0.5 rounded-full font-medium z-10">
+                <span className="absolute top-1 left-1 bg-[#1a3c6e] text-white text-[9px] px-1.5 py-0.5 rounded-full font-medium z-10">
                     Saved
                 </span>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -83,12 +83,12 @@ function ExistingItem({ url, type, onRemove }: ExistingItemProps) {
 
     // Document
     return (
-        <div className="flex items-center justify-between bg-teal-50 border border-teal-200 rounded-lg px-3 py-2.5 group">
+        <div className="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 group">
             <div className="flex items-center gap-2 min-w-0">
-                <LinkOutlined className="text-[#0d9488] text-base flex-shrink-0" />
+                <LinkOutlined className="text-[#1a3c6e] text-base flex-shrink-0" />
                 <div className="min-w-0">
                     <p className="text-sm text-gray-700 font-medium truncate">{filename}</p>
-                    <p className="text-xs text-[#0d9488]">Saved file</p>
+                    <p className="text-xs text-[#1a3c6e]">Saved file</p>
                 </div>
             </div>
             <button
@@ -167,7 +167,7 @@ function NewPreviewItem({ url, name, size, type, onRemove }: NewPreviewItemProps
     return (
         <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 group">
             <div className="flex items-center gap-2 min-w-0">
-                <FileImageOutlined className="text-[#0d9488] text-base flex-shrink-0" />
+                <FileImageOutlined className="text-[#1a3c6e] text-base flex-shrink-0" />
                 <div className="min-w-0">
                     <p className="text-sm text-gray-700 font-medium truncate">{name}</p>
                     {size !== undefined && (
@@ -240,15 +240,15 @@ function MediaUploadBox({
     const isGrid = type === "image" || type === "video";
 
     return (
-        <div className="border-2 border-dashed border-gray-200 rounded-xl overflow-hidden hover:border-[#0d9488] transition-colors bg-white">
+        <div className="border-2 border-dashed border-gray-200 rounded-xl overflow-hidden hover:border-[#1a3c6e] transition-colors bg-white">
             {/* Header */}
             <div
                 className="flex items-center justify-between px-4 py-3 cursor-pointer select-none"
                 onClick={() => inputRef.current?.click()}
             >
                 <div className="flex items-center gap-2">
-                    <span className="text-[#0d9488] text-lg">{icon}</span>
-                    <span className="text-[#1e3a5f] font-semibold text-sm">{label}</span>
+                    <span className="text-[#1a3c6e] text-lg">{icon}</span>
+                    <span className="text-[#1a3c6e] font-semibold text-sm">{label}</span>
                     {hasAny && (
                         <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
                             {totalCount} file{totalCount !== 1 ? "s" : ""}
@@ -258,7 +258,7 @@ function MediaUploadBox({
                 <button
                     type="button"
                     onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
-                    className="flex items-center gap-1 text-xs text-[#0d9488] border border-[#0d9488] rounded px-2 py-1 hover:bg-teal-50 transition-colors"
+                    className="flex items-center gap-1 text-xs text-[#1a3c6e] border border-[#1a3c6e] rounded px-2 py-1 hover:bg-blue-50 transition-colors"
                 >
                     <PlusOutlined />
                     Add {type === "image" ? "Photos" : type === "video" ? "Videos" : "Files"}

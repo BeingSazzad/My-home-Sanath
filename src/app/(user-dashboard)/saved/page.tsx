@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Tabs } from "antd";
+import { ConfigProvider, Tabs } from "antd";
 import { Heart, Search } from "lucide-react";
 import SaveProperties from "@/components/UserDashboard/saveProperties";
 import SavedSearchList from "@/components/UserDashboard/savedSearches/SavedSearchList";
@@ -51,17 +51,20 @@ export default function SavedPage() {
         <p className="text-gray-500 text-sm">Manage your saved properties and search alerts.</p>
       </div>
 
-      <Tabs
-        defaultActiveKey="properties"
-        items={items}
-        className="custom-tabs"
-        size="large"
+      <ConfigProvider
         theme={{
             token: {
                 colorPrimary: '#1a3c6e',
             }
         }}
-      />
+      >
+        <Tabs
+          defaultActiveKey="properties"
+          items={items}
+          className="custom-tabs"
+          size="large"
+        />
+      </ConfigProvider>
 
       <style jsx global>{`
         .custom-tabs .ant-tabs-nav::before {

@@ -28,7 +28,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased inter`}>
+      <body className={`${inter.variable} antialiased inter`} suppressHydrationWarning>
         <ReduxProvider>
           <ConfigProvider theme={mainTheme} wave={{ disabled: true }}>          
               <Navbar />

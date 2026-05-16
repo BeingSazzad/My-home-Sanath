@@ -36,7 +36,7 @@ export default function ListingsFilters({
                 <Option value="all">All Status</Option>
                 <Option value="active">Active</Option>
                 <Option value="draft">Draft</Option>
-                <Option value="let agreed">Let Agreed</Option>
+                <Option value="closed">Closed</Option>
             </Select>
         </div>
     );

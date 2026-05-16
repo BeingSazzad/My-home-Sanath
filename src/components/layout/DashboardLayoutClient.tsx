@@ -6,6 +6,7 @@ import { Button, Drawer } from "antd";
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DashboardSidebar from "./dashboard-sidebar";
+import DashboardBackButton from "./DashboardBackButton";
 
 const SIDEBAR_WIDTH = 300;
 const SIDEBAR_COLLAPSED_WIDTH = 72;
@@ -92,7 +93,8 @@ export default function DashboardLayoutClient({
                     </span>
                 </div>
 
-                <main className="flex-1 p-6 md:p-8 bg-[#F9FAFB]">
+                <main className="flex-1 px-4 py-5 md:px-6 md:py-6 bg-[#F9FAFB]">
+                    <DashboardBackButton fallbackHref="/saved" />
                     {children}
                 </main>
             </div>

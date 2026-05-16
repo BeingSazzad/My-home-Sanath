@@ -36,7 +36,7 @@ export default function LoginForm() {
       
       // Redirect based on role
       if (role === "agent") {
-        router.push("/analytics");
+        router.push("/overview");
       } else {
         router.push("/saved");
       }

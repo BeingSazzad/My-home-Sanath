@@ -5,6 +5,8 @@ import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/feature/auth/authSlice";
 import ChooseRoleForm from "./ChooseRoleForm";
 
 
@@ -15,35 +17,40 @@ export default function Signup() {
   const isAgent = role === "agent";
   const router = useRouter();
 
+  const dispatch = useDispatch();
 
   if (!role) {
     return <ChooseRoleForm />
   }
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, payload: Record<string, unknown>) => {
-    e.preventDefault();
 
-    console.log('handleSubmit', payload);
-
-    // try {
-    //   const response = await fetch("/api/auth/signup", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ ...payload, role }),
-    //   });
-    //   const data = await response.json();
-    //   if (data?.success) {
-    //     toast.success(data?.message || "Account created!");
-    //   } else {
-    //     if (Array.isArray(data?.error)) {
-    //       data.error.forEach((err: { message: string }) => toast.error(err.message, { id: "register" }));
-    //     } else {
-    //       toast.error(data?.message || "Something went wrong!", { id: "register" });
-    //     }
-    //   }
-    // } catch (err) {
-    //   console.error("RegisterForm error:", err);
-    //   toast.error("Unexpected error occurred", { id: "register" });
-    // }
+  const handleSubmit = async (payload: Record<string, any>) => {
+    try {
+      // Mock successful registration
+      const mockUser = {
+        user: {
+          id: Math.random().toString(36).substring(7),
+          email: payload.email,
+          name: payload.name,
+          role: isAgent ? "Agent" : "User",
+          iat: Date.now(),
+          exp: Date.now() + 86400000,
+        },
+        token: "mock-jwt-token-signup-12345"
+      };
+      
+      dispatch(setUser(mockUser));
+      toast.success(isAgent ? "Agent account created successfully!" : "Account created successfully!");
+      
+      // Redirect based on role
+      if (isAgent) {
+        router.push("/overview");
+      } else {
+        router.push("/");
+      }
+    } catch (err) {
+      console.error("Signup error:", err);
+      toast.error("Unexpected error occurred", { id: "register" });
+    }
   };
 
   return (
@@ -58,9 +65,7 @@ export default function Signup() {
       <Form
         form={form}
         layout="vertical"
-        onFinish={(values) =>
-          handleSubmit(new Event("submit") as unknown as React.FormEvent<HTMLFormElement>, values)
-        }
+        onFinish={handleSubmit}
         requiredMark={false}
       >
         <Form.Item name="name" label={<span className="text-sm font-medium text-gray-700">Full Name</span>} rules={[{ required: true, message: "Full Name is required" }]}>

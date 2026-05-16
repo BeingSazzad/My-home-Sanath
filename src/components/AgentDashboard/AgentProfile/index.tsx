@@ -63,7 +63,7 @@ export default function AgencyProfilePage() {
     return (
         <>
             <div className="max-w-3xl">
-                <h1 className="text-2xl font-bold text-gray-900 mb-6">Agency Profile</h1>
+                <h1 className="text-2xl font-bold text-[#1a3c6e] mb-6">Agency Profile</h1>
 
                 <form onSubmit={handleSubmit}>
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">

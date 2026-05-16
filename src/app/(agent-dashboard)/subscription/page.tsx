@@ -1,9 +1,5 @@
-import React from 'react'
+import SubscriptionPage from "@/components/AgentDashboard/Subscription";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export default function Page() {
+  return <SubscriptionPage />;
 }
-
-export default page

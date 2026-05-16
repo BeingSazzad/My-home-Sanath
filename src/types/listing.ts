@@ -1,4 +1,4 @@
-export type ListingStatus = "active" | "draft" | "let agreed";
+export type ListingStatus = "active" | "draft" | "closed" | "let agreed" | "sold";
 
 export interface Listing {
     id: string;
@@ -46,6 +46,8 @@ export interface ListingDetail {
     views: number;
     status: ListingStatus;
     images: string[];
+    videos?: string[];
+    floorPlans?: string[];
     listingType: "for-sale" | "to-rent";
     // Step 3
     propertyType: string;

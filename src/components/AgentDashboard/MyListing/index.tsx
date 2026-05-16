@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { Toaster } from "sonner";
+import { Button, Modal } from "antd";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Toaster, toast } from "sonner";
+import { Trash2 } from "lucide-react";
 import { Listing, ListingDetail } from "@/types/listing";
 import ListingsFilters from "./ListingsFilters";
 import ListingsTable from "./ListingsTable";
@@ -24,6 +25,10 @@ export default function MyListingsPage() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
 
+  // Delete modal
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [listingToDelete, setListingToDelete] = useState<string | null>(null);
+
   const filtered = useMemo(() => {
     return listings.filter((l) => {
       const matchSearch =
@@ -35,8 +40,20 @@ export default function MyListingsPage() {
     });
   }, [listings, search, statusFilter]);
 
-  const handleDelete = (id: string) => {
-    setListings((prev) => prev.filter((l) => l.id !== id));
+  const handleDeleteRequest = (id: string) => {
+    setListingToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (listingToDelete) {
+      setListings((prev) => prev.filter((l) => l.id !== listingToDelete));
+      toast.success("Listing deleted successfully", {
+        description: "The property listing has been removed from the platform."
+      });
+    }
+    setDeleteModalOpen(false);
+    setListingToDelete(null);
   };
 
   const handleDetails = (id: string) => {
@@ -69,16 +86,16 @@ export default function MyListingsPage() {
       <div className="">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">My Listings</h1>
+          <h1 className="text-3xl font-bold text-[#1a3c6e]">My Properties</h1>
           <Button
             type="primary"
             size="large"
             icon={<PlusOutlined />}
             onClick={handleAddNew}
-            style={{ backgroundColor: "#0d9488", borderColor: "#0d9488" }}
+            style={{ backgroundColor: "#1a3c6e", borderColor: "#1a3c6e" }}
             className="!rounded"
           >
-            Add Listing
+            Add Property
           </Button>
         </div>
 
@@ -92,7 +109,7 @@ export default function MyListingsPage() {
           />
           <ListingsTable
             listings={filtered}
-            onDelete={handleDelete}
+            onDelete={handleDeleteRequest}
             onDetails={handleDetails}
             onEdit={handleEdit}
           />
@@ -116,6 +133,48 @@ export default function MyListingsPage() {
           setDetailId(null);
         }}
       />
+
+      {/* Premium Delete Confirmation Modal */}
+      <Modal
+        open={deleteModalOpen}
+        onCancel={() => setDeleteModalOpen(false)}
+        footer={null}
+        centered
+        width={420}
+        styles={{ body: { padding: "32px 24px" } }}
+        className="premium-confirm-modal"
+        closable={false}
+      >
+        <div className="text-center">
+          <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm border border-red-100">
+            <Trash2 size={32} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Listing?</h3>
+          <p className="text-gray-500 mb-8 px-2 text-[15px] leading-relaxed">
+            Are you sure you want to delete this listing? This action <span className="text-red-600 font-semibold">cannot be undone</span> and the property will be permanently removed.
+          </p>
+          <div className="flex gap-3">
+            <Button 
+              block 
+              size="large" 
+              onClick={() => setDeleteModalOpen(false)} 
+              className="!h-12 !rounded-xl !font-semibold border-gray-200 text-gray-600 hover:!border-gray-300 hover:!text-gray-800 bg-gray-50/50"
+            >
+              Cancel
+            </Button>
+            <Button 
+              block 
+              size="large" 
+              type="primary" 
+              danger 
+              onClick={handleConfirmDelete} 
+              className="!h-12 !rounded-xl !font-bold !bg-red-500 !border-red-500 hover:!bg-red-600 shadow-lg shadow-red-100"
+            >
+              Yes, Delete
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }
@@ -175,6 +234,8 @@ export const MOCK_LISTING_DETAILS: ListingDetail[] = [
       "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=500&fit=crop",
       "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=500&fit=crop",
     ],
+    videos: ["https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4"],
+    floorPlans: ["https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=1000&fit=crop"],
     propertyType: "Terraced",
     beds: 5,
     baths: 3,

@@ -19,7 +19,6 @@ const INITIAL: ProfileFormData = {
     city: "London",
     postcode: "SW1A 1AA",
     country: "United Kingdom",
-    language: "English (UK)",
 };
 
 async function myFetch(url: string, options?: { method?: string; body?: unknown }) {

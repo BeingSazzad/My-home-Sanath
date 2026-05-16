@@ -11,6 +11,7 @@ import { Avatar, Button, Layout, Menu, Tag, Typography } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const { Sider } = Layout;
 const { Text } = Typography;
@@ -28,6 +29,8 @@ export default function DashboardSidebar({
   const router = useRouter();
   const pathname = usePathname();
   const baseUrl = useBaseUrl();
+  const { user } = useSelector((state: any) => state.auth);
+  const userData = user?.user;
 
   useEffect(() => {
     setSelectedKey(pathname.split("/")[1] || "analytics");
@@ -93,6 +96,26 @@ export default function DashboardSidebar({
       trigger={null}
       className="bg-white! border-r border-[#f0f0f0] h-[90vh] relative left-0 bottom-0 z-10 flex flex-col overflow-y-auto"
     >
+      {/* User Profile Header */}
+      <div
+        className={`flex items-center gap-3 transition-all duration-300 border-b border-gray-100 ${collapsed ? "py-6 px-4 justify-center" : "py-7 px-6"
+          }`}
+      >
+        <div className="flex items-center gap-3 overflow-hidden">
+          <Avatar
+            size={collapsed ? 40 : 48}
+            className="bg-[#1a3c6e]/5 text-[#1a3c6e] font-bold shrink-0 border border-[#1a3c6e]/10 shadow-sm"
+          >
+            {userData?.name ? userData.name.split(" ").map((n: string) => n[0]).join("").toUpperCase() : "U"}
+          </Avatar>
+          {!collapsed && (
+            <div className="flex flex-col min-w-0">
+              <Text className="text-[10px] font-bold text-[#1a3c6e] uppercase tracking-wider mb-0.5">User Dashboard</Text>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Sidebar Toggle Only */}
       <div className={`flex items-center ${collapsed ? "justify-center py-4" : "justify-end p-4"} border-b border-[#f0f0f0]`}>
         <Button

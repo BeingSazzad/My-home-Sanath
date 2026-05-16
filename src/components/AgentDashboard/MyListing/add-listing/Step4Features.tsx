@@ -33,7 +33,7 @@ export default function Step4Features({ data, onChange }: Step4Props) {
                                 type="button"
                                 onClick={() => toggleFeature(feature)}
                                 className={`px-3 py-2 text-sm border rounded text-left transition-all ${isSelected
-                                    ? "border-[#0d9488] bg-teal-50 text-[#0d9488] font-medium"
+                                    ? "border-[#1a3c6e] bg-blue-50 text-[#1a3c6e] font-medium"
                                     : "border-gray-200 text-gray-700 hover:border-gray-300 bg-white"
                                     }`}
                             >

@@ -3,14 +3,23 @@
 import useBaseUrl from "@/hooks/useBaseUrl";
 import {
     LeftOutlined,
-    LogoutOutlined,
     RightOutlined
 } from "@ant-design/icons";
 import { Avatar, Button, Layout, Menu, Tag, Typography } from "antd";
-import { Box, House, Lock, MessageSquare, Settings, Wallet } from "lucide-react";
+import { 
+    LayoutDashboard, 
+    House, 
+    Mail, 
+    CreditCard, 
+    UserCog, 
+    ShieldCheck,
+    LogOut 
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/feature/auth/authSlice";
 
 const { Sider } = Layout;
 const { Text } = Typography;
@@ -24,52 +33,40 @@ export default function AgentDashboardSidebar({
     collapsed = false,
     onCollapse,
 }: AgentDashboardSidebarProps) {
-    const [selectedKey, setSelectedKey] = useState("analytics");
+    const [selectedKey, setSelectedKey] = useState("overview");
     const router = useRouter();
     const pathname = usePathname();
     const baseUrl = useBaseUrl();
+    const dispatch = useDispatch();
+    const { user } = useSelector((state: any) => state.auth);
+    
+    const userData = user?.user;
+    const subscription = userData?.subscription;
+    const planName = subscription?.status === "active" ? subscription.planName : "No Active Plan";
+    const initials = userData?.name ? userData.name.split(" ").map((n: string) => n[0]).join("").toUpperCase() : "AG";
 
     useEffect(() => {
-        setSelectedKey(pathname.split("/")[1] || "analytics");
+        // More robust path matching
+        const segment = pathname.split("/").filter(Boolean).pop() || "overview";
+        setSelectedKey(segment);
     }, [pathname]);
 
     const menuItems = [
-        { key: "overview", icon: <Box />, label: "Overview" },
-        { key: "my-listing", icon: <House />, label: "My Listings" },
-        { key: "agent-enquiries", icon: <MessageSquare />, label: "Enquiries" },
-        { key: "subscription", icon: <Wallet />, label: "Subscription & Billing" },
-        { key: "agency-profile", icon: <Settings />, label: "Agency Profile" },
-        { key: "security", icon: <Lock />, label: "Security" },
+        { key: "overview", icon: <LayoutDashboard size={18} />, label: "Overview" },
+        { key: "my-listing", icon: <House size={18} />, label: "My Properties" },
+        { key: "agent-enquiries", icon: <Mail size={18} />, label: "Enquiries" },
+        { key: "subscription", icon: <CreditCard size={18} />, label: "Subscription & Billing" },
+        { key: "agency-profile", icon: <UserCog size={18} />, label: "Agency Profile" },
     ];
 
     const handleLogOut = () => {
-        toast.warning("Are you sure you want to log out?", {
-            duration: 5000,
-            description: "You will be logged out and redirected to the login page.",
+        toast("Are you sure you want to log out?", {
+            description: "You will need to sign in again to access your dashboard.",
             action: {
                 label: "Logout",
-                onClick: async () => {
-                    try {
-                        await toast.promise(
-                            fetch(`${baseUrl}/api/auth/logout`, {
-                                method: "POST",
-                                credentials: "include",
-                            }).then(async (res) => {
-                                const data = await res.json();
-                                if (!res.ok) throw new Error(data.message || "Logout failed");
-                                return data.message;
-                            }),
-                            {
-                                loading: "Logging out...",
-                                success: (msg) => <b>{msg}</b>,
-                                error: (err) => err.message || "Logout failed",
-                            }
-                        );
-                        router.push("/auth/login");
-                    } catch (error) {
-                        console.error("Unexpected logout error:", error);
-                        toast.error("Something went wrong during logout");
-                    }
+                onClick: () => {
+                    dispatch(logout());
+                    router.push("/auth/login");
                 },
             },
         });
@@ -80,59 +77,60 @@ export default function AgentDashboardSidebar({
             collapsible
             collapsed={collapsed}
             onCollapse={onCollapse}
-            width={260}
-            collapsedWidth={72}
+            width={280}
+            collapsedWidth={80}
             trigger={null}
-            className="bg-white! border-r border-[#f0f0f0] h-[90vh] relative left-0 bottom-0 z-10 flex flex-col overflow-y-auto"
+            theme="light"
+            className="!bg-white border-r border-slate-100 h-screen sticky top-0 left-0 z-20 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
         >
             {/* User Profile Header */}
             <div
-                className={`border-b border-[#f0f0f0] flex items-center justify-between gap-3 transition-all duration-200 ${collapsed ? "py-4 px-3" : "py-5 px-4"
-                    }`}
+                className={`flex items-center gap-3 transition-all duration-300 border-b border-slate-50 ${
+                    collapsed ? "py-6 px-4 justify-center" : "py-7 px-6"
+                }`}
             >
-                <div>
+                <div className="flex items-center gap-3 overflow-hidden">
                     <Avatar
-                        size={collapsed ? 36 : 44}
-                        className={`bg-[#0d9488]! font-bold shrink-0 ${collapsed ? "text-sm" : "text-base"}`}
+                        size={collapsed ? 40 : 48}
+                        className="bg-[#1a3c6e]/5 text-[#1a3c6e] font-bold shrink-0 border border-[#1a3c6e]/10 shadow-sm"
                     >
-                        WF
+                        {initials}
                     </Avatar>
                     {!collapsed && (
-                        <div className="overflow-hidden">
-                            <Text strong className="text-sm block whitespace-nowrap text-[#1a1a1a]">
-                                Westfert Admin
-                            </Text>
-                            <Text className="text-xs text-[#6b7280]">Administrator</Text>
-                            <div className="mt-1">
-                                <Tag className="bg-primary! border-primary! text-white! text-[10px] leading-4 px-1.5 rounded m-0">
-                                    Premium Plan
+                        <div className="flex flex-col min-w-0">
+                            <Text className="text-[10px] font-bold text-[#1a3c6e] uppercase tracking-wider mb-0.5">Agent Dashboard</Text>
+                            <div className="mt-1.5">
+                                <Tag className={`${subscription?.status === "active" ? "bg-[#1a3c6e]" : "bg-orange-500"} border-none text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0 rounded-md m-0 shadow-sm`}>
+                                    {planName}
                                 </Tag>
                             </div>
                         </div>
                     )}
                 </div>
-                <Button
-                    type="text"
-                    icon={collapsed ? <RightOutlined /> : <LeftOutlined />}
-                    onClick={() => onCollapse?.(!collapsed)}
-                    className="text-[#6b7280] text-base"
-                />
             </div>
 
             {/* Main Menu */}
-            <div className="flex-1 overflow-y-auto flex flex-col h-[calc(90vh-160px)]">
+            <div className="flex-1 py-4 flex flex-col justify-between">
                 <Menu
                     mode="inline"
                     selectedKeys={[selectedKey]}
                     items={menuItems}
-                    inlineIndent={16}
-                    className="border-none! text-sm font-medium py-2 "
+                    inlineIndent={20}
+                    className="!border-none text-[14px] font-medium"
                     onClick={({ key }) => {
                         router.push(`/${key}`);
                     }}
                 />
 
             </div>
+
+            {/* Collapse Toggle */}
+            <button
+                onClick={() => onCollapse?.(!collapsed)}
+                className="absolute -right-3 top-20 bg-white border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center shadow-md text-slate-400 hover:text-[#1a3c6e] transition-colors z-30"
+            >
+                {collapsed ? <RightOutlined style={{ fontSize: 10 }} /> : <LeftOutlined style={{ fontSize: 10 }} />}
+            </button>
         </Sider>
     );
 }

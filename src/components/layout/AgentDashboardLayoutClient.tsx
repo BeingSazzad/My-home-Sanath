@@ -1,7 +1,7 @@
 "use client";
 
 import AgentDashboardSidebar from "@/components/layout/AgentDashboardSidebar";
-import DashboardSidebar from "@/components/layout/dashboard-sidebar";
+import DashboardBackButton from "@/components/layout/DashboardBackButton";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 import { ReactNode, useEffect, useState } from "react";
@@ -44,7 +44,7 @@ export default function AgentDashboardLayoutClient({
   };
 
   return (
-    <div className="flex bg-[#ddd] h-[90vh]">
+    <div className="flex bg-gray-100 min-h-screen">
 
       {/* ── Desktop Sidebar ── */}
       <div
@@ -73,7 +73,7 @@ export default function AgentDashboardLayoutClient({
         styles={{ body: { padding: 0 }, header: { display: "none" } }}
         className="lg:hidden"
       >
-        <DashboardSidebar
+        <AgentDashboardSidebar
           collapsed={false}
           onCollapse={() => setMobileOpen(false)}
         />
@@ -90,13 +90,16 @@ export default function AgentDashboardLayoutClient({
             onClick={() => setMobileOpen(true)}
           />
           <span className="font-semibold text-gray-800 text-sm">
-            Westfert
+            Agent Dashboard
           </span>
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 md:p-6 bg-[#F9FAFB]">
-          {children}
+        <main className="flex-1 px-4 py-8 md:px-8 md:py-10 lg:px-12 bg-[#F9FAFB]">
+          <div className="max-w-7xl mx-auto">
+            <DashboardBackButton fallbackHref="/overview" />
+            {children}
+          </div>
         </main>
       </div>
     </div>

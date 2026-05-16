@@ -6,6 +6,7 @@ type TUser = {
   role: "Admin" | "Manager" | "Sales Executive" | "Agent" | "User";
   iat: number;
   exp: number;
+  subscription?: any; // Added subscription field
 };
 
 type TInitialState = {
@@ -30,13 +31,30 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
       state.token = action.payload?.token ?? null;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("auth", JSON.stringify(state));
+      }
+    },
+    updateSubscription: (state, action) => {
+      if (state.user) {
+        state.user.user = {
+          ...state.user.user,
+          subscription: action.payload,
+        };
+        if (typeof window !== "undefined") {
+          localStorage.setItem("auth", JSON.stringify(state));
+        }
+      }
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("auth");
+      }
     },
   },
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, logout, updateSubscription } = authSlice.actions;
 export default authSlice.reducer;

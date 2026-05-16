@@ -193,7 +193,7 @@ const UserNotifications = () => {
     <div className="max-w-7xl">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#1a3c6e]">Alerts & Notifications</h1>
+          <h1 className="text-2xl font-bold text-[#1a3c6e]">Notification</h1>
           <p className="text-gray-500 text-sm mt-1">Stay updated with your property activity</p>
         </div>
         <div className="flex items-center gap-3">

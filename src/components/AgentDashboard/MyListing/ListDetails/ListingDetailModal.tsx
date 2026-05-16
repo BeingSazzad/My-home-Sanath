@@ -10,8 +10,10 @@ import {
   TagOutlined,
   ThunderboltOutlined,
   UserOutlined,
+  VideoCameraOutlined,
+  FileImageOutlined,
 } from "@ant-design/icons";
-import { Modal, Skeleton, Tag } from "antd";
+import { Modal, Skeleton, Tag, Button } from "antd";
 import { useState } from "react";
 import { MOCK_LISTING_DETAILS } from "..";
 import { StatusBadge } from "../ListingsTable";
@@ -37,8 +39,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 // ─── Info row ──────────────────────────────────────────────────────────────────
 function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-start gap-3 py-2 border-b border-gray-50 last:border-0">
-      <span className="text-[#0d9488] mt-0.5 flex-shrink-0">{icon}</span>
+    <div className="flex items-start gap-3 py-2.5 border-b border-gray-50 last:border-0">
+      <span className="text-[#1a3c6e] mt-0.5 flex-shrink-0 opacity-80">{icon}</span>
       <div className="flex items-center justify-between w-full">
         <span className="text-sm text-gray-500">{label}</span>
         <span className="text-sm font-medium text-gray-900 text-right">{value}</span>
@@ -63,8 +65,8 @@ function DetailSkeleton() {
 
 function StatTile({ icon, label, value }: any) {
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl py-3 px-2 text-center border border-gray-100">
-      <span className="text-[#0d9488] text-xl mb-1">{icon}</span>
+    <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl py-3 px-2 text-center border border-gray-100 transition-all hover:bg-white hover:shadow-sm">
+      <span className="text-[#1a3c6e] text-xl mb-1">{icon}</span>
       <span className="text-base font-bold text-gray-900">{value}</span>
       <span className="text-[11px] text-gray-400 mt-0.5">{label}</span>
     </div>
@@ -151,9 +153,9 @@ export default function ListingDetailModal({ listingId, open, onClose }: Listing
           {/* Price + Address */}
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
-              <p className="text-2xl font-bold text-[#1e3a5f]">{detail.price}</p>
+              <p className="text-2xl font-bold text-[#1a3c6e]">{detail.price}</p>
               <p className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
-                <EnvironmentOutlined className="text-[#0d9488]" />
+                <EnvironmentOutlined className="text-[#1a3c6e]" />
                 {detail.address}
               </p>
             </div>
@@ -192,15 +194,52 @@ export default function ListingDetailModal({ listingId, open, onClose }: Listing
 
           {/* Features */}
           {detail.features?.length > 0 && (
-            <Section title="Features">
+            <Section title="Key Features">
               <div className="flex flex-wrap gap-2">
                 {detail.features.map((f) => (
                   <Tag
                     key={f}
-                    className="!bg-teal-50 !text-teal-700 !border-teal-200 !rounded-full !px-3 !py-0.5 !text-xs !font-medium"
+                    className="!bg-blue-50 !text-[#1a3c6e] !border-blue-100 !rounded-full !px-4 !py-1 !text-xs !font-medium"
                   >
                     {f}
                   </Tag>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* Videos */}
+          {detail.videos && detail.videos.length > 0 && (
+            <Section title="Virtual Tours & Videos">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {detail.videos.map((vid, idx) => (
+                  <div key={idx} className="relative aspect-video rounded-xl overflow-hidden bg-black group">
+                    <video 
+                      src={vid} 
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                       <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                          <VideoCameraOutlined className="text-white text-xl" />
+                       </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* Floor Plans */}
+          {detail.floorPlans && detail.floorPlans.length > 0 && (
+            <Section title="Floor Plans">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {detail.floorPlans.map((fp, idx) => (
+                  <div key={idx} className="relative aspect-[3/4] rounded-xl border border-gray-200 overflow-hidden bg-gray-50 group cursor-pointer">
+                    <ImageGallery images={[fp]} title={`Floor Plan ${idx + 1}`} />
+                    <div className="absolute bottom-0 left-0 right-0 p-2 bg-white/90 backdrop-blur-sm border-t border-gray-100 text-[10px] font-bold text-[#1a3c6e] text-center">
+                      <FileImageOutlined className="mr-1" /> FLOOR PLAN {idx + 1}
+                    </div>
+                  </div>
                 ))}
               </div>
             </Section>

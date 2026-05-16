@@ -1,17 +1,18 @@
 "use client";
 
-import { Button, Avatar, Dropdown, Badge } from "antd";
+import { Button, Avatar, Dropdown, Badge, Popover } from "antd";
 import type { MenuProps } from "antd";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Bell, User, LogOut, LayoutDashboard } from "lucide-react";
+import { Bell, User, LogOut, LayoutDashboard, House, MessageSquare, Wallet, Settings } from "lucide-react";
 import { logout } from "@/redux/feature/auth/authSlice";
 
 export default function NavActions() {
     const dispatch = useDispatch();
     const pathname = usePathname();
+    const router = useRouter();
     const { user } = useSelector((state: any) => state.auth);
     const [mounted, setMounted] = useState(false);
 
@@ -20,34 +21,63 @@ export default function NavActions() {
     }, []);
 
     const dashboardRoutes = [
-        '/analytics', '/saved', '/profile', '/enquiries',
+        '/overview', '/saved', '/profile', '/enquiries',
         '/user-notifications', '/notification-settings',
-        '/password-security', '/overview', '/my-listing',
+        '/password-security', '/my-listing',
         '/agent-enquiries', '/subscription', '/agency-profile', '/security',
     ];
     const isDashboard = dashboardRoutes.some(route => pathname.includes(route));
 
     const handleLogout = () => {
         dispatch(logout());
+        router.push("/auth/login");
     };
+
+    const isAgent = user?.user?.role === "Agent";
 
     const userMenuItems: MenuProps["items"] = [
         {
             key: "profile",
-            icon: <User size={16} />,
-            label: <Link href="/profile" className="font-medium">My Profile</Link>,
+            icon: isAgent ? <Settings size={16} /> : <User size={16} />,
+            label: (
+                <Link href={isAgent ? "/agency-profile" : "/profile"} className="font-medium">
+                    {isAgent ? "Agency Profile" : "My Profile"}
+                </Link>
+            ),
         },
         { type: "divider" as const },
-        ...(!isDashboard ? [
+        ...(isAgent ? [
+            {
+                key: "agent-overview",
+                icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
+                label: <Link href="/overview" className="font-bold text-[#1a3c6e]">Agent Overview</Link>,
+            },
+            {
+                key: "agent-listings",
+                icon: <House size={16} />,
+                label: <Link href="/my-listing" className="font-medium">My Listings / Publish</Link>,
+            },
+            {
+                key: "agent-enquiries",
+                icon: <MessageSquare size={16} />,
+                label: <Link href="/agent-enquiries" className="font-medium">Agent Enquiries</Link>,
+            },
+            {
+                key: "agent-subscription",
+                icon: <Wallet size={16} />,
+                label: <Link href="/subscription" className="font-medium">Subscription</Link>,
+            },
+            { type: "divider" as const },
+        ] : !isDashboard ? [
             {
                 key: "dashboard",
                 icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
                 label: (
                     <Link
-                        href={user?.user?.role === "Agent" ? "/analytics" : "/saved"}
+                        href="/saved"
                         className="font-bold text-[#1a3c6e]"
                     >
-                        {user?.user?.role === "Agent" ? "Agent Dashboard" : "User Dashboard"}
+                        User Dashboard
                     </Link>
                 ),
             },
@@ -71,13 +101,43 @@ export default function NavActions() {
     if (isLoggedIn) {
         return (
             <div className="flex items-center gap-3 sm:gap-6 animate-in fade-in duration-300">
-                <Link href="/user-notifications">
+                <Popover
+                    content={
+                        <div className="w-80 -m-3">
+                            <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-lg">
+                                <h4 className="font-bold text-[#1a3c6e] m-0">Notifications</h4>
+                                <span className="text-[10px] font-bold bg-[#14b8a6] text-white px-2 py-0.5 rounded-full uppercase tracking-wide">3 New</span>
+                            </div>
+                            <div className="max-h-[300px] overflow-y-auto">
+                                <div className="p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors">
+                                    <p className="text-sm text-gray-800 font-semibold m-0 leading-tight">New property match found!</p>
+                                    <p className="text-xs text-gray-500 m-0 mt-1.5">2 mins ago</p>
+                                </div>
+                                <div className="p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors">
+                                    <p className="text-sm text-gray-800 font-semibold m-0 leading-tight">Price drop on Saved Property</p>
+                                    <p className="text-xs text-gray-500 m-0 mt-1.5">1 hour ago</p>
+                                </div>
+                                <div className="p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                                    <p className="text-sm text-gray-800 font-semibold m-0 leading-tight">Welcome to MyHome!</p>
+                                    <p className="text-xs text-gray-500 m-0 mt-1.5">1 day ago</p>
+                                </div>
+                            </div>
+                            <div className="p-3 border-t border-gray-100 text-center bg-gray-50 rounded-b-lg">
+                                <Link href="/user-notifications" className="text-[#14b8a6] text-sm font-bold hover:underline block">
+                                    View All
+                                </Link>
+                            </div>
+                        </div>
+                    }
+                    trigger="click"
+                    placement="bottomRight"
+                >
                     <Badge count={3} size="small" offset={[-2, 2]} color="#14b8a6">
-                        <div className="p-2 hover:bg-gray-50 rounded-full transition-all group">
-                            <Bell className="text-gray-400 group-hover:text-[#1a3c6e] cursor-pointer" size={20} />
+                        <div className="p-2 hover:bg-gray-50 rounded-full transition-all group cursor-pointer">
+                            <Bell className="text-gray-400 group-hover:text-[#1a3c6e]" size={20} />
                         </div>
                     </Badge>
-                </Link>
+                </Popover>
 
                 <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
                     <div className="flex items-center gap-3 cursor-pointer group">

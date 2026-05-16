@@ -1,11 +1,11 @@
 import FindProperties from '@/components/web-pages/FindProperties'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const page = () => {
     return (
-        <div>
+        <Suspense fallback={<div>Loading...</div>}>
             <FindProperties />
-        </div>
+        </Suspense>
     )
 }
 

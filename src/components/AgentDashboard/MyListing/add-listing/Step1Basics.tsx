@@ -19,7 +19,7 @@ export default function Step1Basics({ data, onChange }: Step1Props) {
                     type="button"
                     onClick={() => onChange({ listingType: "for-sale" })}
                     className={`p-4 rounded border-2 text-left transition-all ${data.listingType === "for-sale"
-                        ? "border-[#1e3a5f] bg-blue-50"
+                        ? "border-[#1a3c6e] bg-blue-50"
                         : "border-gray-200 bg-white hover:border-gray-300"
                         }`}
                 >
@@ -30,7 +30,7 @@ export default function Step1Basics({ data, onChange }: Step1Props) {
                     type="button"
                     onClick={() => onChange({ listingType: "to-rent" })}
                     className={`p-4 rounded border-2 text-left transition-all ${data.listingType === "to-rent"
-                        ? "border-[#1e3a5f] bg-blue-50"
+                        ? "border-[#1a3c6e] bg-blue-50"
                         : "border-gray-200 bg-white hover:border-gray-300"
                         }`}
                 >

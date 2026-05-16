@@ -119,11 +119,41 @@ const FilterModal = ({ isOpen, onClose }: FilterModalProps) => {
               <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
                       <label className="text-xs font-medium text-gray-500 ml-1">Min Price</label>
-                      <Select className="w-full h-11" defaultValue="0" options={[{ value: '0', label: 'No Min' }, { value: '250000', label: '£250k' }]} />
+                      <Select className="w-full h-11" defaultValue="0" options={[
+                          { value: '0', label: 'No Min' },
+                          { value: '50000', label: '£50k' },
+                          { value: '100000', label: '£100k' },
+                          { value: '150000', label: '£150k' },
+                          { value: '200000', label: '£200k' },
+                          { value: '250000', label: '£250k' },
+                          { value: '300000', label: '£300k' },
+                          { value: '400000', label: '£400k' },
+                          { value: '500000', label: '£500k' },
+                          { value: '750000', label: '£750k' },
+                          { value: '1000000', label: '£1M' },
+                          { value: '1500000', label: '£1.5M' },
+                          { value: '2000000', label: '£2M' },
+                          { value: '5000000', label: '£5M' },
+                      ]} />
                   </div>
                   <div className="space-y-1.5">
                       <label className="text-xs font-medium text-gray-500 ml-1">Max Price</label>
-                      <Select className="w-full h-11" defaultValue="any" options={[{ value: 'any', label: 'No Max' }, { value: '500000', label: '£500k' }]} />
+                      <Select className="w-full h-11" defaultValue="any" options={[
+                          { value: 'any', label: 'No Max' },
+                          { value: '50000', label: '£50k' },
+                          { value: '100000', label: '£100k' },
+                          { value: '150000', label: '£150k' },
+                          { value: '200000', label: '£200k' },
+                          { value: '250000', label: '£250k' },
+                          { value: '300000', label: '£300k' },
+                          { value: '400000', label: '£400k' },
+                          { value: '500000', label: '£500k' },
+                          { value: '750000', label: '£750k' },
+                          { value: '1000000', label: '£1M' },
+                          { value: '1500000', label: '£1.5M' },
+                          { value: '2000000', label: '£2M' },
+                          { value: '5000000', label: '£5M' },
+                      ]} />
                   </div>
               </div>
           </section>
