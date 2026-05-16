@@ -3,8 +3,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div><AccountSettingsPage /> </div>
+    <div className="max-w-7xl"><AccountSettingsPage /> </div>
   )
 }
 
-export default page
+export default page

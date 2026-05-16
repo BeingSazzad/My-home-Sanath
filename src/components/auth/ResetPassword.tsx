@@ -114,7 +114,7 @@ export default function ResetPasswordForm() {
                   <EyeInvisibleOutlined className="text-gray-400" />
                 )
               }
-              className="!rounded-lg !border-gray-200 hover:!border-[#1a3c6e] focus:!border-[#1a3c6e]"
+              className="!rounded-lg !border-gray-200 hover:!border-[#1a3c6e] focus:!border-[#1a3c6e] !bg-gray-50/50"
             />
           </Form.Item>
 
@@ -151,7 +151,7 @@ export default function ResetPasswordForm() {
                   <EyeInvisibleOutlined className="text-gray-400" />
                 )
               }
-              className="!rounded-lg !border-gray-200 hover:!border-[#1a3c6e] focus:!border-[#1a3c6e]"
+              className="!rounded-lg !border-gray-200 hover:!border-[#1a3c6e] focus:!border-[#1a3c6e] !bg-gray-50/50"
             />
           </Form.Item>
 

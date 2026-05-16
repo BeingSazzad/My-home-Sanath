@@ -7,7 +7,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DashboardSidebar from "./dashboard-sidebar";
 
-const SIDEBAR_WIDTH = 260;
+const SIDEBAR_WIDTH = 300;
 const SIDEBAR_COLLAPSED_WIDTH = 72;
 
 export default function DashboardLayoutClient({
@@ -68,7 +68,7 @@ export default function DashboardLayoutClient({
                 placement="left"
                 open={mobileOpen}
                 onClose={() => setMobileOpen(false)}
-                width={SIDEBAR_WIDTH}
+                width={300}
                 styles={{ body: { padding: 0 }, header: { display: "none" } }}
                 className="lg:hidden"
             >
@@ -92,7 +92,7 @@ export default function DashboardLayoutClient({
                     </span>
                 </div>
 
-                <main className="flex-1 p-4 md:p-6 bg-[#F9FAFB]">
+                <main className="flex-1 p-6 md:p-8 bg-[#F9FAFB]">
                     {children}
                 </main>
             </div>

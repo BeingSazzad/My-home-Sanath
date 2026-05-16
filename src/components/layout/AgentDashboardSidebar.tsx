@@ -132,18 +132,6 @@ export default function AgentDashboardSidebar({
                     }}
                 />
 
-                {/* Logout Button */}
-                <div className="mt-auto border-t border-[#f0f0f0]">
-                    <Button
-                        type="text"
-                        icon={<LogoutOutlined className="text-red-500" />}
-                        onClick={handleLogOut}
-                        className={`w-full h-12 flex items-center gap-2 text-red-500 hover:text-red-600 font-medium text-sm rounded-none ${collapsed ? "justify-center pl-0" : "justify-start pl-6"
-                            }`}
-                    >
-                        {!collapsed && "Log Out"}
-                    </Button>
-                </div>
             </div>
         </Sider>
     );

@@ -106,3 +106,27 @@ body {
 .swiper-pagination-bullet-active {
   background-color: #f5a623;
 }
+/* Global Autofill fix to remove blue background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: inherit !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Remove Ant Design default blue focus shadow */
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
+    border-color: #1a3c6e !important;
+}
+
+/* Force background color on all inputs to avoid browser blue */
+input {
+    background-color: transparent !important;
+}
+

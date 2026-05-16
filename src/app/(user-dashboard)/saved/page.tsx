@@ -45,10 +45,10 @@ export default function SavedPage() {
   ];
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#1a3c6e] mb-2">My Saved Items</h1>
-        <p className="text-gray-500">Manage your saved properties and search alerts in one place.</p>
+    <div className="max-w-7xl">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-[#1a3c6e] mb-1">Saved</h1>
+        <p className="text-gray-500 text-sm">Manage your saved properties and search alerts.</p>
       </div>
 
       <Tabs

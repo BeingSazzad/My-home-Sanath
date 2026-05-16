@@ -253,7 +253,7 @@ export default function NotificationsPage() {
               border: unreadCount !== 0 ? "1px solid blue" : "1px solid gray",
             }}
           >
-            Read all
+            Mark all as read
           </Button>
         </div>
 

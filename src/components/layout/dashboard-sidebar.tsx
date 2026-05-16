@@ -34,10 +34,10 @@ export default function DashboardSidebar({
   }, [pathname]);
 
   const menuItems = [
-    { key: "saved", icon: <Heart size={18} />, label: "My Saved" },
+    { key: "profile", icon: <User size={18} />, label: "Personal Information" },
+    { key: "saved", icon: <Heart size={18} />, label: "Saved" },
     { key: "enquiries", icon: <Send size={18} />, label: "My Enquiries" },
     { key: "user-notifications", icon: <Bell size={18} />, label: "Alerts & Notifications" },
-    { key: "profile", icon: <User size={18} />, label: "Personal Information" },
     { key: "password-security", icon: <Lock size={18} />, label: "Password & Security" },
   ];
 
@@ -87,7 +87,7 @@ export default function DashboardSidebar({
       collapsible
       collapsed={collapsed}
       onCollapse={handleSetQuery}
-      width={260}
+      width={300}
       collapsedWidth={72}
       trigger={null}
       className="bg-white! border-r border-[#f0f0f0] h-[90vh] relative left-0 bottom-0 z-10 flex flex-col overflow-y-auto"
@@ -115,18 +115,6 @@ export default function DashboardSidebar({
           }}
         />
 
-        {/* Logout Button */}
-        <div className="mt-auto border-t border-[#f0f0f0]">
-          <Button
-            type="text"
-            icon={<LogOut size={18} className="text-red-500" />}
-            onClick={handleLogOut}
-            className={`w-full h-12 flex items-center gap-2 text-red-500 hover:text-red-600 font-bold text-sm rounded-none ${collapsed ? "justify-center pl-0" : "justify-start pl-6"
-              }`}
-          >
-            {!collapsed && "Sign Out"}
-          </Button>
-        </div>
       </div>
     </Sider>
   );

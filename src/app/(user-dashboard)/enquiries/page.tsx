@@ -24,10 +24,11 @@ const MOCK_ENQUIRIES: any[] = [
 
 export default function MyEnquiriesPage() {
     return (
-        <div className="">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-5">
-                My Enquiries
-            </h2>
+        <div className="max-w-7xl">
+            <div className="mb-6">
+                <h1 className="text-2xl font-bold text-[#1a3c6e] mb-1">My Enquiries</h1>
+                <p className="text-gray-500 text-sm">Track and manage your property enquiries.</p>
+            </div>
             <EnquiryList initialData={MOCK_ENQUIRIES} />
         </div>
     );

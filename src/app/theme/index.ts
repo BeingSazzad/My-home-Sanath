@@ -8,14 +8,13 @@ export const mainTheme = {
     components: {
         Input: {
             borderRadius: 12,
-            colorBorder: "#404040",
-            colorPrimaryBg: "#121212",
-            colorText: "#757575",
+            colorBorder: "#d9d9d9",
+            colorPrimaryBg: "#ffffff",
+            colorText: "#1f2937",
             inputFontSize: 16,
-            // activeBg: "#989898",
-            colorBgBlur: "#989898",
-            colorTextPlaceholder: "#757575 ",
-            colorBgContainer: "rgba(255,255,255,.1)",
+            colorBgBlur: "#ffffff",
+            colorTextPlaceholder: "#9ca3af",
+            colorBgContainer: "#ffffff",
         },
 
         Modal: {

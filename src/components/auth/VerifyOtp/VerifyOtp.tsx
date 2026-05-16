@@ -105,7 +105,7 @@ export default function VerifyOtpForm() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-[#0f2d5e] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-          <SafetyCertificateOutlined className="text-white text-3xl" />
+          <SafetyCertificateOutlined className="!text-white text-3xl" style={{ color: 'white' }} />
         </div>
         <h2 className="text-2xl font-extrabold text-[#0f2d5e]">Verify OTP</h2>
         <p className="text-gray-500 mt-2 text-sm leading-relaxed max-w-sm mx-auto">
@@ -143,8 +143,8 @@ export default function VerifyOtpForm() {
                   className={`
                     w-11 h-12 sm:w-12 sm:h-13 text-center text-lg font-bold rounded-xl border-2 outline-none
                     transition-all duration-200 bg-gray-50
-                    ${digit ? "border-[#1a3c6e] bg-blue-50 text-[#1a3c6e]" : "border-gray-200 text-gray-800"}
-                    focus:border-[#1a3c6e] focus:bg-blue-50 focus:ring-2 focus:ring-blue-100
+                    ${digit ? "border-[#1a3c6e] bg-gray-50 text-[#1a3c6e]" : "border-gray-200 text-gray-800"}
+                    focus:border-[#1a3c6e] focus:bg-gray-50 focus:ring-2 focus:ring-gray-100
                     disabled:opacity-40 disabled:cursor-not-allowed
                   `}
                 />

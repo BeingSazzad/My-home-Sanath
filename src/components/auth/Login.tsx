@@ -108,9 +108,9 @@ export default function LoginForm() {
           <Form.Item 
             name="password" 
             label={
-              <div className="w-full flex justify-between items-center">
+              <div className="flex justify-between items-center w-full">
                 <span className="text-sm font-bold text-[#1a3c6e]">Password</span>
-                <Link href="/auth/forget-password" size="small" className="text-xs text-gray-400 hover:text-[#1a3c6e] font-medium transition-colors">
+                <Link href="/auth/forget-password" className="text-xs text-gray-400 hover:text-[#1a3c6e] font-medium transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -143,7 +143,7 @@ export default function LoginForm() {
         </div>
 
         <p className="text-center text-[15px] text-gray-500">
-          New to MyHome?{" "}
+          New here?{" "}
           <Link href="/auth/signup" className="text-[#1a3c6e] font-bold hover:underline">
             Create an account
           </Link>
@@ -160,13 +160,20 @@ export default function LoginForm() {
           border-radius: 10px !important;
         }
         .role-segmented .ant-segmented-thumb {
-            background: white !important;
-            box-shadow: 0 4px 12px rgba(26, 60, 110, 0.08) !important;
-            border-radius: 10px !important;
+          background: white !important;
+          box-shadow: 0 4px 12px rgba(26, 60, 110, 0.08) !important;
+          border-radius: 10px !important;
+        }
+        /* Full width labels for right alignment */
+        .ant-form-item-label {
+          width: 100% !important;
+          padding: 0 !important;
+        }
+        .ant-form-item-label > label {
+          width: 100% !important;
+          display: block !important;
         }
       `}</style>
     </div>
-  );
-}
   );
 }

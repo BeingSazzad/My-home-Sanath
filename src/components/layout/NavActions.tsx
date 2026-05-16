@@ -14,10 +14,8 @@ export default function NavActions() {
     const { user } = useSelector((state: any) => state.auth);
     
     // Check if we are on a dashboard-related route
-    const isDashboard = pathname.includes('/analytics') || 
-                        pathname.includes('/saved-search') || 
-                        pathname.includes('/profile') || 
-                        pathname.includes('/save-properties');
+    const dashboardRoutes = ['/analytics', '/saved', '/profile', '/enquiries', '/user-notifications', '/password-security', '/overview', '/my-listing', '/agent-enquiries', '/subscription', '/agency-profile', '/security'];
+    const isDashboard = dashboardRoutes.some(route => pathname.includes(route));
                         
     const isLoggedIn = !!user || isDashboard;
 
@@ -32,16 +30,20 @@ export default function NavActions() {
             label: <Link href="/profile" className="font-medium">My Profile</Link> 
         },
         { type: "divider" },
-        {
+        ...(!isDashboard ? [{
             key: "dashboard", 
             icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
             label: (
-                <Link href="/analytics" className="font-bold text-[#1a3c6e]">
-                    Agent Dashboard
+                <Link 
+                    href={user?.user?.role === "Agent" ? "/analytics" : "/saved"} 
+                    className="font-bold text-[#1a3c6e]"
+                >
+                    {user?.user?.role === "Agent" ? "Agent Dashboard" : "User Dashboard"}
                 </Link>
             ),
         },
-        { type: "divider" },
+        { type: "divider" }] : []),
+
         { 
             key: "logout", 
             icon: <LogOut size={16} />,
@@ -65,10 +67,12 @@ export default function NavActions() {
                 <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
                     <div className="flex items-center gap-3 cursor-pointer group">
                         <div className="text-right hidden xl:block">
-                            <p className="text-[14px] font-bold text-[#1a3c6e] leading-none mb-1">Westfert Admin</p>
+                            <p className="text-[14px] font-bold text-[#1a3c6e] leading-none mb-1">
+                                {user?.user?.name || user?.user?.email?.split("@")[0] || "My Account"}
+                            </p>
                             <div className="flex justify-end">
                                 <span className="text-[10px] bg-[#1a3c6e]/5 text-[#1a3c6e] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
-                                    Agent
+                                    {user?.user?.role || "User"}
                                 </span>
                             </div>
                         </div>

@@ -93,7 +93,7 @@ export default function ForgotPasswordForm() {
               prefix={<MailOutlined className="text-gray-400" />}
               placeholder="your.email@example.com"
               size="large"
-              className="!rounded-lg !border-gray-200 hover:!border-[#1a3c6e] focus:!border-[#1a3c6e]"
+              className="!rounded-lg !border-gray-200 hover:!border-[#1a3c6e] focus:!border-[#1a3c6e] !bg-gray-50/50"
             />
           </Form.Item>
 
