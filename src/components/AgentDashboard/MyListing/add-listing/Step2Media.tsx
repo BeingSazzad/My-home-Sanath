@@ -361,6 +361,17 @@ export default function Step2Media({ data, onChange }: Step2Props) {
                 existingUrls={data.existingFloorPlan}
                 onExistingUrlsChange={(urls) => onChange({ existingFloorPlan: urls })}
             />
+            <MediaUploadBox
+                label="Brochures & Documents"
+                icon={<LinkOutlined />}
+                type="document"
+                accept=".pdf,.doc,.docx"
+                multiple
+                newFiles={data.brochures}
+                onNewFilesChange={(files) => onChange({ brochures: files })}
+                existingUrls={data.existingBrochures}
+                onExistingUrlsChange={(urls) => onChange({ existingBrochures: urls })}
+            />
         </div>
     );
 }

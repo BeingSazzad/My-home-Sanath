@@ -1,4 +1,4 @@
-export type ListingStatus = "active" | "draft" | "closed" | "let agreed" | "sold";
+export type ListingStatus = "active" | "draft" | "closed" | "sold";
 
 export interface Listing {
     id: string;
@@ -8,6 +8,7 @@ export interface Listing {
     views: number;
     status: ListingStatus;
     image: string;
+    listingType: "for-sale" | "to-rent";
 }
 
 export interface ListingFormData {
@@ -19,10 +20,16 @@ export interface ListingFormData {
     country: string;
     city: string;
     streetAddress: string;
-    // Step 2
+    // Step 2 — new uploads
     photos: File[];
     videos: File[];
     floorPlan: File[];
+    brochures: File[];
+    // Step 2 — existing server URLs (for edit mode)
+    existingPhotos: string[];
+    existingVideos: string[];
+    existingFloorPlan: string[];
+    existingBrochures: string[];
     // Step 3
     propertyType: string;
     beds: string;
@@ -48,6 +55,7 @@ export interface ListingDetail {
     images: string[];
     videos?: string[];
     floorPlans?: string[];
+    brochures?: string[];
     listingType: "for-sale" | "to-rent";
     // Step 3
     propertyType: string;

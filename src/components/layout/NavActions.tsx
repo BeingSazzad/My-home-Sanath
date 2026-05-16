@@ -47,26 +47,6 @@ export default function NavActions() {
         },
         { type: "divider" as const },
         ...(isAgent ? [
-            {
-                key: "agent-overview",
-                icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
-                label: <Link href="/overview" className="font-bold text-[#1a3c6e]">Agent Overview</Link>,
-            },
-            {
-                key: "agent-listings",
-                icon: <House size={16} />,
-                label: <Link href="/my-listing" className="font-medium">My Listings / Publish</Link>,
-            },
-            {
-                key: "agent-enquiries",
-                icon: <MessageSquare size={16} />,
-                label: <Link href="/agent-enquiries" className="font-medium">Agent Enquiries</Link>,
-            },
-            {
-                key: "agent-subscription",
-                icon: <Wallet size={16} />,
-                label: <Link href="/subscription" className="font-medium">Subscription</Link>,
-            },
             { type: "divider" as const },
         ] : !isDashboard ? [
             {

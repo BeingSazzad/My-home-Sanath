@@ -1,10 +1,10 @@
 "use client";
 
-
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 import DashboardSidebar from "./dashboard-sidebar";
 import DashboardBackButton from "./DashboardBackButton";
 
@@ -19,6 +19,8 @@ export default function DashboardLayoutClient({
     searchParams: Record<string, string | string[]>;
 }) {
     const router = useRouter();
+    const { user } = useSelector((state: any) => state.auth);
+    const displayName = user?.user?.name || user?.user?.email?.split("@")[0] || "My Account";
 
     const [collapsed, setCollapsed] = useState(
         searchParams?.collapsed === "true"
@@ -89,7 +91,7 @@ export default function DashboardLayoutClient({
                         onClick={() => setMobileOpen(true)}
                     />
                     <span className="font-semibold text-gray-800 text-sm">
-                        Westfert
+                        {displayName}
                     </span>
                 </div>
 

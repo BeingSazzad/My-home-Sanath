@@ -86,7 +86,7 @@ export default function MyListingsPage() {
       <div className="">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-[#1a3c6e]">My Properties</h1>
+          <h1 className="text-3xl font-bold mb-6" style={{ color: "#1a3c6e" }}>My Properties</h1>
           <Button
             type="primary"
             size="large"
@@ -186,7 +186,8 @@ export const MOCK_LISTINGS: Listing[] = [
     address: "42 Kensington Park Road",
     price: "£1.3m",
     views: 1245,
-    status: "active",
+    status: "sold",
+    listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=120&h=80&fit=crop",
   },
   {
@@ -196,6 +197,7 @@ export const MOCK_LISTINGS: Listing[] = [
     price: "£2.1m",
     views: 912,
     status: "active",
+    listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=120&h=80&fit=crop",
   },
   {
@@ -205,6 +207,7 @@ export const MOCK_LISTINGS: Listing[] = [
     price: "£675k",
     views: 675,
     status: "draft",
+    listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=120&h=80&fit=crop",
   },
   {
@@ -213,7 +216,8 @@ export const MOCK_LISTINGS: Listing[] = [
     address: "15 Deansgate Square",
     price: "£2k",
     views: 389,
-    status: "let agreed",
+    status: "active",
+    listingType: "to-rent",
     image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=120&h=80&fit=crop",
   },
 ];
@@ -236,6 +240,7 @@ export const MOCK_LISTING_DETAILS: ListingDetail[] = [
     ],
     videos: ["https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4"],
     floorPlans: ["https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=1000&fit=crop"],
+    brochures: ["/sample-brochure.pdf"],
     propertyType: "Terraced",
     beds: 5,
     baths: 3,

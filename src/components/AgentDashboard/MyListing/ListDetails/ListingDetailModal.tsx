@@ -12,6 +12,8 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   FileImageOutlined,
+  DownloadOutlined,
+  FileTextOutlined,
 } from "@ant-design/icons";
 import { Modal, Skeleton, Tag, Button } from "antd";
 import { useState } from "react";
@@ -239,6 +241,37 @@ export default function ListingDetailModal({ listingId, open, onClose }: Listing
                     <div className="absolute bottom-0 left-0 right-0 p-2 bg-white/90 backdrop-blur-sm border-t border-gray-100 text-[10px] font-bold text-[#1a3c6e] text-center">
                       <FileImageOutlined className="mr-1" /> FLOOR PLAN {idx + 1}
                     </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* Brochures */}
+          {detail.brochures && detail.brochures.length > 0 && (
+            <Section title="Brochures & Documents">
+              <div className="flex flex-col gap-2">
+                {detail.brochures.map((doc, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 group">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center shrink-0">
+                        <FileTextOutlined className="text-lg" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-900 truncate max-w-[200px]">
+                          Property Brochure {idx + 1}.pdf
+                        </p>
+                        <p className="text-[10px] text-gray-500">PDF Document</p>
+                      </div>
+                    </div>
+                    <Button 
+                      icon={<DownloadOutlined />} 
+                      type="link" 
+                      className="text-[#1a3c6e] hover:text-[#14b8a6]"
+                      onClick={() => window.open(doc, '_blank')}
+                    >
+                      Download
+                    </Button>
                   </div>
                 ))}
               </div>

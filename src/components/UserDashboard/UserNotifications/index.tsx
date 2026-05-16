@@ -180,6 +180,7 @@ const NotificationSettings = ({ onBack }: { onBack: () => void }) => {
 
 const UserNotifications = () => {
   const [showSettings, setShowSettings] = useState(false);
+  const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
   if (showSettings) {
     return (
@@ -197,7 +198,10 @@ const UserNotifications = () => {
           <p className="text-gray-500 text-sm mt-1">Stay updated with your property activity</p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="text-sm font-bold text-[#0f2d5e] hover:underline">
+          <button
+            className="text-sm font-bold text-[#0f2d5e] hover:underline"
+            onClick={() => setNotifications(prev => prev.map(n => ({ ...n, isUnread: false })))}
+          >
             Mark all as read
           </button>
           <button
@@ -211,7 +215,7 @@ const UserNotifications = () => {
       </div>
 
       <div className="space-y-4">
-        {NOTIFICATIONS.map(item => (
+        {notifications.map(item => (
           <div
             key={item.id}
             className={`group relative flex gap-4 p-4 rounded-2xl border transition-all cursor-pointer hover:shadow-md ${

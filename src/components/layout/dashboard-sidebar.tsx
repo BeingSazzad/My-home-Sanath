@@ -3,18 +3,17 @@
 import useBaseUrl from "@/hooks/useBaseUrl";
 import {
   LeftOutlined,
-  LogoutOutlined,
   RightOutlined
 } from "@ant-design/icons";
-import { Heart, Search, Send, User, Lock, Settings } from "lucide-react";
-import { Avatar, Button, Layout, Menu, Tag, Typography } from "antd";
+import { Heart, Send, User, Lock, Settings, LogOut } from "lucide-react";
+import { Layout, Menu } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/feature/auth/authSlice";
 
 const { Sider } = Layout;
-const { Text } = Typography;
 
 interface DashboardSidebarProps {
   collapsed?: boolean;
@@ -25,64 +24,41 @@ export default function DashboardSidebar({
   collapsed = false,
   onCollapse,
 }: DashboardSidebarProps) {
-  const [selectedKey, setSelectedKey] = useState("analytics");
+  const [selectedKey, setSelectedKey] = useState("saved");
   const router = useRouter();
   const pathname = usePathname();
-  const baseUrl = useBaseUrl();
+  const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.auth);
+
   const userData = user?.user;
+  const displayName = userData?.name || userData?.email?.split("@")[0] || "My Account";
+  const initials = displayName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
 
   useEffect(() => {
-    setSelectedKey(pathname.split("/")[1] || "analytics");
+    const segment = pathname.split("/").filter(Boolean).pop() || "saved";
+    setSelectedKey(segment);
   }, [pathname]);
 
   const menuItems = [
     { key: "saved", icon: <Heart size={18} />, label: "Saved" },
     { key: "enquiries", icon: <Send size={18} />, label: "My Enquiries" },
     { key: "profile", icon: <User size={18} />, label: "Personal Information" },
-    { type: "divider" as const },
     { key: "notification-settings", icon: <Settings size={18} />, label: "Notification Settings" },
     { key: "password-security", icon: <Lock size={18} />, label: "Password & Security" },
+    { type: "divider" as const },
+    { key: "logout", icon: <LogOut size={18} />, label: "Log out", danger: true },
   ];
 
-  const handleSetQuery = (value: boolean) => {
-    const params = new URLSearchParams(window.location.search);
-
-    params.set("collapsed", String(value));
-
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
-
   const handleLogOut = () => {
-    toast.warning("Are you sure you want to log out?", {
-      duration: 5000,
-      description: "You will be logged out and redirected to the login page.",
-      action: {
-        label: "Logout",
-        onClick: async () => {
-          try {
-            await toast.promise(
-              fetch(`${baseUrl}/api/auth/logout`, {
-                method: "POST",
-                credentials: "include",
-              }).then(async (res) => {
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.message || "Logout failed");
-                return data.message;
-              }),
-              {
-                loading: "Logging out...",
-                success: (msg) => <b>{msg}</b>,
-                error: (err) => err.message || "Logout failed",
-              }
-            );
-            router.push("/auth/login");
-          } catch (error) {
-            console.error("Unexpected logout error:", error);
-            toast.error("Something went wrong during logout");
-          }
+    toast("Are you sure you want to log out?", {
+        description: "You will need to sign in again to access your dashboard.",
+        action: {
+            label: "Logout",
+            onClick: () => {
+                dispatch(logout());
+                router.push("/auth/login");
+            },
         },
-      },
     });
   };
 
@@ -90,56 +66,57 @@ export default function DashboardSidebar({
     <Sider
       collapsible
       collapsed={collapsed}
-      onCollapse={handleSetQuery}
-      width={300}
-      collapsedWidth={72}
+      onCollapse={onCollapse}
+      width={280}
+      collapsedWidth={80}
       trigger={null}
-      className="bg-white! border-r border-[#f0f0f0] h-[90vh] relative left-0 bottom-0 z-10 flex flex-col overflow-y-auto"
+      theme="light"
+      className="!bg-white border-r border-slate-100 h-screen sticky top-0 left-0 z-20 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
     >
       {/* User Profile Header */}
-      <div
-        className={`flex items-center gap-3 transition-all duration-300 border-b border-gray-100 ${collapsed ? "py-6 px-4 justify-center" : "py-7 px-6"
-          }`}
-      >
-        <div className="flex items-center gap-3 overflow-hidden">
-          <Avatar
-            size={collapsed ? 40 : 48}
-            className="bg-[#1a3c6e]/5 text-[#1a3c6e] font-bold shrink-0 border border-[#1a3c6e]/10 shadow-sm"
-          >
-            {userData?.name ? userData.name.split(" ").map((n: string) => n[0]).join("").toUpperCase() : "U"}
-          </Avatar>
-          {!collapsed && (
-            <div className="flex flex-col min-w-0">
-              <Text className="text-[10px] font-bold text-[#1a3c6e] uppercase tracking-wider mb-0.5">User Dashboard</Text>
+      {!collapsed ? (
+        <div className="px-5 py-4 border-b border-slate-100">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0f2d5e] to-[#255099] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              {initials}
             </div>
-          )}
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-gray-900 truncate">{displayName}</p>
+              <p className="text-[11px] text-[#1a3c6e] font-semibold uppercase tracking-wider">User Dashboard</p>
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center py-4 border-b border-slate-100">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#0f2d5e] to-[#255099] flex items-center justify-center text-white font-bold text-xs">
+            {initials}
+          </div>
+        </div>
+      )}
 
-      {/* Sidebar Toggle Only */}
-      <div className={`flex items-center ${collapsed ? "justify-center py-4" : "justify-end p-4"} border-b border-[#f0f0f0]`}>
-        <Button
-          type="text"
-          icon={collapsed ? <RightOutlined /> : <LeftOutlined />}
-          onClick={() => onCollapse?.(!collapsed)}
-          className="text-[#6b7280] text-base hover:bg-gray-50 rounded-lg h-9 w-9 flex items-center justify-center p-0"
-        />
-      </div>
-
-      {/* Main Menu */}
-      <div className="flex-1 overflow-y-auto flex flex-col h-[calc(90vh-160px)]">
+      <div className="flex-1 py-4 flex flex-col justify-between">
         <Menu
           mode="inline"
           selectedKeys={[selectedKey]}
           items={menuItems}
-          inlineIndent={16}
-          className="border-none! text-sm font-medium py-2 "
+          inlineIndent={20}
+          className="!border-none text-[14px] font-medium"
           onClick={({ key }) => {
-            router.push(`/${key}`);
+            if (key === "logout") {
+              handleLogOut();
+            } else {
+              router.push(`/${key}`);
+            }
           }}
         />
-
       </div>
+
+      <button
+        onClick={() => onCollapse?.(!collapsed)}
+        className="absolute -right-3 top-20 bg-white border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center shadow-md text-slate-400 hover:text-[#1a3c6e] transition-colors z-30"
+      >
+        {collapsed ? <RightOutlined style={{ fontSize: 10 }} /> : <LeftOutlined style={{ fontSize: 10 }} />}
+      </button>
     </Sider>
   );
 }

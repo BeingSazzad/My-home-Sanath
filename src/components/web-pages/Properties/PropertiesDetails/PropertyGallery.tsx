@@ -87,6 +87,10 @@ export const PropertyGallery = () => {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all" />
+            <div className="absolute top-4 left-4 z-10 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-[11px] font-bold flex items-center gap-1.5 border border-white/10">
+                <Camera size={12} />
+                <span>1 / {galleryImages.length}</span>
+            </div>
             <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-xs font-bold text-[#1a3c6e] opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 flex items-center gap-2">
                 <Maximize size={14} /> View Gallery
             </div>

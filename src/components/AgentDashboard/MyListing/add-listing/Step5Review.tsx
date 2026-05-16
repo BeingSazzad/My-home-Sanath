@@ -23,7 +23,7 @@ function getChecklist(data: ListingFormData): ChecklistItem[] {
         },
         {
             label: "Photos & Media",
-            isComplete: data.photos?.length > 0,
+            isComplete: data.photos?.length > 0 || data.existingPhotos?.length > 0,
         },
         {
             label: "Property Information",
@@ -45,7 +45,7 @@ export default function Step5Review({ data, onChange }: Step5Props) {
             <div className="border border-gray-200 rounded-lg overflow-hidden">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
                     <h3 className="font-semibold text-gray-900">Listing Checklist</h3>
-                    <span className="text-[#0d9488] font-medium text-sm">
+                    <span className="text-[#1a3c6e] font-medium text-sm">
                         {completeCount}/{checklist.length} complete
                     </span>
                 </div>
@@ -53,10 +53,7 @@ export default function Step5Review({ data, onChange }: Step5Props) {
                     {checklist.map((item) => (
                         <div key={item.label} className="flex items-center justify-between px-5 py-3">
                             <span className="text-gray-700 text-sm">{item.label}</span>
-                            <span
-                                className={`text-sm font-medium ${item.isComplete ? "text-[#0d9488]" : "text-amber-500"
-                                    }`}
-                            >
+                            <span className={`text-sm font-medium ${item.isComplete ? "text-[#1a3c6e]" : "text-amber-500"}`}>
                                 {item.isComplete ? "Complete" : "Missing"}
                             </span>
                         </div>
@@ -65,15 +62,17 @@ export default function Step5Review({ data, onChange }: Step5Props) {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Publish Status</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Property Status</label>
                 <Select
                     size="large"
-                    className="w-full"
-                    value={data.publishStatus || "Active"}
+                    className="w-full custom-select"
+                    value={data.publishStatus || "active"}
                     onChange={(val) => onChange({ publishStatus: val })}
                 >
-                    <Option value="Active">Active</Option>
-                    <Option value="Draft">Draft</Option>
+                    <Option value="active">Active</Option>
+                    <Option value="draft">Draft</Option>
+                    <Option value="sold">Sold</Option>
+                    <Option value="closed">Closed</Option>
                 </Select>
             </div>
         </div>

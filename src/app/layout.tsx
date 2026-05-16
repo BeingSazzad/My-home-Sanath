@@ -2,9 +2,6 @@ import '@ant-design/v5-patch-for-react-19';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
-
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
 import { ConfigProvider } from "antd";
 import './globals.css';
 import { mainTheme } from "./theme";
@@ -31,10 +28,8 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased inter`} suppressHydrationWarning>
         <ReduxProvider>
           <ConfigProvider theme={mainTheme} wave={{ disabled: true }}>          
-              <Navbar />
               <Toaster position="top-right" duration={1500} />
               {children}
-              <Footer />          
           </ConfigProvider>
         </ReduxProvider>
       </body>

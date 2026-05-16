@@ -52,6 +52,8 @@ export const PropertyContent = () => {
         </div>
       </div>
 
+
+
       {/* Description */}
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-3">Property Description</h3>
@@ -78,6 +80,8 @@ export const PropertyContent = () => {
           ))}
         </div>
       </div>
+
+
 
       {/* Property Information Table */}
       <div>

@@ -1,19 +1,17 @@
 "use client";
 
-import useBaseUrl from "@/hooks/useBaseUrl";
 import {
     LeftOutlined,
     RightOutlined
 } from "@ant-design/icons";
-import { Avatar, Button, Layout, Menu, Tag, Typography } from "antd";
-import { 
-    LayoutDashboard, 
-    House, 
-    Mail, 
-    CreditCard, 
-    UserCog, 
-    ShieldCheck,
-    LogOut 
+import { Layout, Menu } from "antd";
+import {
+    LayoutDashboard,
+    House,
+    Mail,
+    CreditCard,
+    UserCog,
+    LogOut
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/feature/auth/authSlice";
 
 const { Sider } = Layout;
-const { Text } = Typography;
 
 interface AgentDashboardSidebarProps {
     collapsed?: boolean;
@@ -36,14 +33,11 @@ export default function AgentDashboardSidebar({
     const [selectedKey, setSelectedKey] = useState("overview");
     const router = useRouter();
     const pathname = usePathname();
-    const baseUrl = useBaseUrl();
     const dispatch = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
     
     const userData = user?.user;
-    const subscription = userData?.subscription;
-    const planName = subscription?.status === "active" ? subscription.planName : "No Active Plan";
-    const initials = userData?.name ? userData.name.split(" ").map((n: string) => n[0]).join("").toUpperCase() : "AG";
+    const initials = userData?.name ? userData.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : "AG";
 
     useEffect(() => {
         // More robust path matching
@@ -52,11 +46,13 @@ export default function AgentDashboardSidebar({
     }, [pathname]);
 
     const menuItems = [
-        { key: "overview", icon: <LayoutDashboard size={18} />, label: "Overview" },
+        { key: "overview", icon: <LayoutDashboard size={18} />, label: "Agent Overview" },
         { key: "my-listing", icon: <House size={18} />, label: "My Properties" },
-        { key: "agent-enquiries", icon: <Mail size={18} />, label: "Enquiries" },
-        { key: "subscription", icon: <CreditCard size={18} />, label: "Subscription & Billing" },
+        { key: "agent-enquiries", icon: <Mail size={18} />, label: "Enquiries Inbox" },
+        { key: "subscription", icon: <CreditCard size={18} />, label: "Subscription" },
         { key: "agency-profile", icon: <UserCog size={18} />, label: "Agency Profile" },
+        { type: "divider" as const },
+        { key: "logout", icon: <LogOut size={18} />, label: "Log out", danger: true },
     ];
 
     const handleLogOut = () => {
@@ -83,31 +79,28 @@ export default function AgentDashboardSidebar({
             theme="light"
             className="!bg-white border-r border-slate-100 h-screen sticky top-0 left-0 z-20 flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
         >
-            {/* User Profile Header */}
-            <div
-                className={`flex items-center gap-3 transition-all duration-300 border-b border-slate-50 ${
-                    collapsed ? "py-6 px-4 justify-center" : "py-7 px-6"
-                }`}
-            >
-                <div className="flex items-center gap-3 overflow-hidden">
-                    <Avatar
-                        size={collapsed ? 40 : 48}
-                        className="bg-[#1a3c6e]/5 text-[#1a3c6e] font-bold shrink-0 border border-[#1a3c6e]/10 shadow-sm"
-                    >
-                        {initials}
-                    </Avatar>
-                    {!collapsed && (
-                        <div className="flex flex-col min-w-0">
-                            <Text className="text-[10px] font-bold text-[#1a3c6e] uppercase tracking-wider mb-0.5">Agent Dashboard</Text>
-                            <div className="mt-1.5">
-                                <Tag className={`${subscription?.status === "active" ? "bg-[#1a3c6e]" : "bg-orange-500"} border-none text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0 rounded-md m-0 shadow-sm`}>
-                                    {planName}
-                                </Tag>
-                            </div>
-                        </div>
-                    )}
+            {/* Agent Profile Header */}
+            {!collapsed ? (
+              <div className="px-5 py-4 border-b border-slate-100">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0f2d5e] to-[#255099] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    {initials}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-gray-900 truncate">
+                      {userData?.name || userData?.email?.split("@")[0] || "Agent"}
+                    </p>
+                    <p className="text-[11px] text-[#1a3c6e] font-semibold uppercase tracking-wider">Agent Dashboard</p>
+                  </div>
                 </div>
-            </div>
+              </div>
+            ) : (
+              <div className="flex justify-center py-4 border-b border-slate-100">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#0f2d5e] to-[#255099] flex items-center justify-center text-white font-bold text-xs">
+                  {initials}
+                </div>
+              </div>
+            )}
 
             {/* Main Menu */}
             <div className="flex-1 py-4 flex flex-col justify-between">
@@ -118,7 +111,11 @@ export default function AgentDashboardSidebar({
                     inlineIndent={20}
                     className="!border-none text-[14px] font-medium"
                     onClick={({ key }) => {
-                        router.push(`/${key}`);
+                        if (key === "logout") {
+                            handleLogOut();
+                        } else {
+                            router.push(`/${key}`);
+                        }
                     }}
                 />
 

@@ -261,8 +261,8 @@ const FilterModal = ({ isOpen, onClose }: FilterModalProps) => {
         {/* Footer */}
         <div className="p-5 border-t border-gray-100 bg-white">
             <div className="flex gap-3">
-                <button 
-                    onClick={() => { setRadius(5); setBeds("2"); }}
+                <button
+                    onClick={() => { setRadius(5); setBeds("2"); setBaths("1"); setAddedDate("Any"); setActiveType("Detached"); }}
                     className="flex-1 h-11 rounded-lg font-semibold text-gray-500 hover:bg-gray-50 transition-all text-xs"
                 >
                     Reset

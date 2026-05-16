@@ -7,11 +7,7 @@ import {
   Typography,
   Space,
   Button,
-  Modal,
   Form,
-  Input,
-  Select,
-  DatePicker,
   message,
   Row,
   Col,
@@ -23,11 +19,9 @@ import dayjs from "dayjs";
 import EditProfileModal from "../Modal/EditProfileModal";
 import ChangePasswordModal from "../Modal/ChangePasswordModal";
 import { toast } from "sonner";
-import { useGetProfileQuery } from "@/redux/feature/auth/authApi";
 import Spinner from "../Spinner";
 
 const { Title, Text } = Typography;
-const { Option } = Select;
 
 interface ProfileData {
   name: string;
@@ -82,10 +76,10 @@ export default function ProfilePage() {
   };
 
   const profileFields = [
-    { label: "Name", value: 'profile?.name', key: "name" },
-    { label: "Position", value: 'profile?.designation', key: "position" },
-    { label: "Id. no", value: ' profile?.uid', key: "idNo" },
-    { label: "Email", value: 'profile?.email', key: "email" },
+    { label: "Name", value: profileData.name, key: "name" },
+    { label: "Position", value: profileData.position, key: "position" },
+    { label: "Id. no", value: profileData.idNo, key: "idNo" },
+    { label: "Email", value: profileData.email, key: "email" },
     {
       label: "Contact Number",
       value: profileData.contactNumber,

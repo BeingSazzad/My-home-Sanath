@@ -34,7 +34,7 @@ export const MOCK_LISTINGS: Listing[] = [
     address: "15 Deansgate Square",
     price: "£2k",
     views: 389,
-    status: "let agreed",
+    status: "closed",
     image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=120&h=80&fit=crop",
   },
 ];
@@ -127,7 +127,7 @@ export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
     address: "15 Deansgate Square, Manchester M3 4LZ",
     price: "£2,000 pcm",
     views: 389,
-    status: "let agreed",
+    status: "closed",
     listingType: "to-rent",
     images: [
       "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=500&fit=crop",

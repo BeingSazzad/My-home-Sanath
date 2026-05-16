@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 
 import { Card, Col, Row, Select, Typography, Avatar, Button } from "antd";
 import {
@@ -72,14 +73,22 @@ const tooltipStyle = {
 export default function OverviewsPage() {
     const router = useRouter();
     const { user } = useSelector((state: any) => state.auth);
-    const userRole = user?.user?.role || "Admin";
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const userRole = user?.user?.role || "Agent";
+
+    if (!mounted) return null;
 
     return (
         <div className="p-6 space-y-6">
             {/* Page Header */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div>
-                    <Title level={2} className="text-[#1a3c6e] mb-1 text-[28px]">
+                    <Title level={2} className="mb-1 text-[28px]" style={{ color: "#1a3c6e" }}>
                         Agent Dashboard
                     </Title>
                     <Text className="text-[#6b7280] text-sm">
@@ -143,7 +152,7 @@ export default function OverviewsPage() {
                     <Card
                         className="rounded-xl border border-[#f0f0f0] h-full shadow-sm cursor-pointer hover:shadow-md transition-all duration-300"
                         styles={{ body: { padding: 0 } }}
-                        onClick={() => router.push("/enquiries")}
+                        onClick={() => router.push("/agent-enquiries")}
                         title={
                             <div className="flex items-center justify-between py-1">
                                 <span className="font-semibold text-gray-800">Recent Enquiries</span>
@@ -152,7 +161,7 @@ export default function OverviewsPage() {
                                     className="text-[#1a3c6e] font-semibold p-0 hover:opacity-80"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        router.push("/enquiries");
+                                        router.push("/agent-enquiries");
                                     }}
                                 >
                                     View All

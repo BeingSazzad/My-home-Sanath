@@ -17,7 +17,6 @@ const STATUS_CONFIG: Record<ListingStatus, { label: string; classes: string }> =
   active: { label: "active", classes: "bg-green-50 text-green-700 border border-green-200" },
   draft: { label: "draft", classes: "bg-gray-100 text-gray-600 border border-gray-300" },
   closed: { label: "closed", classes: "bg-red-50 text-red-600 border border-red-200" },
-  "let agreed": { label: "let agreed", classes: "bg-blue-50 text-blue-700 border border-blue-200" },
   sold: { label: "sold", classes: "bg-purple-50 text-purple-700 border border-purple-200" },
 };
 
@@ -43,8 +42,9 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit }:
   return (
     <div className="w-full overflow-x-auto bg-white">
       {/* Table Header */}
-      <div className="min-w-[800px] grid grid-cols-[2.5fr_1fr_1fr_1.5fr_250px] gap-6 px-6 py-4 bg-gray-50/50 border-b border-gray-200 text-xs font-bold text-gray-600 uppercase tracking-wider">
+      <div className="min-w-[850px] grid grid-cols-[2fr_0.8fr_1fr_1fr_1fr_220px] gap-6 px-6 py-4 bg-gray-50/50 border-b border-gray-200 text-xs font-bold text-gray-600 uppercase tracking-wider">
         <span>Property</span>
+        <span className="text-center">Type</span>
         <span className="text-right">Price</span>
         <span className="text-right">Views</span>
         <span className="text-center">Status</span>
@@ -56,7 +56,7 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit }:
         {listings.map((listing) => (
           <div
             key={listing.id}
-            className="grid grid-cols-[2.5fr_1fr_1fr_1.5fr_250px] gap-6 px-6 py-5 items-center hover:bg-gray-50 transition-colors group"
+            className="grid grid-cols-[2fr_0.8fr_1fr_1fr_1fr_220px] gap-6 px-6 py-5 items-center hover:bg-gray-50 transition-colors group"
           >
             {/* Property */}
             <div className="flex items-center gap-4 min-w-0 pr-4">
@@ -68,7 +68,16 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit }:
                 <p className="text-[13px] text-gray-500 truncate">{listing.address}</p>
               </div>
             </div>
-
+            {/* Category/Type */}
+            <div className="flex justify-center">
+              <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight ${
+                listing.listingType === "for-sale" 
+                  ? "bg-amber-50 text-amber-700 border border-amber-100" 
+                  : "bg-indigo-50 text-indigo-700 border border-indigo-100"
+              }`}>
+                {listing.listingType === "for-sale" ? "Sale" : "Rent"}
+              </span>
+            </div>
             {/* Price */}
             <div className="text-right">
               <span className="text-[#1a3c6e] font-bold text-[15px]">{listing.price}</span>
