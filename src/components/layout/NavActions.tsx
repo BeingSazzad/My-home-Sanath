@@ -106,13 +106,15 @@ export default function NavActions() {
                     </Badge>
                 </Popover>
 
-                <Link href={isAgent ? "/overview" : "/saved"} className="flex items-center cursor-pointer group">
-                    <Avatar
-                        size={44}
-                        src="/images/customer.png"
-                        className="border-2 border-white ring-2 ring-[#1a3c6e]/10 group-hover:ring-[#1a3c6e]/30 transition-all shadow-sm"
-                    />
-                </Link>
+                <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} placement="bottomRight">
+                    <div className="flex items-center cursor-pointer group">
+                        <Avatar
+                            size={44}
+                            src="/images/customer.png"
+                            className="border-2 border-white ring-2 ring-[#1a3c6e]/10 group-hover:ring-[#1a3c6e]/30 transition-all shadow-sm"
+                        />
+                    </div>
+                </Dropdown>
             </div>
         );
     }

@@ -4,25 +4,23 @@ import {
     LeftOutlined,
     RightOutlined
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Avatar, Dropdown } from "antd";
 import {
     LayoutDashboard,
     House,
     Mail,
     CreditCard,
     LogOut,
-    Bell,
     Settings,
     UserCog,
     User
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/redux/feature/auth/authSlice";
 
-const { Sider } = Layout;
+const Sider = Layout.Sider;
 
 interface AgentDashboardSidebarProps {
     collapsed?: boolean;
@@ -37,6 +35,7 @@ export default function AgentDashboardSidebar({
     const router = useRouter();
     const pathname = usePathname();
     const dispatch = useDispatch();
+    const { user } = useSelector((state: any) => state.auth);
     
     useEffect(() => {
         const segment = pathname.split("/").filter(Boolean).pop() || "overview";
@@ -52,14 +51,30 @@ export default function AgentDashboardSidebar({
         { key: "agency-profile", icon: <UserCog size={18} />, label: "Profile" },
     ];
 
-    const bottomMenuItems = [
-        { key: "logout", icon: <LogOut size={18} />, label: "Log out", danger: true },
-    ];
-
     const handleLogOut = () => {
         dispatch(logout());
         router.push("/auth/login");
     };
+
+    const displayName = user?.user?.name || "Agent Name";
+    const displayRole = user?.user?.role || "Agent";
+
+    const logoutMenuItems = [
+        {
+            key: "profile",
+            icon: <User size={16} />,
+            label: <span className="font-medium">View Profile</span>,
+            onClick: () => router.push("/agency-profile")
+        },
+        { type: "divider" as const },
+        {
+            key: "logout",
+            icon: <LogOut size={16} />,
+            label: <span className="font-bold text-red-600">Log out</span>,
+            danger: true,
+            onClick: handleLogOut
+        }
+    ];
 
     return (
         <>
@@ -91,19 +106,31 @@ export default function AgentDashboardSidebar({
                         router.push(`/${key}`);
                     }}
                 />
-                <div className="border-t border-gray-100 pt-2 pb-2">
-                    <Menu
-                        mode="inline"
-                        selectable={false}
-                        items={bottomMenuItems}
-                        inlineIndent={20}
-                        className="!border-none text-[14px] font-medium"
-                        onClick={({ key }) => {
-                            if (key === "logout") {
-                                handleLogOut();
-                            }
-                        }}
-                    />
+                <div className="border-t border-gray-100 p-4">
+                    <Dropdown 
+                        menu={{ items: logoutMenuItems }} 
+                        trigger={['click']} 
+                        placement="topRight"
+                        overlayClassName="min-w-[200px]"
+                    >
+                        <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 cursor-pointer transition-all border border-transparent hover:border-gray-100 animate-in fade-in duration-300">
+                            <Avatar 
+                                size={40} 
+                                src="/images/customer.png" 
+                                className="border border-gray-200 shadow-sm shrink-0"
+                            />
+                            {!collapsed && (
+                                <div className="flex-1 min-w-0 text-left">
+                                    <p className="text-sm font-bold text-gray-800 truncate m-0 leading-tight">
+                                        {displayName}
+                                    </p>
+                                    <p className="text-xs text-gray-500 truncate m-0 mt-1.5 font-medium">
+                                        {displayRole}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </Dropdown>
                 </div>
             </div>
 
