@@ -4,12 +4,10 @@ import {
   LeftOutlined,
   RightOutlined
 } from "@ant-design/icons";
-import { Heart, Send, User, Lock, Settings, LogOut } from "lucide-react";
-import { Layout, Menu, Avatar, Dropdown } from "antd";
+import { Heart, Send, User, Lock, Settings } from "lucide-react";
+import { Layout, Menu } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "@/redux/feature/auth/authSlice";
 
 const { Sider } = Layout;
 
@@ -25,8 +23,6 @@ export default function DashboardSidebar({
   const [selectedKey, setSelectedKey] = useState("saved");
   const router = useRouter();
   const pathname = usePathname();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     const segment = pathname.split("/").filter(Boolean).pop() || "saved";
@@ -39,24 +35,6 @@ export default function DashboardSidebar({
     { key: "profile", icon: <User size={18} />, label: "Profile" },
     { key: "user-notifications", icon: <Settings size={18} />, label: "Notification Settings" },
     { key: "password-security", icon: <Lock size={18} />, label: "Password & Security" },
-  ];
-
-  const handleLogOut = () => {
-    dispatch(logout());
-    router.push("/auth/login");
-  };
-
-  const displayName = user?.user?.name || "User Name";
-  const displayRole = user?.user?.role || "User";
-
-  const logoutMenuItems = [
-    {
-      key: "logout",
-      icon: <LogOut size={16} />,
-      label: <span className="font-bold text-red-600">Log out</span>,
-      danger: true,
-      onClick: handleLogOut
-    }
   ];
 
   return (
@@ -78,7 +56,7 @@ export default function DashboardSidebar({
       theme="light"
       className="!bg-white border-r border-slate-100 h-full flex flex-col shadow-[1px_0_10px_rgba(0,0,0,0.02)]"
     >
-      <div className="flex-1 h-full py-4 flex flex-col justify-between overflow-hidden">
+      <div className="flex-1 h-full py-4 flex flex-col overflow-hidden">
         <Menu
           mode="inline"
           selectedKeys={[selectedKey]}
@@ -89,32 +67,6 @@ export default function DashboardSidebar({
             router.push(`/${key}`);
           }}
         />
-        <div className="border-t border-gray-100 p-4">
-          <Dropdown 
-            menu={{ items: logoutMenuItems }} 
-            trigger={['click']} 
-            placement="topRight"
-            overlayClassName="min-w-[200px]"
-          >
-            <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 cursor-pointer transition-all border border-transparent hover:border-gray-100 animate-in fade-in duration-300">
-              <Avatar 
-                size={40} 
-                src="/images/customer.png" 
-                className="border border-gray-200 shadow-sm shrink-0"
-              />
-              {!collapsed && (
-                <div className="flex-1 min-w-0 text-left">
-                  <p className="text-sm font-bold text-gray-800 truncate m-0 leading-tight">
-                    {displayName}
-                  </p>
-                  <p className="text-xs text-gray-500 truncate m-0 mt-1.5 font-medium">
-                    {displayRole}
-                  </p>
-                </div>
-              )}
-            </div>
-          </Dropdown>
-        </div>
       </div>
 
       <button
