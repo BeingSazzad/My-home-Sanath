@@ -31,18 +31,18 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative w-full h-[520px] sm:h-[580px] md:h-[640px] flex items-center justify-center overflow-hidden rounded-[2rem] mt-6 sm:mt-8 shadow-sm">
+        <section className="relative w-full h-[560px] sm:h-[620px] md:h-[700px] flex items-center justify-center overflow-hidden rounded-2xl mt-4 sm:mt-5 shadow-sm">
             {/* Background image */}
             <Image
                 src="/heroImg.jpg"
                 alt="Beautiful property"
                 fill
-                className="object-cover object-center rounded-3xl"
+                className="object-cover object-center rounded-2xl"
                 priority
             />
 
             {/* Subtle dark veil — keeps image vibrant but text legible */}
-            <div className="absolute inset-0 bg-black/40 rounded-3xl" />
+            <div className="absolute inset-0 bg-black/40 rounded-2xl" />
 
             {/* Content */}
             <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
