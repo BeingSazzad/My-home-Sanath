@@ -122,7 +122,7 @@ export default function ListingModal({ open, onClose, onSuccess, editId }: Listi
           // FALLBACK: If API fails, try to find in mock data
           // Note: In a real production app, you'd only rely on the API.
           // This is for demo/development stability.
-          const { MOCK_LISTING_DETAILS } = await import("../index");
+          const { MOCK_LISTING_DETAILS } = await import("@/Mockdata");
           const mock = MOCK_LISTING_DETAILS.find(m => m.id === editId);
           
           if (mock) {
@@ -136,7 +136,7 @@ export default function ListingModal({ open, onClose, onSuccess, editId }: Listi
       } catch (err) {
         console.error("ListingModal fetchExisting error:", err);
         // Try mock fallback even on catch
-        const { MOCK_LISTING_DETAILS } = await import("../index");
+        const { MOCK_LISTING_DETAILS } = await import("@/Mockdata");
         const mock = MOCK_LISTING_DETAILS.find(m => m.id === editId);
         if (mock) {
           setFormData(detailToFormData(mock));

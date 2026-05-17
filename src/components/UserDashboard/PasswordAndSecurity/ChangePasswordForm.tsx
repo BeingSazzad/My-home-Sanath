@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input, Button } from "antd";
 import { toast } from "sonner";
-import { handleApiError } from "@/lib/handleApiError";
+import { handleApiError } from "@/helpers/handleApiError";
 
 function getStrength(pw: string): number {
     if (pw.length === 0) return 0;

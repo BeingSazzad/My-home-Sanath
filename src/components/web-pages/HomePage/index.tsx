@@ -1,5 +1,5 @@
 import React from 'react'
-import HeroSection from './HeroSecton'
+import HeroSection from './HeroSection'
 import PropertiesNearYou from './PropertiesNearYou'
 import MarketplaceSection from './MarketplaceSection'
 import PopularLocations from './PopularLocations'

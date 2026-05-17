@@ -1,4 +1,7 @@
 import { Listing, ListingDetail } from "@/types/listing";
+import { Enquiry } from "@/types/enquiry";
+
+// ─── Listings ─────────────────────────────────────────────────────────────────
 
 export const MOCK_LISTINGS: Listing[] = [
   {
@@ -7,7 +10,7 @@ export const MOCK_LISTINGS: Listing[] = [
     address: "42 Kensington Park Road",
     price: "£1.3m",
     views: 1245,
-    status: "active",
+    status: "sold",
     listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=120&h=80&fit=crop",
   },
@@ -37,14 +40,14 @@ export const MOCK_LISTINGS: Listing[] = [
     address: "15 Deansgate Square",
     price: "£2k",
     views: 389,
-    status: "closed",
+    status: "active",
     listingType: "to-rent",
     image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=120&h=80&fit=crop",
   },
 ];
 
-export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
-  "1": {
+export const MOCK_LISTING_DETAILS: ListingDetail[] = [
+  {
     id: "1",
     title: "Stunning Victorian Townhouse",
     address: "42 Kensington Park Road, Notting Hill, London W11 2ND",
@@ -58,6 +61,9 @@ export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
       "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=500&fit=crop",
       "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=500&fit=crop",
     ],
+    videos: ["https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4"],
+    floorPlans: ["https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=1000&fit=crop"],
+    brochures: ["/sample-brochure.pdf"],
     propertyType: "Terraced",
     beds: 5,
     baths: 3,
@@ -71,7 +77,7 @@ export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
     listedDate: "12 Mar 2025",
     agent: "Sarah Jenkins",
   },
-  "2": {
+  {
     id: "2",
     title: "Modern Riverside Penthouse",
     address: "1 Nine Elms Lane, Vauxhall, London SW8 5NQ",
@@ -99,7 +105,7 @@ export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
     listedDate: "28 Jan 2025",
     agent: "Sarah Jenkins",
   },
-  "3": {
+  {
     id: "3",
     title: "Charming Cotswolds Cottage",
     address: "8 Church Lane, Bourton-on-the-Water, Gloucestershire GL54 2AP",
@@ -125,7 +131,7 @@ export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
     listedDate: "5 Apr 2025",
     agent: "Sarah Jenkins",
   },
-  "4": {
+  {
     id: "4",
     title: "Luxury Manchester Apartment",
     address: "15 Deansgate Square, Manchester M3 4LZ",
@@ -151,7 +157,89 @@ export const MOCK_LISTING_DETAILS: Record<string, ListingDetail> = {
     listedDate: "19 Feb 2025",
     agent: "Sarah Jenkins",
   },
-};
+];
+
+// ─── Enquiries (User Dashboard — sent by user) ────────────────────────────────
+
+export const MOCK_USER_ENQUIRIES: Enquiry[] = [
+  {
+    id: "1",
+    name: "Sarah Mitchell",
+    initials: "SM",
+    email: "sarah@knightfrank.co.uk",
+    phone: "+44 20 7861 1111",
+    propertyTitle: "Stunning Victorian Townhouse",
+    propertyId: "1",
+    property: "Stunning Victorian Townhouse",
+    leadDetails: "",
+    price: "£1.3m",
+    address: "42 Kensington Park Road",
+    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=400&q=80",
+    sentTo: "Knight Frank",
+    message: "I would like to arrange a viewing for this weekend if possible. Thanks!",
+    timeAgo: "2 days ago",
+    sentOn: "3/17/2026",
+    agent: {
+      name: "Sarah Mitchell",
+      company: "Knight Frank",
+      phone: "+44 20 7861 1111",
+      email: "sarah@knightfrank.co.uk",
+      avatar: "S",
+    },
+  },
+];
+
+// ─── Leads (Agent Dashboard — received enquiries) ─────────────────────────────
+
+export const MOCK_AGENT_LEADS = [
+  {
+    id: "1",
+    name: "Tom Walker",
+    initials: "TW",
+    email: "tom.w@example.com",
+    phone: "+44 7700 900111",
+    propertyId: "1",
+    property: "Stunning Victorian Townhouse",
+    price: "£1,300,000",
+    address: "42 Kensington Park Road, Notting Hill, W11",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=120&h=80&fit=crop",
+    leadDetails: "First-time buyer • No property to sell",
+    message: "Hi, I saw Stunning Victorian Townhouse and would like to arrange a viewing for this weekend if possible.",
+    timeAgo: "2 hours ago",
+  },
+  {
+    id: "2",
+    name: "Alice Johnson",
+    initials: "AJ",
+    email: "alice.j@example.com",
+    phone: "+44 7700 900112",
+    propertyId: "2",
+    property: "Modern Riverside Penthouse",
+    price: "£2,100,000",
+    address: "1 Nine Elms Lane, Vauxhall, SW8",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=120&h=80&fit=crop",
+    leadDetails: "Cash buyer • Property sold STC",
+    message: "I am very interested in the Modern Riverside Penthouse. Could we schedule a viewing early next week?",
+    timeAgo: "4 hours ago",
+  },
+  {
+    id: "3",
+    name: "Mark King",
+    initials: "MK",
+    email: "mark.k@example.com",
+    phone: "+44 7700 900113",
+    propertyId: "3",
+    property: "Charming Cotswolds Cottage",
+    price: "£675,000",
+    address: "8 Church Lane, Bourton-on-the-Water",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=120&h=80&fit=crop",
+    leadDetails: "Mortgage in principle • No property",
+    message: "The Charming Cotswolds Cottage looks perfect for us. Is there any flexibility on the asking price?",
+    timeAgo: "6 hours ago",
+  },
+];
+
+// ─── Form / Filter Options ─────────────────────────────────────────────────────
 
 export const FEATURES_LIST = [
   "Garden", "Parking", "New Build",

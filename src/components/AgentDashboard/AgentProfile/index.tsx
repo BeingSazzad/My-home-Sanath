@@ -7,8 +7,8 @@ import { AgencyProfile } from "@/types/enquiry";
 import { toast } from "sonner";
 import { myFetch } from "@/helpers/myFetch";
 import AgencyLogoSection from "./AgencyLogoSection";
-import CoreInfoForm from "./Coreinfoform";
-import BusinessDetailsForm from "./Businessdetailsform";
+import CoreInfoForm from "./CoreInfoForm";
+import BusinessDetailsForm from "./BusinessDetailsForm";
 import PersonalInfoForm from "@/components/UserDashboard/ProfileInfo/PersonalInfoForm";
 import AddressForm from "@/components/UserDashboard/ProfileInfo/AddressForm";
 

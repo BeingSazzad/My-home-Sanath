@@ -4,58 +4,11 @@ import { useState } from "react";
 import { Modal } from "antd";
 import { Enquiry } from "@/types/enquiry";
 import { toast, Toaster } from "sonner";
+import { MOCK_AGENT_LEADS } from "@/Mockdata";
 import EnquiryCard from "./Enquirycard";
 
-const MOCK_ENQUIRIES: any[] = [
-    {
-        id: "1",
-        name: "Tom Walker",
-        initials: "TW",
-        email: "tom.w@example.com",
-        phone: "+44 7700 900111",
-        propertyId: "1",
-        property: "Stunning Victorian Townhouse",
-        price: "£1,300,000",
-        address: "42 Kensington Park Road, Notting Hill, W11",
-        image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=120&h=80&fit=crop",
-        leadDetails: "First-time buyer • No property to sell",
-        message: "Hi, I saw Stunning Victorian Townhouse and would like to arrange a viewing for this weekend if possible.",
-        timeAgo: "2 hours ago",
-    },
-    {
-        id: "2",
-        name: "Alice Johnson",
-        initials: "AJ",
-        email: "alice.j@example.com",
-        phone: "+44 7700 900112",
-        propertyId: "2",
-        property: "Modern Riverside Penthouse",
-        price: "£2,100,000",
-        address: "1 Nine Elms Lane, Vauxhall, SW8",
-        image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=120&h=80&fit=crop",
-        leadDetails: "Cash buyer • Property sold STC",
-        message: "I am very interested in the Modern Riverside Penthouse. Could we schedule a viewing early next week?",
-        timeAgo: "4 hours ago",
-    },
-    {
-        id: "3",
-        name: "Mark King",
-        initials: "MK",
-        email: "mark.k@example.com",
-        phone: "+44 7700 900113",
-        propertyId: "3",
-        property: "Charming Cotswolds Cottage",
-        price: "£675,000",
-        address: "8 Church Lane, Bourton-on-the-Water",
-        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=120&h=80&fit=crop",
-        leadDetails: "Mortgage in principle • No property",
-        message: "The Charming Cotswolds Cottage looks perfect for us. Is there any flexibility on the asking price?",
-        timeAgo: "6 hours ago",
-    },
-];
-
 export default function EnquiriesPage() {
-    const [enquiries, setEnquiries] = useState<Enquiry[]>(MOCK_ENQUIRIES);
+    const [enquiries, setEnquiries] = useState<Enquiry[]>(MOCK_AGENT_LEADS as Enquiry[]);
 
     const handleUpdateStatus = (id: string) => {
         Modal.confirm({

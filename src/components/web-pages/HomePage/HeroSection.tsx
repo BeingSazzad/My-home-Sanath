@@ -95,7 +95,7 @@ export default function HeroSection() {
                                     placeholder="Search by location, postcode or area..."
                                     prefix={<SearchOutlined className="text-gray-400 mr-3 text-lg" />}
                                     suffix={
-                                        <button 
+                                        <button
                                             onClick={() => setIsFilterOpen(true)}
                                             className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-400 hover:text-[#1a3c6e]"
                                             title="Open Filters"
@@ -130,9 +130,9 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <FilterModal 
-                isOpen={isFilterOpen} 
-                onClose={() => setIsFilterOpen(false)} 
+            <FilterModal
+                isOpen={isFilterOpen}
+                onClose={() => setIsFilterOpen(false)}
             />
         </section>
     );

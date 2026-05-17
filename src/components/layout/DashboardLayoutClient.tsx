@@ -5,7 +5,7 @@ import { Button, Drawer } from "antd";
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import DashboardSidebar from "./dashboard-sidebar";
+import DashboardSidebar from "./DashboardSidebar";
 import DashboardBackButton from "./DashboardBackButton";
 
 const SIDEBAR_WIDTH = 280;

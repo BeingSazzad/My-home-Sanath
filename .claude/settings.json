@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"e:\\\\Vibe code\\\\Sanath My home website\"; Get-ChildItem src\\\\components\\\\web-pages -Recurse | Select-Object Name | Where-Object {$_.Name -notmatch \"^\\\\.\"})",
+      "PowerShell(cd \"e:\\\\Vibe code\\\\Sanath My home website\"; Get-ChildItem src\\\\types; Write-Host \"---HELPERS---\"; Get-ChildItem src\\\\helpers; Write-Host \"---HOOKS---\"; Get-ChildItem src\\\\hooks; Write-Host \"---LIB---\"; Get-ChildItem src\\\\lib; Write-Host \"---REDUX---\"; Get-ChildItem src\\\\redux -Recurse | Where-Object {!$_.PSIsContainer})",
+      "PowerShell(cd \"e:\\\\Vibe code\\\\Sanath My home website\"; Get-ChildItem src\\\\components -Recurse | Where-Object {!$_.PSIsContainer} | ForEach-Object { $_.FullName.Replace\\(\\(Get-Location\\).Path + '\\\\', ''\\) } | Sort-Object)"
+    ]
+  }
+}

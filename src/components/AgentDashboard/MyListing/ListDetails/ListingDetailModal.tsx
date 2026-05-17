@@ -17,9 +17,9 @@ import {
 } from "@ant-design/icons";
 import { Modal, Skeleton, Tag, Button } from "antd";
 import { useState } from "react";
-import { MOCK_LISTING_DETAILS } from "..";
+import { MOCK_LISTING_DETAILS } from "@/Mockdata";
 import { StatusBadge } from "../ListingsTable";
-import ImageGallery from "./Imagegallery";
+import ImageGallery from "./ImageGallery";
 
 
 interface ListingDetailModalProps {

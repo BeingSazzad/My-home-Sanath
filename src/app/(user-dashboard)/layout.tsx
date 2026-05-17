@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { getSearchParams } from "@/lib/getSearchParams";
+import { getSearchParams } from "@/helpers/getSearchParams";
 import DashboardLayoutClient from "@/components/layout/DashboardLayoutClient";
 
 export default async function Layout({ children }: { children: ReactNode }) {

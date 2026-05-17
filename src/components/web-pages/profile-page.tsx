@@ -19,7 +19,7 @@ import dayjs from "dayjs";
 import EditProfileModal from "../Modal/EditProfileModal";
 import ChangePasswordModal from "../Modal/ChangePasswordModal";
 import { toast } from "sonner";
-import Spinner from "../Spinner";
+import Spinner from "../ui/Spinner";
 
 const { Title, Text } = Typography;
 
