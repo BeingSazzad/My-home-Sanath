@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { Button } from "antd";
 import { BellFilled, BellOutlined } from "@ant-design/icons";
@@ -20,10 +21,13 @@ export interface Props {
 export default function SavedSearchItem({ item, onToggleAlert, onRemove, isLast }: Props) {
     return (
         <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-5 ${!isLast ? "border-b border-gray-100" : ""}`}>
-            <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{item.title}</h3>
+            <Link 
+                href={`/find-properties?q=${encodeURIComponent(item.title.split(',')[0])}`}
+                className="flex-1 min-w-0 group cursor-pointer"
+            >
+                <h3 className="font-semibold text-gray-900 text-sm sm:text-base group-hover:text-[#14b8a6] group-hover:underline transition-colors">{item.title}</h3>
                 <p className="text-gray-500 text-xs sm:text-sm mt-0.5">{item.description}</p>
-            </div>
+            </Link>
 
             <div className="flex items-center gap-3 shrink-0">
                 <Button
