@@ -28,6 +28,8 @@ export default function Navbar() {
     const pathname = usePathname();
     const screens = useBreakpoint();
 
+    const isHome = pathname === "/" || pathname === "/home";
+
     // Auto-close drawer when switching to desktop
     useEffect(() => {
         if (screens.md) {
@@ -36,7 +38,7 @@ export default function Navbar() {
     }, [screens.md]);
 
     return (
-        <header className="w-full bg-white shadow-sm sticky top-0 z-50">
+        <header className={`w-full bg-white sticky top-0 z-50 transition-all duration-300 ${isHome ? "" : "shadow-sm"}`}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 shrink-0">

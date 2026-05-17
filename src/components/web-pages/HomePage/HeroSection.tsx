@@ -31,7 +31,7 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative w-full h-[520px] sm:h-[580px] md:h-[640px] flex items-center justify-center overflow-hidden">
+        <section className="relative w-full h-[520px] sm:h-[580px] md:h-[640px] flex items-center justify-center overflow-hidden rounded-[2rem] mt-6 sm:mt-8 shadow-sm">
             {/* Background image */}
             <Image
                 src="/heroImg.jpg"
