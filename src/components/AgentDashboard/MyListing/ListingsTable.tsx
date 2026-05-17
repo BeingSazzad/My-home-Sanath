@@ -122,7 +122,7 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
                     onClick: ({ key }) => onStatusChange(listing.id, key as ListingStatus),
                   }}
                   trigger={["click"]}
-                  placement="bottomCenter"
+                  placement="bottom"
                 >
                   <button className="flex items-center gap-1 hover:scale-105 active:scale-95 transition-all cursor-pointer bg-transparent border-0 p-0 focus:outline-none">
                     <StatusBadge status={listing.status} />
