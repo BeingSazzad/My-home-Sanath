@@ -80,7 +80,7 @@ export default function NavActions() {
                                 </div>
                             </div>
                             <div className="p-3 border-t border-gray-100 text-center bg-gray-50 rounded-b-lg">
-                                <Link href="/user-notifications" className="text-[#14b8a6] text-sm font-bold hover:underline block">
+                                <Link href="/notification" className="text-[#14b8a6] text-sm font-bold hover:underline block">
                                     View All
                                 </Link>
                             </div>

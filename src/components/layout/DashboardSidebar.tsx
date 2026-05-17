@@ -33,7 +33,7 @@ export default function DashboardSidebar({
     { key: "saved", icon: <Heart size={18} />, label: "Saved" },
     { key: "enquiries", icon: <Send size={18} />, label: "My Enquiries" },
     { key: "profile", icon: <User size={18} />, label: "Profile" },
-    { key: "user-notifications", icon: <Settings size={18} />, label: "Notification Settings" },
+    { key: "notification-settings", icon: <Settings size={18} />, label: "Notification Settings" },
     { key: "password-security", icon: <Lock size={18} />, label: "Password & Security" },
   ];
 
