@@ -15,15 +15,25 @@ export default function EnquiriesPage() {
 
     const [enquiries, setEnquiries] = useState<Enquiry[]>(MOCK_AGENT_LEADS as Enquiry[]);
 
-    const handleUpdateStatus = (id: string) => {
+    const handleMarkComplete = (id: string) => {
+        setEnquiries((prev) =>
+            prev.map((e) => (e.id === id ? { ...e, status: "completed" } : e))
+        );
+        toast.success("Enquiry marked as complete!", {
+            description: "The lead status has been set to contacted.",
+        });
+    };
+
+    const handleDelete = (id: string) => {
         Modal.confirm({
-            title: "Update Enquiry Status",
-            content: "Mark this enquiry as contacted?",
-            okText: "Yes, Update",
-            okButtonProps: { className: "!bg-teal-600 !border-teal-600" },
+            title: "Delete Enquiry?",
+            content: "Are you sure you want to permanently delete this lead? This action cannot be undone.",
+            okText: "Yes, Delete",
+            okButtonProps: { className: "!bg-red-600 !border-red-600" },
+            okType: "danger",
             async onOk() {
-                toast.success("Status updated!");
                 setEnquiries((prev) => prev.filter((e) => e.id !== id));
+                toast.success("Enquiry deleted successfully!");
             },
         });
     };
@@ -85,7 +95,12 @@ export default function EnquiriesPage() {
                 ) : (
                     <div className="space-y-4">
                         {filteredEnquiries.map((enquiry) => (
-                            <EnquiryCard key={enquiry.id} enquiry={enquiry} onUpdateStatus={handleUpdateStatus} />
+                            <EnquiryCard 
+                                key={enquiry.id} 
+                                enquiry={enquiry} 
+                                onMarkComplete={handleMarkComplete} 
+                                onDelete={handleDelete} 
+                            />
                         ))}
                     </div>
                 )}

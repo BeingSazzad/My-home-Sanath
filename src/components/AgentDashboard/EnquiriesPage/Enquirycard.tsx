@@ -9,11 +9,12 @@ import Link from "next/link";
 
 interface Props {
     enquiry: Enquiry;
-    onUpdateStatus: (id: string) => void;
+    onMarkComplete: (id: string) => void;
+    onDelete: (id: string) => void;
 }
 
-export default function EnquiryCard({ enquiry, onUpdateStatus }: Props) {
-    const { id, name, initials, email, phone, property, propertyId, leadDetails, message, timeAgo, image, price, address } = enquiry;
+export default function EnquiryCard({ enquiry, onMarkComplete, onDelete }: Props) {
+    const { id, name, initials, email, phone, property, propertyId, leadDetails, message, timeAgo, image, price, address, status } = enquiry;
     const [isExpanded, setIsExpanded] = useState(false);
 
     const handleCopy = (text: string, e: React.MouseEvent) => {
@@ -30,11 +31,6 @@ export default function EnquiryCard({ enquiry, onUpdateStatus }: Props) {
     const handleEmail = (e: React.MouseEvent) => {
         e.stopPropagation();
         toast.success(`Opening email to ${email}`);
-    };
-
-    const handleUpdate = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onUpdateStatus(id);
     };
 
     return (
@@ -56,9 +52,15 @@ export default function EnquiryCard({ enquiry, onUpdateStatus }: Props) {
                     <div className="flex-1 min-w-0 pr-4">
                         <div className="flex flex-wrap items-center gap-2 mb-1">
                             <p className="font-bold text-gray-950 text-[16px] leading-tight">{name}</p>
-                            <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-teal-700">
-                                New lead
-                            </span>
+                            {status === "completed" ? (
+                                <span className="rounded-full bg-gray-50 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-gray-500 border border-gray-200">
+                                    ✓ Contacted
+                                </span>
+                            ) : (
+                                <span className="rounded-full bg-teal-50 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-teal-700 border border-teal-200 animate-pulse">
+                                    New lead
+                                </span>
+                            )}
                             <span className="ml-auto text-xs text-gray-500 whitespace-nowrap hidden sm:block font-semibold bg-gray-100 px-2.5 py-1 rounded-full">{timeAgo}</span>
                         </div>
                         <div className="mb-1.5 flex items-center gap-1.5">
@@ -169,12 +171,30 @@ export default function EnquiryCard({ enquiry, onUpdateStatus }: Props) {
                                 Email Lead
                             </Button>
                         </div>
-                        <Button
-                            onClick={handleUpdate}
-                            className="!rounded-lg border-gray-300 font-semibold !h-10 !px-5 hover:!border-[#1a3c6e] hover:!text-[#1a3c6e]"
-                        >
-                            Update Status
-                        </Button>
+                        <div className="flex items-center gap-2">
+                            {status !== "completed" && (
+                                <Button
+                                    type="primary"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onMarkComplete(id);
+                                    }}
+                                    className="!bg-teal-600 !border-teal-600 hover:!bg-teal-700 !rounded-lg font-bold !h-10 !px-5 shadow-sm"
+                                >
+                                    Mark Complete
+                                </Button>
+                            )}
+                            <Button
+                                danger
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onDelete(id);
+                                }}
+                                className="!rounded-lg font-bold !h-10 !px-5 hover:!bg-red-50"
+                            >
+                                Delete
+                            </Button>
+                        </div>
                     </div>
                 </div>
             )}

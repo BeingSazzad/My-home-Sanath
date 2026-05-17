@@ -24,6 +24,7 @@ export interface Enquiry {
     timeAgo: string;
     sentOn: string;
     agent: Agent;
+    status?: "new" | "completed";
 }
 
 export interface AgencyProfile {
