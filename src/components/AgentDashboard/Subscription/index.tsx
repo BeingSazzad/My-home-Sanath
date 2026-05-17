@@ -441,7 +441,7 @@ export default function SubscriptionPage() {
                         <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
                             <div>
                                 <h3 className="text-xl font-bold text-[#1a3c6e] m-0">Secure Checkout</h3>
-                                <p className="text-xs text-gray-500 mt-0.5 m-0">PCI-DSS Compliant Encryption Enabled</p>
+                                <p className="text-xs text-gray-500 mt-0.5 m-0 font-medium">PCI-DSS Compliant Encryption Enabled</p>
                             </div>
                             <button 
                                 onClick={() => setSelectedPlan(null)}
@@ -454,19 +454,19 @@ export default function SubscriptionPage() {
                         {/* Modal Body */}
                         <div className="p-6 overflow-y-auto space-y-6 flex-1 text-left">
                             {/* Order Summary */}
-                            <div className="bg-blue-50/50 border border-blue-100/50 rounded-2xl p-4 space-y-3">
-                                <p className="text-xs font-bold text-[#1a3c6e] uppercase tracking-wider m-0">Order Summary</p>
+                            <div className="bg-blue-50/60 border border-blue-100/70 rounded-2xl p-4 space-y-3 shadow-inner">
+                                <p className="text-xs font-bold text-[#1a3c6e] uppercase tracking-widest m-0">Order Summary</p>
                                 <div className="flex justify-between items-center">
-                                    <span className="font-semibold text-gray-800 text-sm">{selectedPlan.name} Plan ({selectedPlan.period.replace("/", "")})</span>
-                                    <span className="font-bold text-gray-900 text-sm">{selectedPlan.price}</span>
+                                    <span className="font-bold text-gray-800 text-sm">{selectedPlan.name} Plan ({selectedPlan.period.replace("/", "")})</span>
+                                    <span className="font-extrabold text-gray-900 text-sm">{selectedPlan.price}</span>
                                 </div>
                                 {selectedPlan.name !== "Free Trial" && (
                                     <>
-                                        <div className="flex justify-between text-xs text-gray-500">
+                                        <div className="flex justify-between text-xs font-semibold text-gray-500">
                                             <span>Subtotal</span>
                                             <span>{selectedPlan.price}</span>
                                         </div>
-                                        <div className="flex justify-between text-xs text-gray-500">
+                                        <div className="flex justify-between text-xs font-semibold text-gray-500">
                                             <span>VAT (20%)</span>
                                             <span>
                                                 £{(parseFloat(selectedPlan.price.replace("£", "")) * 0.2).toFixed(2)}
@@ -474,10 +474,10 @@ export default function SubscriptionPage() {
                                         </div>
                                     </>
                                 )}
-                                <div className="h-[1px] bg-blue-100/30 my-2" />
-                                <div className="flex justify-between items-center text-base font-bold text-gray-900">
+                                <div className="h-[1px] bg-blue-100/60 my-2" />
+                                <div className="flex justify-between items-center text-base font-extrabold text-gray-900">
                                     <span>Total Due</span>
-                                    <span className="text-[#1a3c6e]">
+                                    <span className="text-lg text-[#1a3c6e]">
                                         {selectedPlan.name === "Free Trial" 
                                             ? "£0.00" 
                                             : `£${(parseFloat(selectedPlan.price.replace("£", "")) * 1.2).toFixed(2)}`
@@ -486,82 +486,66 @@ export default function SubscriptionPage() {
                                 </div>
                             </div>
 
-                            {/* Payment Methods */}
-                            <div className="space-y-3">
-                                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider m-0">Select Payment Method</p>
-                                <div className="grid grid-cols-3 gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() => setPaymentMethod("card")}
-                                        className={`p-3 border rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentMethod === "card" ? "border-[#1a3c6e] bg-[#1a3c6e]/5 text-[#1a3c6e]" : "border-gray-200 hover:bg-gray-50 text-gray-600 bg-white"}`}
-                                    >
-                                        <span className="text-xs font-bold">Credit Card</span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setPaymentMethod("paypal")}
-                                        className={`p-3 border rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentMethod === "paypal" ? "border-[#1a3c6e] bg-[#1a3c6e]/5 text-[#1a3c6e]" : "border-gray-200 hover:bg-gray-50 text-gray-600 bg-white"}`}
-                                    >
-                                        <span className="text-xs font-bold">PayPal</span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setPaymentMethod("gpay")}
-                                        className={`p-3 border rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentMethod === "gpay" ? "border-[#1a3c6e] bg-[#1a3c6e]/5 text-[#1a3c6e]" : "border-gray-200 hover:bg-gray-50 text-gray-600 bg-white"}`}
-                                    >
-                                        <span className="text-xs font-bold">Google Pay</span>
-                                    </button>
+                            {/* Stripe Branding Header */}
+                            <div className="border border-gray-200 rounded-2xl p-5 bg-white space-y-4 shadow-sm">
+                                <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[#635bff] text-xl font-extrabold tracking-tight select-none">stripe</span>
+                                        <span className="text-[10px] bg-purple-50 text-[#635bff] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                                            Secure Card Payment
+                                        </span>
+                                    </div>
+                                    <span className="text-xs font-bold text-teal-600 flex items-center gap-1 bg-teal-50 px-2 py-0.5 rounded-full">
+                                        🛡️ PCI Compliant
+                                    </span>
                                 </div>
-                            </div>
 
-                            {/* Payment Inputs */}
-                            {paymentMethod === "card" ? (
+                                {/* Stripe Form Fields with High Contrast & Perfect Readability */}
                                 <div className="space-y-4">
                                     <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Card Number</label>
-                                        <input
-                                            type="text"
-                                            placeholder="4242 4242 4242 4242"
-                                            value={cardNumber}
-                                            onChange={(e) => setCardNumber(e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm box-border"
-                                        />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Expiry Date</label>
+                                        <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Card Number</label>
+                                        <div className="relative">
                                             <input
                                                 type="text"
-                                                placeholder="MM/YY"
+                                                placeholder="4242 4242 4242 4242"
+                                                value={cardNumber}
+                                                onChange={(e) => setCardNumber(e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-gray-900 font-bold placeholder:text-gray-400 placeholder:opacity-100 box-border bg-white shadow-sm transition-all"
+                                            />
+                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-gray-400 select-none">💳</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Expiry Date</label>
+                                            <input
+                                                type="text"
+                                                placeholder="MM / YY"
                                                 value={cardExpiry}
                                                 onChange={(e) => setCardExpiry(e.target.value)}
-                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-center box-border"
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-center text-gray-900 font-bold placeholder:text-gray-400 placeholder:opacity-100 box-border bg-white shadow-sm transition-all"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">CVC / CVV</label>
+                                            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">CVC / CVV</label>
                                             <input
                                                 type="password"
                                                 placeholder="•••"
                                                 maxLength={3}
                                                 value={cardCvc}
                                                 onChange={(e) => setCardCvc(e.target.value)}
-                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-center box-border"
+                                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-center text-gray-900 font-bold placeholder:text-gray-400 placeholder:opacity-100 box-border bg-white shadow-sm transition-all"
                                             />
                                         </div>
                                     </div>
                                 </div>
-                            ) : (
-                                <div className="p-8 border border-dashed border-gray-200 rounded-2xl text-center space-y-2">
-                                    <p className="font-semibold text-gray-700 text-sm m-0">Standard checkout redirection</p>
-                                    <p className="text-xs text-gray-400 m-0">You will be redirected securely to complete the payment authorization.</p>
-                                </div>
-                            )}
+                            </div>
 
-                            <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                <span className="text-gray-400 text-xs font-bold select-none">🛡️</span>
-                                <p className="text-[11px] text-gray-500 leading-snug m-0">
-                                    Your checkout session is encrypted with 256-bit SSL. Card credentials are never stored directly on our servers.
+                            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                <span className="text-gray-500 text-xs font-bold select-none mt-0.5">🔒</span>
+                                <p className="text-[11px] text-gray-600 font-medium leading-relaxed m-0">
+                                    Your payment is processed instantly and securely via Stripe. Card details are transmitted via SSL with 256-bit encryption.
                                 </p>
                             </div>
                         </div>
@@ -573,12 +557,12 @@ export default function SubscriptionPage() {
                                 block
                                 loading={isLoading}
                                 onClick={handleCompletePayment}
-                                className="!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e] !h-12 !font-bold !text-sm !rounded-xl shadow-md"
+                                className="!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e] !h-12 !font-bold !text-sm !rounded-xl shadow-md transition-all active:scale-[0.98]"
                             >
-                                {isLoading ? "Processing Security Check..." : (selectedPlan.name === "Free Trial" ? "Activate Free Trial" : `Authorize Payment of £${selectedPlan.name === "Free Trial" ? "0.00" : (parseFloat(selectedPlan.price.replace("£", "")) * 1.2).toFixed(2)}`)}
+                                {isLoading ? "Processing Stripe Payment..." : (selectedPlan.name === "Free Trial" ? "Activate Free Trial" : `Pay £${selectedPlan.name === "Free Trial" ? "0.00" : (parseFloat(selectedPlan.price.replace("£", "")) * 1.2).toFixed(2)} with Stripe`)}
                             </Button>
-                            <p className="text-[10px] text-center text-gray-400 font-medium m-0">
-                                By completing the checkout, you authorize automatic billing transitions under our standard policy.
+                            <p className="text-[10px] text-center text-gray-400 font-semibold m-0">
+                                By completing the checkout, you authorize recurring subscription transitions under standard policy terms.
                             </p>
                         </div>
                     </div>
