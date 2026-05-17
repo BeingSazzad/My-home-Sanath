@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Listing, ListingStatus } from "@/types/listing";
 import { Popconfirm, Dropdown } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -91,14 +92,16 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
             </div>
 
             {/* Leads */}
-            <div className="text-right">
-              <span className={`px-2.5 py-1 rounded-md text-[13px] font-bold border transition-all ${
-                listing.leadsCount && listing.leadsCount > 0
-                  ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
-                  : "bg-gray-50 text-gray-400 border-gray-200"
-              }`}>
-                {listing.leadsCount ?? 0} leads
-              </span>
+            <div className="text-right flex justify-end">
+              <Link href={`/agent-enquiries?propertyId=${listing.id}`} className="no-underline">
+                <span className={`px-3 py-1.5 rounded-md text-[12px] font-bold border transition-all inline-block hover:scale-105 active:scale-95 cursor-pointer ${
+                  listing.leadsCount && listing.leadsCount > 0
+                    ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
+                    : "bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100"
+                }`}>
+                  {listing.leadsCount ?? 0} leads
+                </span>
+              </Link>
             </div>
 
             {/* Status */}
