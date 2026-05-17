@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Card, Col, Row, Tag, Table } from "antd";
 import { CheckCircleFilled, DownloadOutlined, StarFilled } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { updateSubscription } from "@/redux/feature/auth/authSlice";
 
 export default function SubscriptionPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const dispatch = useDispatch();
     // Simulate reading from auth state
     const { user } = useSelector((state: any) => state.auth);
@@ -80,6 +81,9 @@ export default function SubscriptionPage() {
 
     // If the logged in user is a regular customer (User role), restrict access
     if (!isAgent) {
+        const planParam = searchParams.get("plan") || "";
+        const signupUrl = planParam ? `/auth/signup?role=agent&plan=${planParam}` : `/auth/signup?role=agent`;
+
         return (
             <div className="max-w-xl mx-auto my-16 text-center p-8 bg-white border border-gray-100 rounded-3xl shadow-md animate-in fade-in duration-500">
                 <div className="w-16 h-16 bg-blue-50 text-[#1a3c6e] rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner text-xl">
@@ -98,7 +102,7 @@ export default function SubscriptionPage() {
                         Go back Home
                     </Button>
                     <Button 
-                        onClick={() => router.push("/auth/choose-role")}
+                        onClick={() => router.push(signupUrl)}
                         className="!h-12 !px-8 !font-bold !rounded-xl text-[#1a3c6e] border-gray-200 hover:border-[#1a3c6e]"
                     >
                         Register as Agent
@@ -180,6 +184,18 @@ export default function SubscriptionPage() {
             recommended: false,
         },
     ];
+
+    // Auto-trigger checkout if plan query parameter is present (e.g. from register/pricing page)
+    useEffect(() => {
+        const planParam = searchParams.get("plan");
+        if (planParam && plans && plans.length > 0) {
+            const matchedPlan = plans.find(p => p.name.toLowerCase() === planParam.toLowerCase() || (planParam.toLowerCase() === "pro" && p.name.toLowerCase() === "professional"));
+            if (matchedPlan) {
+                setSelectedPlan(matchedPlan);
+                setShowPlans(true);
+            }
+        }
+    }, [searchParams]);
 
     const invoices = activeSubscription?.invoices || [];
 
