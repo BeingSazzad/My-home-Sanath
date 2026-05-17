@@ -26,19 +26,22 @@ export default function SubscriptionPage() {
         setIsLoading(true);
         // Simulate checkout and state update
         setTimeout(() => {
-            const price = planName === "Pro Agent" ? (isAnnual ? "790" : "79") : (planName === "Elite Agency" ? (isAnnual ? "1490" : "149") : (isAnnual ? "290" : "29"));
-            
+            let price = "0";
+            if (planName === "Starter") price = isAnnual ? "490" : "49";
+            else if (planName === "Professional") price = isAnnual ? "990" : "99";
+            else if (planName === "Premium") price = isAnnual ? "1990" : "199";
+
             const mockSubscription = {
                 status: "active",
                 planName: planName,
                 price: price,
-                cycle: isAnnual ? "yearly" : "monthly",
-                renewalDate: new Date(Date.now() + (isAnnual ? 365 : 30) * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+                cycle: planName === "Free Trial" ? "6 months" : (isAnnual ? "yearly" : "monthly"),
+                renewalDate: new Date(Date.now() + (planName === "Free Trial" ? 180 : (isAnnual ? 365 : 30)) * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
                 invoices: [
                     { 
                         id: `INV-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`, 
                         date: new Date().toLocaleDateString(), 
-                        amount: `£${price}`, 
+                        amount: price === "0" ? "Free" : `£${price}`, 
                         status: "Paid" 
                     }
                 ]
@@ -56,24 +59,69 @@ export default function SubscriptionPage() {
 
     const plans = [
         {
-            name: "Basic Agent",
-            price: isAnnual ? "£290" : "£29",
-            period: isAnnual ? "/year" : "/month",
-            features: ["Up to 10 Active Listings", "Basic Analytics", "Email Support", "Standard Visibility"],
+            name: "Free Trial",
+            price: "£0",
+            period: "/6 months",
+            features: [
+                "6 months free trial",
+                "Unlimited listings",
+                "Multiple staff accounts",
+                "Advanced reporting",
+                "API access",
+                "XML/BLM feed support"
+            ],
+            restrictions: [
+                "No featured listings",
+                "No premium placement",
+                "No homepage exposure"
+            ],
+            afterTrial: "Listings become inactive after trial unless upgraded",
             recommended: false,
         },
         {
-            name: "Pro Agent",
-            price: isAnnual ? "£790" : "£79",
+            name: "Starter",
+            price: isAnnual ? "£490" : "£49",
             period: isAnnual ? "/year" : "/month",
-            features: ["Up to 50 Active Listings", "Advanced Analytics & Reports", "Priority 24/7 Support", "Featured Listing Placements", "Lead Management CRM"],
+            features: [
+                "Up to 50 listings",
+                "Lead enquiry access",
+                "Mobile app exposure",
+                "Website exposure",
+                "Basic analytics",
+                "Agent profile page",
+                "XML/BLM feed support"
+            ],
+            recommended: false,
+        },
+        {
+            name: "Professional",
+            price: isAnnual ? "£990" : "£99",
+            period: isAnnual ? "/year" : "/month",
+            features: [
+                "Up to 250 listings",
+                "Featured listings access",
+                "Better search ranking",
+                "XML/BLM feed support",
+                "Lead management tools",
+                "Advanced analytics",
+                "Multiple staff accounts"
+            ],
             recommended: true,
         },
         {
-            name: "Elite Agency",
-            price: isAnnual ? "£1490" : "£149",
+            name: "Premium",
+            price: isAnnual ? "£1990" : "£199",
             period: isAnnual ? "/year" : "/month",
-            features: ["Unlimited Listings", "White-label Reports", "Dedicated Account Manager", "Top Tier Placements", "API Access"],
+            features: [
+                "Unlimited listings",
+                "Homepage featured placement",
+                "Premium verified badge",
+                "Priority support",
+                "Multiple staff accounts",
+                "Advanced reporting",
+                "API access",
+                "XML/BLM feed support"
+            ],
             recommended: false,
         },
     ];
@@ -144,10 +192,19 @@ export default function SubscriptionPage() {
                                         <div>
                                             <div className="flex justify-between text-sm mb-2">
                                                 <span className="text-gray-600 font-medium">Active Listings</span>
-                                                <span className="font-bold text-gray-900">24 / 50</span>
+                                                <span className="font-bold text-gray-900">
+                                                    24 / {activeSubscription.planName === "Starter" ? "50" : (activeSubscription.planName === "Professional" ? "250" : "Unlimited")}
+                                                </span>
                                             </div>
                                             <div className="w-full bg-gray-100 rounded-full h-2">
-                                                <div className="bg-teal-500 h-2 rounded-full" style={{ width: "48%" }}></div>
+                                                <div 
+                                                    className="bg-teal-500 h-2 rounded-full transition-all duration-500" 
+                                                    style={{ 
+                                                        width: activeSubscription.planName === "Starter" 
+                                                            ? "48%" 
+                                                            : (activeSubscription.planName === "Professional" ? "9.6%" : "2.4%") 
+                                                    }}
+                                                ></div>
                                             </div>
                                         </div>
                                     </div>
@@ -238,11 +295,11 @@ export default function SubscriptionPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                                 {plans.map((plan, index) => (
                                     <div 
                                         key={index} 
-                                        className={`relative rounded-2xl border bg-white p-6 transition-all duration-300 hover:shadow-lg flex flex-col ${plan.recommended ? "border-[#1a3c6e] shadow-md transform md:-translate-y-2 ring-1 ring-[#1a3c6e]/10" : "border-gray-200"}`}
+                                        className={`relative rounded-2xl border bg-white p-6 transition-all duration-300 hover:shadow-lg flex flex-col ${plan.recommended ? "border-[#1a3c6e] shadow-md transform lg:-translate-y-2 ring-1 ring-[#1a3c6e]/10" : "border-gray-200"}`}
                                     >
                                         {plan.recommended && (
                                             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1a3c6e] text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
@@ -254,17 +311,38 @@ export default function SubscriptionPage() {
                                             <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
                                             <div className="flex items-end gap-1">
                                                 <span className="text-4xl font-extrabold text-gray-900">{plan.price}</span>
-                                                <span className="text-gray-500 font-medium mb-1">{plan.period}</span>
+                                                <span className="text-gray-500 font-medium mb-1 text-sm">{plan.period}</span>
                                             </div>
                                         </div>
                                         
-                                        <div className="space-y-3 mb-8 flex-1">
+                                        <div className="space-y-3 mb-6 flex-1">
+                                            {/* Features */}
                                             {plan.features.map((feature, i) => (
-                                                <div key={i} className="flex items-start gap-3">
-                                                    <CheckCircleFilled className={`mt-0.5 ${plan.recommended ? "text-[#1a3c6e]" : "text-gray-400"}`} />
-                                                    <span className="text-gray-600 text-sm">{feature}</span>
+                                                <div key={i} className="flex items-start gap-2.5">
+                                                    <CheckCircleFilled className={`mt-0.5 ${plan.recommended ? "text-[#1a3c6e]" : "text-teal-500"}`} />
+                                                    <span className="text-gray-600 text-sm leading-tight">{feature}</span>
                                                 </div>
                                             ))}
+                                            
+                                            {/* Restrictions */}
+                                            {plan.restrictions && (
+                                                <div className="pt-4 border-t border-gray-100 mt-4 space-y-2.5">
+                                                    <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-1.5">Restrictions</p>
+                                                    {plan.restrictions.map((restriction, i) => (
+                                                        <div key={i} className="flex items-start gap-2.5">
+                                                            <span className="text-red-400 text-xs font-bold select-none mt-0.5">✕</span>
+                                                            <span className="text-gray-400 text-xs leading-tight">{restriction}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {/* After Trial warning */}
+                                            {plan.afterTrial && (
+                                                <div className="mt-4 bg-red-50 border border-red-100/50 rounded-xl p-3">
+                                                    <p className="text-red-600 text-[11px] font-semibold leading-normal">{plan.afterTrial}</p>
+                                                </div>
+                                            )}
                                         </div>
 
                                         <Button 
@@ -272,9 +350,9 @@ export default function SubscriptionPage() {
                                             block 
                                             onClick={() => handleSubscribe(plan.name)}
                                             loading={isLoading}
-                                            className={`!h-12 !font-bold !text-base !rounded-lg shadow-sm ${plan.recommended ? "!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e]" : "hover:!border-[#1a3c6e] hover:!text-[#1a3c6e]"}`}
+                                            className={`!h-11 !font-bold !text-sm !rounded-lg shadow-sm ${plan.recommended ? "!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e]" : "hover:!border-[#1a3c6e] hover:!text-[#1a3c6e]"}`}
                                         >
-                                            Subscribe Now
+                                            {plan.name === "Free Trial" ? "Start Free Trial" : "Subscribe Now"}
                                         </Button>
                                     </div>
                                 ))}
