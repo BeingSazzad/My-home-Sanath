@@ -11,7 +11,7 @@ import { SlidersHorizontal } from "lucide-react";
 type SearchTab = "buy" | "rent";
 
 const tabConfig: Record<SearchTab, { label: string; placeholder: string; path: string }> = {
-    buy: { label: "Buy", placeholder: "Search homes for sale", path: "/find-properties" },
+    buy: { label: "Buy", placeholder: "Search homes to buy", path: "/find-properties" },
     rent: { label: "Rent", placeholder: "Search homes for rent", path: "/find-properties" },
 };
 
