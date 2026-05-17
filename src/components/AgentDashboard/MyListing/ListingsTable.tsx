@@ -100,7 +100,7 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
               >
                 <span className={`px-3 py-1.5 rounded-md text-[12px] font-bold border transition-all inline-block hover:scale-105 active:scale-95 cursor-pointer ${
                   listing.leadsCount && listing.leadsCount > 0
-                    ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
+                    ? "bg-[#1a3c6e]/5 text-[#1a3c6e] border-[#1a3c6e]/20 hover:bg-[#1a3c6e]/10"
                     : "bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100"
                 }`}>
                   {listing.leadsCount ?? 0} leads

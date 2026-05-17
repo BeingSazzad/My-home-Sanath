@@ -196,7 +196,7 @@ export default function PropertyLeadsModal({ open, onClose, propertyId, property
         <div className="space-y-4 pt-2">
           <div className="flex items-center justify-between text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">
             <span>Enquiry List</span>
-            <span className="bg-blue-50 text-[#1a3c6e] border border-blue-100 px-2.5 py-0.5 rounded-full text-[10px]">
+            <span className="bg-[#1a3c6e]/5 text-[#1a3c6e] border border-[#1a3c6e]/10 px-2.5 py-0.5 rounded-full text-[10px]">
               {leads.length} Active Leads
             </span>
           </div>
