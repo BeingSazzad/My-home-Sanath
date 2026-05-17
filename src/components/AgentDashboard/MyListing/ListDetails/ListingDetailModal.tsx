@@ -192,18 +192,28 @@ export default function ListingDetailModal({ listingId, open, onClose }: Listing
             <Section title="Virtual Tours & Videos">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {detail.videos.map((vid, idx) => (
-                  <div key={idx} className="relative aspect-video rounded-xl overflow-hidden bg-black group">
+                  <div key={idx} className="relative aspect-video rounded-xl overflow-hidden bg-black shadow-inner border border-gray-150">
                     <video 
                       src={vid} 
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                      controls
+                      className="w-full h-full object-cover rounded-xl"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                       <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
-                          <VideoCameraOutlined className="text-white text-xl" />
-                       </div>
-                    </div>
                   </div>
                 ))}
+              </div>
+            </Section>
+          )}
+
+          {/* 360° Virtual Tour */}
+          {detail.virtualTourLink && (
+            <Section title="360° Interactive Virtual Tour">
+              <div className="w-full aspect-video rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-black relative">
+                <iframe 
+                  src={detail.virtualTourLink} 
+                  className="w-full h-full border-0 rounded-xl"
+                  allowFullScreen
+                  allow="xr-spatial-tracking"
+                />
               </div>
             </Section>
           )}
