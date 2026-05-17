@@ -25,6 +25,7 @@ export interface ListingFormData {
     videos: File[];
     floorPlan: File[];
     brochures: File[];
+    virtualTourLink?: string;
     // Step 2 — existing server URLs (for edit mode)
     existingPhotos: string[];
     existingVideos: string[];
@@ -56,6 +57,7 @@ export interface ListingDetail {
     videos?: string[];
     floorPlans?: string[];
     brochures?: string[];
+    virtualTourLink?: string;
     listingType: "for-sale" | "to-rent";
     // Step 3
     propertyType: string;

@@ -64,12 +64,7 @@ export default function ChangePasswordForm() {
     };
 
     return (
-        <div className="max-w-2xl">
-            <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">Security & Password</h2>
-                <p className="text-slate-500 mt-1">Manage your account security and update your password.</p>
-            </div>
-
+        <div className="max-w-4xl">
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>

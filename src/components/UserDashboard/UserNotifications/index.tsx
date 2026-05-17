@@ -127,17 +127,9 @@ const NotificationSettings = ({ onBack }: { onBack: () => void }) => {
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
-        <button
-          onClick={onBack}
-          className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
-        >
-          <ChevronLeft size={18} className="text-gray-700" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-bold text-[#1a3c6e]">Notification Settings</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Manage how you receive updates</p>
-        </div>
+      <div className="mb-8">
+        <h1 className="text-3xl font-extrabold text-[#1a3c6e]">Notification Settings</h1>
+        <p className="text-gray-500 mt-1">Manage how you receive updates</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -179,7 +171,7 @@ const NotificationSettings = ({ onBack }: { onBack: () => void }) => {
 };
 
 const UserNotifications = () => {
-  const [showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState(true);
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
   if (showSettings) {
@@ -193,9 +185,9 @@ const UserNotifications = () => {
   return (
     <div className="max-w-7xl">
       <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-[#1a3c6e]">Notification</h1>
-          <p className="text-gray-500 text-sm mt-1">Stay updated with your property activity</p>
+        <div className="mb-8">
+          <h1 className="text-3xl font-extrabold text-[#1a3c6e]">Notifications</h1>
+          <p className="text-gray-500 mt-1">Stay updated with your property activity</p>
         </div>
         <div className="flex items-center gap-3">
           <button

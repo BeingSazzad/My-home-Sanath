@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Input } from "antd";
 import { ListingFormData } from "@/types/listing";
 import {
 
@@ -372,6 +373,18 @@ export default function Step2Media({ data, onChange }: Step2Props) {
                 existingUrls={data.existingBrochures}
                 onExistingUrlsChange={(urls) => onChange({ existingBrochures: urls })}
             />
+            
+            <div className="pt-2">
+                <label className="block text-sm font-semibold text-gray-800 mb-2">360° Virtual Tour Link</label>
+                <Input 
+                    placeholder="https://matterport.com/..." 
+                    size="large"
+                    value={data.virtualTourLink}
+                    onChange={(e) => onChange({ virtualTourLink: e.target.value })}
+                    className="!rounded-xl h-12"
+                    prefix={<LinkOutlined className="text-gray-400 mr-2" />}
+                />
+            </div>
         </div>
     );
 }

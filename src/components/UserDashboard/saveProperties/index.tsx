@@ -17,10 +17,11 @@ const SaveProperties = () => {
     ].flatMap((p) => Array(6).fill(p)); // Creates 6 identical cards for demo
 
     return (
-        <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-5">
-                6 Properties Found
-            </h2>
+        <div className="max-w-7xl mx-auto">
+            <div className="mb-8">
+                <h1 className="text-3xl font-extrabold text-[#1a3c6e]">Saved Properties</h1>
+                <p className="text-gray-500 mt-1">6 properties found matching your criteria</p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {properties.map((property, index) => (
                     <PropertyCard key={index} property={property} />

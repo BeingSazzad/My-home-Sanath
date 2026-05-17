@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(powershell -Command \"Get-Content 'src\\\\components\\\\layout\\\\DashboardLayoutClient.tsx'\")",
+      "Bash(powershell -Command \"Select-String -Path 'src\\\\components\\\\AgentDashboard\\\\MyListing\\\\add-listing\\\\AddListingModal.tsx' -Pattern 'destroyOn'\")",
+      "Bash(powershell -Command \"Select-String -Path 'src\\\\components\\\\AgentDashboard\\\\MyListing\\\\ListDetails\\\\ListingDetailModal.tsx' -Pattern 'destroyOn|console\\\\.log'\")",
+      "Bash(powershell -Command \"Select-String -Path 'src\\\\components\\\\AgentDashboard\\\\MyListing\\\\add-listing\\\\AddListingModal.tsx' -Pattern 'destroyOn|console\\\\.log'\")"
     ]
   }
 }

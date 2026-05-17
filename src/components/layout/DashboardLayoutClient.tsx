@@ -8,8 +8,8 @@ import { useSelector } from "react-redux";
 import DashboardSidebar from "./dashboard-sidebar";
 import DashboardBackButton from "./DashboardBackButton";
 
-const SIDEBAR_WIDTH = 300;
-const SIDEBAR_COLLAPSED_WIDTH = 72;
+const SIDEBAR_WIDTH = 280;
+const SIDEBAR_COLLAPSED_WIDTH = 80;
 
 export default function DashboardLayoutClient({
     children,
@@ -20,34 +20,33 @@ export default function DashboardLayoutClient({
 }) {
     const router = useRouter();
     const { user } = useSelector((state: any) => state.auth);
-    const displayName = user?.user?.name || user?.user?.email?.split("@")[0] || "My Account";
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const displayName = mounted ? (user?.user?.name || user?.user?.email?.split("@")[0] || "My Account") : "My Account";
 
     const [collapsed, setCollapsed] = useState(
         searchParams?.collapsed === "true"
     );
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    /**
-     * 🔥 Sync query → state (on first load / change)
-     */
     useEffect(() => {
         if (searchParams?.collapsed !== undefined) {
             setCollapsed(searchParams.collapsed === "true");
         }
     }, [searchParams]);
 
-    /**
-     * 🔥 Update query
-     */
     const handleSetQuery = (value: boolean) => {
         const params = new URLSearchParams(window.location.search);
         params.set("collapsed", String(value));
-
         router.replace(`?${params.toString()}`, { scroll: false });
     };
 
     return (
-        <div className="flex bg-[#ddd] h-[90vh]">
+        <div className="flex bg-[#F9FAFB] min-h-[calc(100vh-72px)]">
             {/* Desktop Sidebar */}
             <div
                 className="hidden lg:block flex-shrink-0 transition-all duration-300"
@@ -57,13 +56,15 @@ export default function DashboardLayoutClient({
                         : SIDEBAR_WIDTH,
                 }}
             >
-                <DashboardSidebar
-                    collapsed={collapsed}
-                    onCollapse={(val) => {
-                        setCollapsed(val);
-                        handleSetQuery(val);
-                    }}
-                />
+                <div className="sticky top-[72px] h-[calc(100vh-72px)]">
+                    <DashboardSidebar
+                        collapsed={collapsed}
+                        onCollapse={(val) => {
+                            setCollapsed(val);
+                            handleSetQuery(val);
+                        }}
+                    />
+                </div>
             </div>
 
             {/* Mobile Drawer */}
@@ -71,7 +72,7 @@ export default function DashboardLayoutClient({
                 placement="left"
                 open={mobileOpen}
                 onClose={() => setMobileOpen(false)}
-                width={300}
+                width={280}
                 styles={{ body: { padding: 0 }, header: { display: "none" } }}
                 className="lg:hidden"
             >
@@ -82,9 +83,9 @@ export default function DashboardLayoutClient({
             </Drawer>
 
             {/* Main Content */}
-            <div className="flex-1 flex overflow-y-auto flex-col min-w-0">
+            <div className="flex-1 flex flex-col min-w-0">
                 {/* Mobile Top Bar */}
-                <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-white border-b sticky top-0 z-50">
+                <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-100 sticky top-[72px] z-40">
                     <Button
                         type="text"
                         icon={<MenuOutlined style={{ fontSize: 18 }} />}
@@ -95,9 +96,11 @@ export default function DashboardLayoutClient({
                     </span>
                 </div>
 
-                <main className="flex-1 px-4 py-5 md:px-6 md:py-6 bg-[#F9FAFB]">
-                    <DashboardBackButton fallbackHref="/saved" />
-                    {children}
+                <main className="flex-1 px-4 py-8 md:px-12 md:py-10">
+                    <div className="max-w-7xl mx-auto">
+                        <DashboardBackButton fallbackHref="/saved" />
+                        {children}
+                    </div>
                 </main>
             </div>
         </div>

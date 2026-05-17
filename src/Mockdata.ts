@@ -8,6 +8,7 @@ export const MOCK_LISTINGS: Listing[] = [
     price: "£1.3m",
     views: 1245,
     status: "active",
+    listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=120&h=80&fit=crop",
   },
   {
@@ -17,6 +18,7 @@ export const MOCK_LISTINGS: Listing[] = [
     price: "£2.1m",
     views: 912,
     status: "active",
+    listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=120&h=80&fit=crop",
   },
   {
@@ -26,6 +28,7 @@ export const MOCK_LISTINGS: Listing[] = [
     price: "£675k",
     views: 675,
     status: "draft",
+    listingType: "for-sale",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=120&h=80&fit=crop",
   },
   {
@@ -35,6 +38,7 @@ export const MOCK_LISTINGS: Listing[] = [
     price: "£2k",
     views: 389,
     status: "closed",
+    listingType: "to-rent",
     image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=120&h=80&fit=crop",
   },
 ];

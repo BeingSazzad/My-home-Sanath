@@ -134,11 +134,6 @@ export default function Navbar() {
                         </div>
 
                         <div className="flex-1 overflow-y-auto py-4 px-4">
-                            {/* Auth Section in Drawer */}
-                            <div className="mb-6 p-4 bg-[#1a3c6e]/5 rounded-2xl">
-                                <NavActions />
-                            </div>
-
                             <nav className="flex flex-col gap-1">
                                 <p className="px-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Main Menu</p>
                                 {mobileLinks.map((link) => {

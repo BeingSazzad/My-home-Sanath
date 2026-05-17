@@ -106,11 +106,11 @@ export default function SubscriptionPage() {
     ];
 
     return (
-        <div className="p-2 sm:p-6 max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-[#1a3c6e]">Billing & Subscription</h1>
-                <p className="text-gray-500 mt-1 text-sm">Manage your plan, billing details, and view invoices.</p>
+                <h1 className="text-3xl font-extrabold text-[#1a3c6e]">Billing & Subscription</h1>
+                <p className="text-gray-500 mt-1">Manage your plan, billing details, and view invoices.</p>
             </div>
 
             {hasSubscription ? (
@@ -200,16 +200,16 @@ export default function SubscriptionPage() {
             ) : (
                 /* ─── NO SUBSCRIPTION VIEW (EMPTY STATE + PLANS) ─── */
                 <div className="animate-in fade-in duration-500">
-                    <div className="bg-orange-50 border border-orange-100 text-orange-800 px-6 py-6 rounded-2xl mb-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+                    <div className="bg-blue-50 border border-blue-100 text-[#1a3c6e] px-6 py-6 rounded-2xl mb-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
                         <div className="text-center sm:text-left">
                             <h3 className="font-bold text-xl mb-1">You don&apos;t have an active subscription yet.</h3>
-                            <p className="text-orange-700/80 text-sm">Choose a plan below to unlock premium agent tools, listings, and featured placements.</p>
+                            <p className="text-[#1a3c6e]/70 text-sm">Choose a plan below to unlock premium agent tools, listings, and featured placements.</p>
                         </div>
                         {!showPlans && (
                             <Button 
                                 type="primary" 
                                 onClick={() => setShowPlans(true)}
-                                className="!bg-orange-600 !border-orange-600 hover:!bg-orange-700 !h-12 !px-10 !font-bold !rounded-xl shadow-lg shadow-orange-200 transition-all hover:scale-105 active:scale-95"
+                                className="!bg-[#14b8a6] !border-[#14b8a6] hover:!bg-[#119e8e] !h-12 !px-10 !font-bold !rounded-xl shadow-lg shadow-[#14b8a6]/30 transition-all hover:scale-105 active:scale-95"
                             >
                                 Get Subscription Now
                             </Button>

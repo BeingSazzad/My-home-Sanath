@@ -87,13 +87,9 @@ export default function OverviewsPage() {
         <div className="p-6 space-y-6">
             {/* Page Header */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                <div>
-                    <Title level={2} className="mb-1 text-[28px]" style={{ color: "#1a3c6e" }}>
-                        Agent Dashboard
-                    </Title>
-                    <Text className="text-[#6b7280] text-sm">
-                        Welcome back, {userRole}. Here&apos;s what&apos;s happening today.
-                    </Text>
+                <div className="mb-2">
+                    <h1 className="text-3xl font-extrabold text-[#1a3c6e]">Agent Dashboard</h1>
+                    <p className="text-gray-500 mt-1">Welcome back, {userRole}. Here&apos;s what&apos;s happening today.</p>
                 </div>
             </div>
 

@@ -80,9 +80,6 @@ export default function ListingDetailModal({ listingId, open, onClose }: Listing
   const [detail, setDetail] = useState<ListingDetail | null>(MOCK_LISTING_DETAILS[0]);
   const [loading, setLoading] = useState(false);
 
-
-  console.log('detail', MOCK_LISTING_DETAILS[0]);
-
   // useEffect(() => {
   //   if (!open || !listingId) return;
 
@@ -132,7 +129,7 @@ export default function ListingDetailModal({ listingId, open, onClose }: Listing
       footer={null}
       width={680}
       centered
-      destroyOnClose
+      destroyOnHidden
       title={
         !loading && detail ? (
           <div className="flex items-center justify-between pr-8">

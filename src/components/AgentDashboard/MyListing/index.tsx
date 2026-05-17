@@ -2,8 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { Button, Modal } from "antd";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Toaster, toast } from "sonner";
+import { PlusOutlined } from "@ant-design/icons";
+import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 import { Listing, ListingDetail } from "@/types/listing";
 import ListingsFilters from "./ListingsFilters";
@@ -85,15 +85,17 @@ export default function MyListingsPage() {
     <>
       <div className="">
         {/* Page Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold mb-6" style={{ color: "#1a3c6e" }}>My Properties</h1>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+          <div>
+            <h1 className="text-3xl font-extrabold text-[#1a3c6e]">My Properties</h1>
+            <p className="text-gray-500 mt-1">Manage and track all your property listings</p>
+          </div>
           <Button
             type="primary"
             size="large"
             icon={<PlusOutlined />}
             onClick={handleAddNew}
-            style={{ backgroundColor: "#1a3c6e", borderColor: "#1a3c6e" }}
-            className="!rounded"
+            className="!bg-[#1a3c6e] !border-[#1a3c6e] !rounded-xl !h-11 shadow-lg shadow-[#1a3c6e]/20 hover:!scale-[1.02] active:!scale-95 transition-all font-bold"
           >
             Add Property
           </Button>
@@ -314,7 +316,7 @@ export const MOCK_LISTING_DETAILS: ListingDetail[] = [
     address: "15 Deansgate Square, Manchester M3 4LZ",
     price: "£2,000 pcm",
     views: 389,
-    status: "let agreed",
+    status: "closed",
     listingType: "to-rent",
     images: [
       "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=500&fit=crop",

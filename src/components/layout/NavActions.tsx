@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Bell, User, LogOut, LayoutDashboard, House, MessageSquare, Wallet, Settings } from "lucide-react";
+import { Bell, User, LogOut, LayoutDashboard, Settings } from "lucide-react";
 import { logout } from "@/redux/feature/auth/authSlice";
 
 export default function NavActions() {
@@ -20,14 +20,6 @@ export default function NavActions() {
         setMounted(true);
     }, []);
 
-    const dashboardRoutes = [
-        '/overview', '/saved', '/profile', '/enquiries',
-        '/user-notifications', '/notification-settings',
-        '/password-security', '/my-listing',
-        '/agent-enquiries', '/subscription', '/agency-profile', '/security',
-    ];
-    const isDashboard = dashboardRoutes.some(route => pathname.includes(route));
-
     const handleLogout = () => {
         dispatch(logout());
         router.push("/auth/login");
@@ -36,6 +28,19 @@ export default function NavActions() {
     const isAgent = user?.user?.role === "Agent";
 
     const userMenuItems: MenuProps["items"] = [
+        {
+            key: "dashboard",
+            icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
+            label: (
+                <Link
+                    href={isAgent ? "/overview" : "/saved"}
+                    className="font-bold text-[#1a3c6e]"
+                >
+                    {isAgent ? "Agent Dashboard" : "User Dashboard"}
+                </Link>
+            ),
+        },
+        { type: "divider" as const },
         {
             key: "profile",
             icon: isAgent ? <Settings size={16} /> : <User size={16} />,
@@ -46,23 +51,6 @@ export default function NavActions() {
             ),
         },
         { type: "divider" as const },
-        ...(isAgent ? [
-            { type: "divider" as const },
-        ] : !isDashboard ? [
-            {
-                key: "dashboard",
-                icon: <LayoutDashboard size={16} className="text-[#1a3c6e]" />,
-                label: (
-                    <Link
-                        href="/saved"
-                        className="font-bold text-[#1a3c6e]"
-                    >
-                        User Dashboard
-                    </Link>
-                ),
-            },
-            { type: "divider" as const },
-        ] : []),
         {
             key: "logout",
             icon: <LogOut size={16} />,
@@ -71,16 +59,15 @@ export default function NavActions() {
         },
     ];
 
-    // Prevent SSR/client hydration mismatch — render placeholder until mounted
     if (!mounted) {
-        return <div className="w-28 h-10" />;
+        return <div className="w-10 h-10" />;
     }
 
     const isLoggedIn = !!user;
 
     if (isLoggedIn) {
         return (
-            <div className="flex items-center gap-3 sm:gap-6 animate-in fade-in duration-300">
+            <div className="flex items-center gap-4 sm:gap-6 animate-in fade-in duration-300">
                 <Popover
                     content={
                         <div className="w-80 -m-3">
@@ -89,7 +76,7 @@ export default function NavActions() {
                                 <span className="text-[10px] font-bold bg-[#14b8a6] text-white px-2 py-0.5 rounded-full uppercase tracking-wide">3 New</span>
                             </div>
                             <div className="max-h-[300px] overflow-y-auto">
-                                <div className="p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors">
+                                <div className="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors">
                                     <p className="text-sm text-gray-800 font-semibold m-0 leading-tight">New property match found!</p>
                                     <p className="text-xs text-gray-500 m-0 mt-1.5">2 mins ago</p>
                                 </div>
@@ -119,25 +106,13 @@ export default function NavActions() {
                     </Badge>
                 </Popover>
 
-                <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow={{ pointAtCenter: true }}>
-                    <div className="flex items-center gap-3 cursor-pointer group">
-                        <div className="text-right hidden xl:block">
-                            <p className="text-[14px] font-bold text-[#1a3c6e] leading-none mb-1">
-                                {user?.user?.name || user?.user?.email?.split("@")[0] || "My Account"}
-                            </p>
-                            <div className="flex justify-end">
-                                <span className="text-[10px] bg-[#1a3c6e]/5 text-[#1a3c6e] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
-                                    {user?.user?.role || "User"}
-                                </span>
-                            </div>
-                        </div>
-                        <Avatar
-                            size={44}
-                            src="/images/customer.png"
-                            className="border-2 border-white ring-2 ring-[#1a3c6e]/10 group-hover:ring-[#1a3c6e]/30 transition-all shadow-sm"
-                        />
-                    </div>
-                </Dropdown>
+                <Link href={isAgent ? "/overview" : "/saved"} className="flex items-center cursor-pointer group">
+                    <Avatar
+                        size={44}
+                        src="/images/customer.png"
+                        className="border-2 border-white ring-2 ring-[#1a3c6e]/10 group-hover:ring-[#1a3c6e]/30 transition-all shadow-sm"
+                    />
+                </Link>
             </div>
         );
     }

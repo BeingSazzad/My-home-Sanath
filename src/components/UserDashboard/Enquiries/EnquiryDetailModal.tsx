@@ -31,7 +31,6 @@ export default function EnquiryDetailModal({
             centered
             width={700}
             closable={true}
-            
             styles={{
                 body: { padding: 0, background: "#f8fafc" },
             }}
@@ -107,33 +106,26 @@ export default function EnquiryDetailModal({
                                 <p className="font-bold text-gray-900 text-sm">
                                     {enquiry.agent.name}
                                 </p>
-                                <p className="text-gray-400 text-xs">
+                                <p className="text-gray-400 text-xs mb-3">
                                     {enquiry.agent.company}
                                 </p>
 
-                                <div className="flex gap-2 mt-2">
+                                <div className="space-y-2">
                                     <a
                                         href={`tel:${enquiry.agent.phone}`}
-                                        className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50"
+                                        className="text-gray-600 text-xs flex items-center gap-2 hover:text-[#1a3c6e] transition-colors"
                                     >
-                                        <PhoneOutlined className="text-gray-500 text-xs" />
+                                        <PhoneOutlined className="text-[#1a3c6e] text-xs" />
+                                        {enquiry.agent.phone}
                                     </a>
                                     <a
                                         href={`mailto:${enquiry.agent.email}`}
-                                        className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50"
+                                        className="text-gray-600 text-xs flex items-center gap-2 hover:text-[#1a3c6e] transition-colors"
                                     >
-                                        <MailOutlined className="text-gray-500 text-xs" />
+                                        <MailOutlined className="text-[#1a3c6e] text-xs" />
+                                        {enquiry.agent.email}
                                     </a>
                                 </div>
-
-                                <p className="text-gray-500 text-xs mt-2 flex items-center gap-1">
-                                    <PhoneOutlined className="text-xs" />{" "}
-                                    {enquiry.agent.phone}
-                                </p>
-                                <p className="text-gray-500 text-xs mt-1 flex items-center gap-1">
-                                    <MailOutlined className="text-xs" />{" "}
-                                    {enquiry.agent.email}
-                                </p>
                             </div>
                         </div>
                     </div>

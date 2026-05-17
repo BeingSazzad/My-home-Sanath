@@ -48,8 +48,11 @@ export default function HeroSection() {
             <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
 
                 {/* Headline */}
-                <h1 className="text-white text-4xl sm:text-5xl md:text-7xl font-black text-center leading-tight drop-shadow-md">
-                    Property Simplified
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-center leading-tight tracking-tight drop-shadow-lg mb-2">
+                    <span className="text-white">Property </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-[#14b8a6] drop-shadow-sm">
+                        Simplified
+                    </span>
                 </h1>
 
                 {/* Search card */}
@@ -78,7 +81,7 @@ export default function HeroSection() {
                     <div className="px-6 py-8 flex flex-col sm:flex-row gap-4 items-end">
                         {/* Search Container */}
                         <div className="w-full flex flex-col gap-3">
-                            <span className="text-white/80 text-xs font-semibold pl-1">
+                            <span className="text-white/90 text-sm font-medium tracking-wide pl-1">
                                 {tabConfig[activeTab as keyof typeof tabConfig]?.placeholder}
                             </span>
 

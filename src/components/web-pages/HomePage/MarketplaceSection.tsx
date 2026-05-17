@@ -3,16 +3,16 @@ import Link from "next/link";
 import { Button } from "antd";
 import {
   HomeOutlined,
-  PictureOutlined,
+  CompassOutlined,
   BankOutlined,
   SafetyOutlined,
 } from "@ant-design/icons";
 
 const features = [
-  { icon: <HomeOutlined className="text-xl text-[#1a3c6e]" />, label: "Smart Home Design" },
-  { icon: <PictureOutlined className="text-xl text-[#1a3c6e]" />, label: "Beautiful Scene Around" },
-  { icon: <BankOutlined className="text-xl text-[#1a3c6e]" />, label: "Exceptional Lifestyle" },
-  { icon: <SafetyOutlined className="text-xl text-[#1a3c6e]" />, label: "Complete 24/7 Security" },
+  { icon: <HomeOutlined style={{ fontSize: "20px", color: "#1a3c6e" }} />, label: "Smart Home Design" },
+  { icon: <CompassOutlined style={{ fontSize: "20px", color: "#1a3c6e" }} />, label: "Beautiful Scene Around" },
+  { icon: <BankOutlined style={{ fontSize: "20px", color: "#1a3c6e" }} />, label: "Exceptional Lifestyle" },
+  { icon: <SafetyOutlined style={{ fontSize: "20px", color: "#1a3c6e" }} />, label: "Complete 24/7 Security" },
 ];
 
 export default function MarketplaceSection() {

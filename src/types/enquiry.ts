@@ -11,8 +11,9 @@ export interface Enquiry {
     name: string;
     initials: string;
     email: string;
-    propertyTitle: string;
     phone: string;
+    propertyTitle: string;
+    propertyId: string;
     property: string;
     leadDetails: string;
     price: string;
