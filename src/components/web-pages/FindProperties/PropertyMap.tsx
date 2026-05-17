@@ -42,9 +42,9 @@ export default function PropertyMap({ properties }: Props) {
               <span className="font-extrabold text-xl text-[#14b8a6]">£875,000</span>
               <span className="text-[10px] bg-[#1a3c6e] text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider">FEATURED</span>
             </div>
-            <p className="font-semibold mt-1">4 bed House</p>
-            <p className="text-sm text-gray-500">42 Morning Lane, London</p>
-            <p className="text-xs text-gray-400 mt-2">Click on map pins for details</p>
+            <p className="font-bold text-gray-900 mt-1">4 bed House</p>
+            <p className="text-sm text-gray-600 mt-0.5">42 Morning Lane, London</p>
+            <p className="text-xs text-gray-500 mt-2 font-medium">Click on map pins for details</p>
           </div>
         </div>
       </div>
