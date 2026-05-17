@@ -62,7 +62,7 @@ export default function Testimonials() {
                     className="!pb-10"
                 >
                     {testimonials.map((t, i) => (
-                        <SwiperSlide key={`${t.name}-${i}`}>
+                        <SwiperSlide key={`${t.name}-${i}`} className="!h-auto flex">
                             <TestimonialCard {...t} />
                         </SwiperSlide>
                     ))}
