@@ -47,10 +47,11 @@ export default function Testimonials() {
                     </h2>
                 </div>
 
-                {/* Swiper Carousel */}
                 <Swiper
                     modules={[Pagination, Autoplay]}
                     spaceBetween={24}
+                    loop={true}
+                    grabCursor={true}
                     autoplay={{ delay: 4000, disableOnInteraction: false }}
                     pagination={{ clickable: true }}
                     breakpoints={{
