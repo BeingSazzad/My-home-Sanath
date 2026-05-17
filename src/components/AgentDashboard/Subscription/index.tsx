@@ -14,6 +14,9 @@ export default function SubscriptionPage() {
     // Simulate reading from auth state
     const { user } = useSelector((state: any) => state.auth);
     
+    // Check if the logged-in user is an Agent
+    const isAgent = user?.user?.role === "Agent";
+    
     // In a real app, you would fetch this from /api/subscriptions or user object
     const activeSubscription = user?.user?.subscription;
     const hasSubscription = activeSubscription?.status === "active";
@@ -21,22 +24,37 @@ export default function SubscriptionPage() {
     const [isAnnual, setIsAnnual] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [showPlans, setShowPlans] = useState(false);
+    
+    // Secure checkout state
+    const [selectedPlan, setSelectedPlan] = useState<any>(null);
+    const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "gpay">("card");
+    const [cardNumber, setCardNumber] = useState("");
+    const [cardExpiry, setCardExpiry] = useState("");
+    const [cardCvc, setCardCvc] = useState("");
 
-    const handleSubscribe = (planName: string) => {
+    // Open checkout modal instead of subscribing instantly
+    const handleSubscribe = (plan: any) => {
+        setSelectedPlan(plan);
+    };
+
+    // Process secure payment and save subscription
+    const handleCompletePayment = () => {
+        if (!selectedPlan) return;
+        
         setIsLoading(true);
-        // Simulate checkout and state update
+        // Simulate bank/PCI security check
         setTimeout(() => {
             let price = "0";
-            if (planName === "Starter") price = isAnnual ? "490" : "49";
-            else if (planName === "Professional") price = isAnnual ? "990" : "99";
-            else if (planName === "Premium") price = isAnnual ? "1990" : "199";
+            if (selectedPlan.name === "Starter") price = isAnnual ? "490" : "49";
+            else if (selectedPlan.name === "Professional") price = isAnnual ? "990" : "99";
+            else if (selectedPlan.name === "Premium") price = isAnnual ? "1990" : "199";
 
             const mockSubscription = {
                 status: "active",
-                planName: planName,
+                planName: selectedPlan.name,
                 price: price,
-                cycle: planName === "Free Trial" ? "6 months" : (isAnnual ? "yearly" : "monthly"),
-                renewalDate: new Date(Date.now() + (planName === "Free Trial" ? 180 : (isAnnual ? 365 : 30)) * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+                cycle: selectedPlan.name === "Free Trial" ? "6 months" : (isAnnual ? "yearly" : "monthly"),
+                renewalDate: new Date(Date.now() + (selectedPlan.name === "Free Trial" ? 180 : (isAnnual ? 365 : 30)) * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
                 invoices: [
                     { 
                         id: `INV-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`, 
@@ -49,9 +67,46 @@ export default function SubscriptionPage() {
             
             dispatch(updateSubscription(mockSubscription));
             setIsLoading(false);
-            toast.success(`Success! You are now subscribed to ${planName}.`);
-        }, 1200);
+            setSelectedPlan(null);
+            
+            // Clear inputs
+            setCardNumber("");
+            setCardExpiry("");
+            setCardCvc("");
+            
+            toast.success(`Secure checkout complete! You are now subscribed to ${selectedPlan.name}.`);
+        }, 1800);
     };
+
+    // If the logged in user is a regular customer (User role), restrict access
+    if (!isAgent) {
+        return (
+            <div className="max-w-xl mx-auto my-16 text-center p-8 bg-white border border-gray-100 rounded-3xl shadow-md animate-in fade-in duration-500">
+                <div className="w-16 h-16 bg-blue-50 text-[#1a3c6e] rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner text-xl">
+                    ℹ️
+                </div>
+                <h2 className="text-2xl font-extrabold text-[#1a3c6e] mb-3">Agent Only Access</h2>
+                <p className="text-gray-500 mb-8 leading-relaxed text-sm">
+                    The subscription plans are exclusively for Real Estate Agents to list properties, manage staff accounts, and boost listings.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button 
+                        type="primary" 
+                        onClick={() => router.push("/home")}
+                        className="!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e] !h-12 !px-8 !font-bold !rounded-xl shadow-sm"
+                    >
+                        Go back Home
+                    </Button>
+                    <Button 
+                        onClick={() => router.push("/auth/choose-role")}
+                        className="!h-12 !px-8 !font-bold !rounded-xl text-[#1a3c6e] border-gray-200 hover:border-[#1a3c6e]"
+                    >
+                        Register as Agent
+                    </Button>
+                </div>
+            </div>
+        );
+    }
 
     const handleManageBilling = () => {
         toast.success("Redirecting to Stripe Customer Portal...");
@@ -348,7 +403,7 @@ export default function SubscriptionPage() {
                                         <Button 
                                             type={plan.recommended ? "primary" : "default"}
                                             block 
-                                            onClick={() => handleSubscribe(plan.name)}
+                                            onClick={() => handleSubscribe(plan)}
                                             loading={isLoading}
                                             className={`!h-11 !font-bold !text-sm !rounded-lg shadow-sm ${plan.recommended ? "!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e]" : "hover:!border-[#1a3c6e] hover:!text-[#1a3c6e]"}`}
                                         >
@@ -359,6 +414,158 @@ export default function SubscriptionPage() {
                             </div>
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* ─── SECURE CHECKOUT MODAL ─── */}
+            {selectedPlan && (
+                <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+                        {/* Modal Header */}
+                        <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                            <div>
+                                <h3 className="text-xl font-bold text-[#1a3c6e] m-0">Secure Checkout</h3>
+                                <p className="text-xs text-gray-500 mt-0.5 m-0">PCI-DSS Compliant Encryption Enabled</p>
+                            </div>
+                            <button 
+                                onClick={() => setSelectedPlan(null)}
+                                className="text-gray-400 hover:text-gray-600 h-8 w-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-lg font-bold border-none bg-transparent cursor-pointer"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Modal Body */}
+                        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-left">
+                            {/* Order Summary */}
+                            <div className="bg-blue-50/50 border border-blue-100/50 rounded-2xl p-4 space-y-3">
+                                <p className="text-xs font-bold text-[#1a3c6e] uppercase tracking-wider m-0">Order Summary</p>
+                                <div className="flex justify-between items-center">
+                                    <span className="font-semibold text-gray-800 text-sm">{selectedPlan.name} Plan ({selectedPlan.period.replace("/", "")})</span>
+                                    <span className="font-bold text-gray-900 text-sm">{selectedPlan.price}</span>
+                                </div>
+                                {selectedPlan.name !== "Free Trial" && (
+                                    <>
+                                        <div className="flex justify-between text-xs text-gray-500">
+                                            <span>Subtotal</span>
+                                            <span>{selectedPlan.price}</span>
+                                        </div>
+                                        <div className="flex justify-between text-xs text-gray-500">
+                                            <span>VAT (20%)</span>
+                                            <span>
+                                                £{(parseFloat(selectedPlan.price.replace("£", "")) * 0.2).toFixed(2)}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
+                                <div className="h-[1px] bg-blue-100/30 my-2" />
+                                <div className="flex justify-between items-center text-base font-bold text-gray-900">
+                                    <span>Total Due</span>
+                                    <span className="text-[#1a3c6e]">
+                                        {selectedPlan.name === "Free Trial" 
+                                            ? "£0.00" 
+                                            : `£${(parseFloat(selectedPlan.price.replace("£", "")) * 1.2).toFixed(2)}`
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Payment Methods */}
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider m-0">Select Payment Method</p>
+                                <div className="grid grid-cols-3 gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentMethod("card")}
+                                        className={`p-3 border rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentMethod === "card" ? "border-[#1a3c6e] bg-[#1a3c6e]/5 text-[#1a3c6e]" : "border-gray-200 hover:bg-gray-50 text-gray-600 bg-white"}`}
+                                    >
+                                        <span className="text-xs font-bold">Credit Card</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentMethod("paypal")}
+                                        className={`p-3 border rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentMethod === "paypal" ? "border-[#1a3c6e] bg-[#1a3c6e]/5 text-[#1a3c6e]" : "border-gray-200 hover:bg-gray-50 text-gray-600 bg-white"}`}
+                                    >
+                                        <span className="text-xs font-bold">PayPal</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentMethod("gpay")}
+                                        className={`p-3 border rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentMethod === "gpay" ? "border-[#1a3c6e] bg-[#1a3c6e]/5 text-[#1a3c6e]" : "border-gray-200 hover:bg-gray-50 text-gray-600 bg-white"}`}
+                                    >
+                                        <span className="text-xs font-bold">Google Pay</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Payment Inputs */}
+                            {paymentMethod === "card" ? (
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Card Number</label>
+                                        <input
+                                            type="text"
+                                            placeholder="4242 4242 4242 4242"
+                                            value={cardNumber}
+                                            onChange={(e) => setCardNumber(e.target.value)}
+                                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm box-border"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Expiry Date</label>
+                                            <input
+                                                type="text"
+                                                placeholder="MM/YY"
+                                                value={cardExpiry}
+                                                onChange={(e) => setCardExpiry(e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-center box-border"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">CVC / CVV</label>
+                                            <input
+                                                type="password"
+                                                placeholder="•••"
+                                                maxLength={3}
+                                                value={cardCvc}
+                                                onChange={(e) => setCardCvc(e.target.value)}
+                                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#1a3c6e] focus:border-[#1a3c6e] text-sm text-center box-border"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="p-8 border border-dashed border-gray-200 rounded-2xl text-center space-y-2">
+                                    <p className="font-semibold text-gray-700 text-sm m-0">Standard checkout redirection</p>
+                                    <p className="text-xs text-gray-400 m-0">You will be redirected securely to complete the payment authorization.</p>
+                                </div>
+                            )}
+
+                            <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                <span className="text-gray-400 text-xs font-bold select-none">🛡️</span>
+                                <p className="text-[11px] text-gray-500 leading-snug m-0">
+                                    Your checkout session is encrypted with 256-bit SSL. Card credentials are never stored directly on our servers.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Modal Footer */}
+                        <div className="p-6 border-t border-gray-100 bg-gray-50/50 flex flex-col gap-2.5">
+                            <Button
+                                type="primary"
+                                block
+                                loading={isLoading}
+                                onClick={handleCompletePayment}
+                                className="!bg-[#1a3c6e] !border-[#1a3c6e] hover:!bg-[#0f2d5e] !h-12 !font-bold !text-sm !rounded-xl shadow-md"
+                            >
+                                {isLoading ? "Processing Security Check..." : (selectedPlan.name === "Free Trial" ? "Activate Free Trial" : `Authorize Payment of £${selectedPlan.name === "Free Trial" ? "0.00" : (parseFloat(selectedPlan.price.replace("£", "")) * 1.2).toFixed(2)}`)}
+                            </Button>
+                            <p className="text-[10px] text-center text-gray-400 font-medium m-0">
+                                By completing the checkout, you authorize automatic billing transitions under our standard policy.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
