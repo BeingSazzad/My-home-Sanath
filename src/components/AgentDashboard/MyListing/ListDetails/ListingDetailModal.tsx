@@ -16,7 +16,7 @@ import {
   FileTextOutlined,
 } from "@ant-design/icons";
 import { Modal, Skeleton, Tag, Button } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MOCK_LISTING_DETAILS } from "@/Mockdata";
 import { StatusBadge } from "../ListingsTable";
 import ImageGallery from "./ImageGallery";
@@ -77,45 +77,25 @@ function StatTile({ icon, label, value }: any) {
 
 // ─── Main Modal ────────────────────────────────────────────────────────────────
 export default function ListingDetailModal({ listingId, open, onClose }: ListingDetailModalProps) {
-  const [detail, setDetail] = useState<ListingDetail | null>(MOCK_LISTING_DETAILS[0]);
+  const [detail, setDetail] = useState<ListingDetail | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (!open || !listingId) return;
+  useEffect(() => {
+    if (!open || !listingId) {
+      setDetail(null);
+      return;
+    }
 
-  //   const fetchDetail = async () => {
-  //     setLoading(true);
-  //     setDetail(null);
+    setLoading(true);
+    // Simulate loading delay to show premium skeleton loader
+    const timer = setTimeout(() => {
+      const found = MOCK_LISTING_DETAILS.find((d) => d.id === listingId);
+      setDetail(found || null);
+      setLoading(false);
+    }, 250);
 
-  //     try {
-  //       const response = await myFetch("/api/listings/1");
-
-  //       if (response?.success) {
-  //         // setDetail(response.data);
-  //         setDetail(MOCK_LISTING_DETAILS[0]);
-  //       } else {
-  //         if (response?.error && Array.isArray(response.error)) {
-  //           response.error.forEach((err: { message: string }) =>
-  //             toast.error(err.message, { id: "listing-detail" })
-  //           );
-  //         } else {
-  //           toast.error(response?.message || "Failed to load listing details", {
-  //             id: "listing-detail",
-  //           });
-  //         }
-  //         onClose();
-  //       }
-  //     } catch (err) {
-  //       console.error("ListingDetailModal fetchDetail error:", err);
-  //       toast.error("Unexpected error occurred", { id: "listing-detail" });
-  //       onClose();
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchDetail();
-  // }, [open, listingId]);
+    return () => clearTimeout(timer);
+  }, [open, listingId]);
 
   const handleClose = () => {
     setDetail(null);
