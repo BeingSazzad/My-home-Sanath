@@ -79,12 +79,6 @@ const ALERT_TYPE_SETTINGS = [
     title: 'Listing approved',
     description: 'When your listing goes live',
   },
-  {
-    key: 'listingExpiring',
-    icon: <AlertCircle size={20} className="text-[#1a3c6e]" />,
-    title: 'Listing expiring',
-    description: '7 days before listing expires',
-  },
 ];
 
 const ToggleRow = ({
@@ -123,7 +117,7 @@ const NotificationSettings = ({ onBack }: { onBack: () => void }) => {
   const isAgent = user?.user?.role === 'Agent';
 
   const [channels, setChannels] = useState({ emailAlerts: true, pushNotifications: true });
-  const [alerts, setAlerts] = useState({ listingApproved: true, listingExpiring: true });
+  const [alerts, setAlerts] = useState({ listingApproved: true });
 
   return (
     <div>
