@@ -25,6 +25,50 @@ export default function Signup() {
 
   const handleSubmit = async (payload: Record<string, any>) => {
     try {
+      const selectedPlan = searchParams.get("plan");
+      let mockSubscription = null;
+
+      if (isAgent && selectedPlan) {
+        let planName = "Free Trial";
+        let price = "0";
+        let cycle = "6 months";
+        
+        const lowerPlan = selectedPlan.toLowerCase();
+        if (lowerPlan === "starter") {
+          planName = "Starter";
+          price = "49";
+          cycle = "monthly";
+        } else if (lowerPlan === "pro" || lowerPlan === "professional") {
+          planName = "Professional";
+          price = "99";
+          cycle = "monthly";
+        } else if (lowerPlan === "premium") {
+          planName = "Premium";
+          price = "199";
+          cycle = "monthly";
+        } else if (lowerPlan === "free" || lowerPlan === "trial") {
+          planName = "Free Trial";
+          price = "0";
+          cycle = "6 months";
+        }
+        
+        mockSubscription = {
+          status: "active",
+          planName: planName,
+          price: price,
+          cycle: cycle,
+          renewalDate: new Date(Date.now() + (planName === "Free Trial" ? 180 : 30) * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+          invoices: [
+            { 
+              id: `INV-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`, 
+              date: new Date().toLocaleDateString(), 
+              amount: price === "0" ? "Free" : `£${price}`, 
+              status: "Paid" 
+            }
+          ]
+        };
+      }
+
       // Mock successful registration
       const mockUser = {
         user: {
@@ -32,6 +76,7 @@ export default function Signup() {
           email: payload.email,
           name: payload.name,
           role: isAgent ? "Agent" : "User",
+          subscription: mockSubscription,
           iat: Date.now(),
           exp: Date.now() + 86400000,
         },
@@ -39,7 +84,7 @@ export default function Signup() {
       };
       
       dispatch(setUser(mockUser));
-      toast.success(isAgent ? "Agent account created successfully!" : "Account created successfully!");
+      toast.success(isAgent ? `Agent account created with ${mockSubscription ? mockSubscription.planName : "Free Trial"} Plan!` : "Account created successfully!");
       
       // Redirect based on role
       if (isAgent) {
