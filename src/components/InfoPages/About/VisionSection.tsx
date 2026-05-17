@@ -7,10 +7,10 @@ export default function VisionSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                     {/* Text */}
                     <div>
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
                             Our Vision
                         </h2>
-                        <div className="space-y-4 text-sm sm:text-base leading-relaxed">
+                        <div className="space-y-4 text-sm sm:text-base text-gray-700 leading-relaxed">
                             <p>
                                 We believe property discovery should be simple, transparent,
                                 and accessible to everyone. Our vision is to build a trusted
