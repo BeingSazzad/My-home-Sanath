@@ -79,7 +79,7 @@ export default function PopularLocations() {
                     <p className="text-[#14b8a6] text-xs font-bold uppercase tracking-widest mb-2">
                         Explore by Location
                     </p>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900">
+                    <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a3c6e]">
                         Popular UK Locations
                     </h2>
                 </div>

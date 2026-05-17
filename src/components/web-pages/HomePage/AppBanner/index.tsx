@@ -9,7 +9,7 @@ export default function AppBanner() {
 
                     {/* Left Content */}
                     <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
-                        <h2 className="text-gray-900 text-3xl md:text-4xl font-bold leading-snug mb-4">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-[#1a3c6e] leading-snug mb-4">
                             Buy, Rent, or Explore Properties Anytime
                         </h2>
                         <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-md mx-auto lg:mx-0">

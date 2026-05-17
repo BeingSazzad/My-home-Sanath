@@ -58,9 +58,9 @@ export default function MarketplaceSection() {
 
           {/* ── Right: Content ── */}
           <div className="flex flex-col gap-5">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a3c6e] leading-tight">
               The Leading Real Estate{" "}
-              <span className="text-gray-900">About Marketplace</span>
+              <span className="text-[#1a3c6e]">About Marketplace</span>
             </h2>
 
             <p className="text-gray-500 text-sm sm:text-base leading-relaxed">

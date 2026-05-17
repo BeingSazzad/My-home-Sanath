@@ -52,7 +52,7 @@ export default function PropertiesNearYou() {
                 {/* Heading Area */}
                 <div className="flex justify-between items-end mb-10">
                     <div>
-                        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a3c6e] mb-3">
                             Properties near you
                         </h2>
                         <p className="text-gray-500 text-sm sm:text-base leading-relaxed">Handpicked homes in your favorite neighborhoods</p>
