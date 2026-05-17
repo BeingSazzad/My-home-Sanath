@@ -13,7 +13,11 @@ const HomePage = () => {
             <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
                 <HeroSection />
                 <PropertiesNearYou />
-                <MarketplaceSection />
+            </div>
+
+            <MarketplaceSection />
+
+            <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
                 <PopularLocations />
 
                 <WhyMyHome />
