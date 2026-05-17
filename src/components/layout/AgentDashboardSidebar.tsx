@@ -61,13 +61,6 @@ export default function AgentDashboardSidebar({
 
     const logoutMenuItems = [
         {
-            key: "profile",
-            icon: <User size={16} />,
-            label: <span className="font-medium">View Profile</span>,
-            onClick: () => router.push("/agency-profile")
-        },
-        { type: "divider" as const },
-        {
             key: "logout",
             icon: <LogOut size={16} />,
             label: <span className="font-bold text-red-600">Log out</span>,

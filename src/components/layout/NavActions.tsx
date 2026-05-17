@@ -42,16 +42,6 @@ export default function NavActions() {
         },
         { type: "divider" as const },
         {
-            key: "profile",
-            icon: isAgent ? <Settings size={16} /> : <User size={16} />,
-            label: (
-                <Link href={isAgent ? "/agency-profile" : "/profile"} className="font-medium">
-                    {isAgent ? "Agency Profile" : "My Profile"}
-                </Link>
-            ),
-        },
-        { type: "divider" as const },
-        {
             key: "logout",
             icon: <LogOut size={16} />,
             label: <span onClick={handleLogout} className="cursor-pointer font-bold">Sign Out</span>,
