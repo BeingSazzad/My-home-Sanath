@@ -56,7 +56,7 @@ export default function Testimonials() {
                     breakpoints={{
                         0: { slidesPerView: 1 },
                         640: { slidesPerView: 2 },
-                        1024: { slidesPerView: 4 },
+                        1024: { slidesPerView: 3 },
                     }}
                     className="!pb-10"
                 >
