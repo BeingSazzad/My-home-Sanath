@@ -44,8 +44,9 @@ export default function NavActions() {
         {
             key: "logout",
             icon: <LogOut size={16} />,
-            label: <span onClick={handleLogout} className="cursor-pointer font-bold">Sign Out</span>,
+            label: <span className="font-bold">Sign Out</span>,
             danger: true,
+            onClick: handleLogout,
         },
     ];
 
@@ -96,7 +97,18 @@ export default function NavActions() {
                     </Badge>
                 </Popover>
 
-                <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} placement="bottomRight">
+                <Dropdown 
+                    menu={{ 
+                        items: userMenuItems,
+                        onClick: ({ key }) => {
+                            if (key === "logout") {
+                                handleLogout();
+                            }
+                        }
+                    }} 
+                    trigger={["click"]} 
+                    placement="bottomRight"
+                >
                     <div className="flex items-center cursor-pointer group">
                         <Avatar
                             size={44}
