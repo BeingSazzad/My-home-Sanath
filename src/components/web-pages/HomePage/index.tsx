@@ -9,14 +9,17 @@ import AppBanner from './AppBanner'
 
 const HomePage = () => {
     return (
-        <div className='container mx-auto  px-4 sm:px-6 lg:px-8'>
-            <HeroSection />
-            <PropertiesNearYou />
-            <MarketplaceSection />
-            <PopularLocations />
+        <div className='w-full'>
+            <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <HeroSection />
+                <PropertiesNearYou />
+                <MarketplaceSection />
+                <PopularLocations />
 
-            <WhyMyHome />
-            <Testimonials />
+                <WhyMyHome />
+                <Testimonials />
+            </div>
+            
             <AppBanner />
         </div>
     )

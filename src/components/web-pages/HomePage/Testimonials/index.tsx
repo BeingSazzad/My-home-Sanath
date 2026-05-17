@@ -39,10 +39,10 @@ export default function Testimonials() {
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-12">
-                    <p className="text-[#f5a623] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
+                    <p className="text-[#14b8a6] text-sm font-bold tracking-[0.2em] uppercase mb-3">
                         Testimonials
                     </p>
-                    <h2 className="text-gray-900 text-3xl md:text-4xl font-bold">
+                    <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a3c6e]">
                         What Our Users Say
                     </h2>
                 </div>
