@@ -61,7 +61,10 @@ export const MOCK_LISTING_DETAILS: ListingDetail[] = [
       "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=500&fit=crop",
       "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=500&fit=crop",
     ],
-    videos: ["https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4"],
+    videos: [
+      "https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4",
+      "https://assets.mixkit.co/videos/preview/mixkit-bright-suburban-house-exterior-with-lush-greenery-47864-large.mp4"
+    ],
     virtualTourLink: "https://my.matterport.com/show/?m=JGPnGBy2snS",
     floorPlans: ["https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=1000&fit=crop"],
     brochures: ["/sample-brochure.pdf"],
@@ -93,7 +96,10 @@ export const MOCK_LISTING_DETAILS: ListingDetail[] = [
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=500&fit=crop",
       "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=500&fit=crop",
     ],
-    videos: ["https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4"],
+    videos: [
+      "https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-with-large-windows-and-city-views-44331-large.mp4",
+      "https://assets.mixkit.co/videos/preview/mixkit-bright-suburban-house-exterior-with-lush-greenery-47864-large.mp4"
+    ],
     virtualTourLink: "https://my.matterport.com/show/?m=JGPnGBy2snS",
     propertyType: "Penthouse",
     beds: 3,
