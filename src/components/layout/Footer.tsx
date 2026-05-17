@@ -5,7 +5,6 @@ import FooterBrand from "./FooterBrand";
 
 const companyLinks = [
     { label: "About Us", href: "/about" },
-    { label: "Contact Us", href: "/contact-us" },
     { label: "Pricing", href: "/pricing" },
 ];
 
