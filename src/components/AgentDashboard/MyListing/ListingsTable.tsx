@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Listing, ListingStatus } from "@/types/listing";
-import { Popconfirm } from "antd";
+import { Popconfirm, Dropdown } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Eye } from "lucide-react";
 
@@ -11,6 +11,7 @@ interface ListingsTableProps {
   onDelete: (id: string) => void;
   onDetails: (id: string) => void;
   onEdit: (id: string) => void;
+  onStatusChange?: (id: string, newStatus: ListingStatus) => void;
 }
 
 const STATUS_CONFIG: Record<ListingStatus, { label: string; classes: string }> = {
@@ -29,7 +30,7 @@ export function StatusBadge({ status }: { status: ListingStatus }) {
   );
 }
 
-export default function ListingsTable({ listings, onDelete, onDetails, onEdit }: ListingsTableProps) {
+export default function ListingsTable({ listings, onDelete, onDetails, onEdit, onStatusChange }: ListingsTableProps) {
   if (listings.length === 0) {
     return (
       <div className="text-center py-20 text-gray-400 bg-white">
@@ -90,7 +91,27 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit }:
 
             {/* Status */}
             <div className="flex justify-center">
-              <StatusBadge status={listing.status} />
+              {onStatusChange ? (
+                <Dropdown
+                  menu={{
+                    items: [
+                      { key: "active", label: <span className="font-bold text-green-700">Active</span> },
+                      { key: "sold", label: <span className="font-bold text-purple-700">Sold</span> },
+                      { key: "draft", label: <span className="font-bold text-gray-600">Draft</span> },
+                      { key: "closed", label: <span className="font-bold text-red-600">Closed</span> },
+                    ],
+                    onClick: ({ key }) => onStatusChange(listing.id, key as ListingStatus),
+                  }}
+                  trigger={["click"]}
+                  placement="bottomCenter"
+                >
+                  <button className="flex items-center gap-1 hover:scale-105 active:scale-95 transition-all cursor-pointer bg-transparent border-0 p-0 focus:outline-none">
+                    <StatusBadge status={listing.status} />
+                  </button>
+                </Dropdown>
+              ) : (
+                <StatusBadge status={listing.status} />
+              )}
             </div>
 
             {/* Actions */}

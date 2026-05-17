@@ -67,6 +67,17 @@ export default function MyListingsPage() {
     setListingModalOpen(true);
   };
 
+  const handleStatusChange = (id: string, newStatus: Listing["status"]) => {
+    setListings((prev) =>
+      prev.map((listing) =>
+        listing.id === id ? { ...listing, status: newStatus } : listing
+      )
+    );
+    toast.success(`Status updated to ${newStatus.toUpperCase()}`, {
+      description: "The property listing status has been updated successfully."
+    });
+  };
+
   const handleAddNew = () => {
     setEditId(null);
     setListingModalOpen(true);
@@ -115,6 +126,7 @@ export default function MyListingsPage() {
             onDelete={handleDeleteRequest}
             onDetails={handleDetails}
             onEdit={handleEdit}
+            onStatusChange={handleStatusChange}
           />
         </div>
       </div>
