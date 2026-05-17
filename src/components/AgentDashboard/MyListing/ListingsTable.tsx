@@ -43,11 +43,12 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
   return (
     <div className="w-full overflow-x-auto bg-white">
       {/* Table Header */}
-      <div className="min-w-[850px] grid grid-cols-[2fr_0.8fr_1fr_1fr_1fr_220px] gap-6 px-6 py-4 bg-gray-50/50 border-b border-gray-200 text-xs font-bold text-gray-600 uppercase tracking-wider">
+      <div className="min-w-[850px] grid grid-cols-[2fr_0.8fr_1fr_0.8fr_0.8fr_1fr_220px] gap-6 px-6 py-4 bg-gray-50/50 border-b border-gray-200 text-xs font-bold text-gray-600 uppercase tracking-wider">
         <span>Property</span>
         <span className="text-center">Type</span>
         <span className="text-right">Price</span>
         <span className="text-right">Views</span>
+        <span className="text-right">Leads</span>
         <span className="text-center">Status</span>
         <span className="text-right">Actions</span>
       </div>
@@ -57,7 +58,7 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
         {listings.map((listing) => (
           <div
             key={listing.id}
-            className="grid grid-cols-[2fr_0.8fr_1fr_1fr_1fr_220px] gap-6 px-6 py-5 items-center hover:bg-gray-50 transition-colors group"
+            className="grid grid-cols-[2fr_0.8fr_1fr_0.8fr_0.8fr_1fr_220px] gap-6 px-6 py-5 items-center hover:bg-gray-50 transition-colors group"
           >
             {/* Property */}
             <div className="flex items-center gap-4 min-w-0 pr-4">
@@ -87,6 +88,17 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
             {/* Views */}
             <div className="text-right font-semibold text-[14px] text-gray-600">
               {listing.views.toLocaleString()}
+            </div>
+
+            {/* Leads */}
+            <div className="text-right">
+              <span className={`px-2.5 py-1 rounded-md text-[13px] font-bold border transition-all ${
+                listing.leadsCount && listing.leadsCount > 0
+                  ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
+                  : "bg-gray-50 text-gray-400 border-gray-200"
+              }`}>
+                {listing.leadsCount ?? 0} leads
+              </span>
             </div>
 
             {/* Status */}

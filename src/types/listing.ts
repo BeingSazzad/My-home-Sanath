@@ -6,6 +6,7 @@ export interface Listing {
     address: string;
     price: string;
     views: number;
+    leadsCount?: number;
     status: ListingStatus;
     image: string;
     listingType: "for-sale" | "to-rent";
