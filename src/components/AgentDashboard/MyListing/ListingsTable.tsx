@@ -13,6 +13,7 @@ interface ListingsTableProps {
   onDetails: (id: string) => void;
   onEdit: (id: string) => void;
   onStatusChange?: (id: string, newStatus: ListingStatus) => void;
+  onViewLeads?: (id: string) => void;
 }
 
 const STATUS_CONFIG: Record<ListingStatus, { label: string; classes: string }> = {
@@ -31,7 +32,7 @@ export function StatusBadge({ status }: { status: ListingStatus }) {
   );
 }
 
-export default function ListingsTable({ listings, onDelete, onDetails, onEdit, onStatusChange }: ListingsTableProps) {
+export default function ListingsTable({ listings, onDelete, onDetails, onEdit, onStatusChange, onViewLeads }: ListingsTableProps) {
   if (listings.length === 0) {
     return (
       <div className="text-center py-20 text-gray-400 bg-white">
@@ -93,7 +94,10 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
 
             {/* Leads */}
             <div className="text-right flex justify-end">
-              <Link href={`/agent-enquiries?propertyId=${listing.id}`} className="no-underline">
+              <button
+                onClick={() => onViewLeads?.(listing.id)}
+                className="bg-transparent border-0 p-0 focus:outline-none cursor-pointer"
+              >
                 <span className={`px-3 py-1.5 rounded-md text-[12px] font-bold border transition-all inline-block hover:scale-105 active:scale-95 cursor-pointer ${
                   listing.leadsCount && listing.leadsCount > 0
                     ? "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
@@ -101,7 +105,7 @@ export default function ListingsTable({ listings, onDelete, onDetails, onEdit, o
                 }`}>
                   {listing.leadsCount ?? 0} leads
                 </span>
-              </Link>
+              </button>
             </div>
 
             {/* Status */}

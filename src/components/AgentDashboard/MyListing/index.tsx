@@ -11,6 +11,7 @@ import ListingsFilters from "./ListingsFilters";
 import ListingsTable from "./ListingsTable";
 import ListingModal from "./add-listing/AddListingModal";
 import ListingDetailModal from "./ListDetails/ListingDetailModal";
+import PropertyLeadsModal from "./PropertyLeadsModal";
 
 
 export default function MyListingsPage() {
@@ -25,6 +26,10 @@ export default function MyListingsPage() {
   // Detail modal
   const [detailOpen, setDetailOpen] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
+
+  // Leads modal
+  const [leadsOpen, setLeadsOpen] = useState(false);
+  const [leadsId, setLeadsId] = useState<string | null>(null);
 
   // Delete modal
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -65,6 +70,11 @@ export default function MyListingsPage() {
   const handleEdit = (id: string) => {
     setEditId(id);
     setListingModalOpen(true);
+  };
+
+  const handleViewLeads = (id: string) => {
+    setLeadsId(id);
+    setLeadsOpen(true);
   };
 
   const handleStatusChange = (id: string, newStatus: Listing["status"]) => {
@@ -127,6 +137,7 @@ export default function MyListingsPage() {
             onDetails={handleDetails}
             onEdit={handleEdit}
             onStatusChange={handleStatusChange}
+            onViewLeads={handleViewLeads}
           />
         </div>
       </div>
@@ -147,6 +158,17 @@ export default function MyListingsPage() {
           setDetailOpen(false);
           setDetailId(null);
         }}
+      />
+
+      {/* Property Leads Modal */}
+      <PropertyLeadsModal
+        open={leadsOpen}
+        onClose={() => {
+          setLeadsOpen(false);
+          setLeadsId(null);
+        }}
+        propertyId={leadsId}
+        propertyTitle={listings.find(l => l.id === leadsId)?.title}
       />
 
       {/* Premium Delete Confirmation Modal */}
